@@ -10,10 +10,11 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- HTMX CDN -->
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@1.9.10"></script>
-    <!-- Google Fonts -->
+    <!-- Google Fonts & Material Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
     
     <style>
         body {
@@ -117,10 +118,8 @@
     <header class="border-b border-amber-900/20 bg-stone-950/80 backdrop-blur-md sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <!-- Bronze Shield Logo -->
-                <svg class="w-8 h-8 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-                </svg>
+                <!-- Real Logo Image from Workspace -->
+                <img src="Logo.png" class="w-8 h-8 object-contain rounded border border-amber-500/30 shadow-md" alt="Aegis Mirror Logo" />
                 <span class="heading-font font-bold text-xl tracking-wider text-stone-100">
                     AEGIS <span class="text-amber-500 font-light">MIRROR</span>
                 </span>
@@ -219,38 +218,32 @@
                      :class="revealed ? 'active' : ''">
                     <!-- Glass shine -->
                     <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent rounded-2xl pointer-events-none"></div>
-                    <!-- Detailed Mock QR Code with Aegis center logo -->
-                    <svg class="w-full h-full text-stone-100" viewBox="0 0 100 100" fill="currentColor">
-                        <!-- Corners -->
-                        <path d="M5 5h20v5H10v15H5V5zm70 0h20v20h-5V10H75V5zM5 75h5v15h15v5H5V75zm90 0v20H75v-5h15V75h5z" fill="#b45309" />
-                        <!-- QR Matrix blocks -->
-                        <rect x="15" y="15" width="15" height="15" fill="currentColor" />
-                        <rect x="18" y="18" width="9" height="9" fill="#0e0d0b" />
-                        <rect x="21" y="21" width="3" height="3" fill="#10b981" />
-
-                        <rect x="70" y="15" width="15" height="15" fill="currentColor" />
-                        <rect x="73" y="18" width="9" height="9" fill="#0e0d0b" />
-                        <rect x="76" y="21" width="3" height="3" fill="#f59e0b" />
-
-                        <rect x="15" y="70" width="15" height="15" fill="currentColor" />
-                        <rect x="18" y="73" width="9" height="9" fill="#0e0d0b" />
-                        <rect x="21" y="76" width="3" height="3" fill="#10b981" />
-                        
-                        <!-- Middle Mock QR pixels -->
-                        <path d="M40 15h5v5h-5zM45 25h10v5H45zM35 35h5v10h-5zM55 35h5v5h-5zM65 30h5v10h-5zM45 45h5v5h-5zM75 50h10v5H75zM55 55h5v10h-5zM35 60h10v5H35zM45 70h5v15h-5zM55 75h15v5H55zM60 85h10v5H60z" fill="currentColor" />
-                        
-                        <!-- Embedded Mini Shield inside QR center -->
-                        <rect x="42" y="42" width="16" height="16" rx="4" fill="#8b5a2b" />
-                        <path d="M47 46.5L50 45l3 1.5v3c0 1.8-1.2 3.5-3 4-1.8-.5-3-2.2-3-4v-3z" fill="#0e0d0b" />
-                    </svg>
+                    
+                    <!-- REAL SCANNABLE QR CODE linking directly to this live deployed application -->
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://aegis-private-indol.vercel.app" 
+                         class="w-full h-full rounded-xl object-contain bg-stone-950 p-2" 
+                         alt="Aegis Mirror Live Setup QR Code" />
                 </div>
                 
                 <p x-show="!revealed" class="text-xs text-amber-500 font-mono mt-4 animate-pulse">
                     Initiating cryptographic handshake...
                 </p>
-                <p x-show="revealed" class="text-xs text-stone-500 font-mono mt-4">
-                    Vector Node: active_handshake_ok_2026
-                </p>
+                
+                <!-- SasukeHiro Area / Onboarding Setup Video Clip -->
+                <div x-show="revealed" 
+                     class="mt-8 bg-stone-900/60 backdrop-blur-md border border-amber-900/20 p-5 rounded-2xl shadow-xl w-full max-w-md text-left transition duration-550 animate-fade-in">
+                    <h3 class="heading-font font-bold text-sm text-stone-200 mb-3 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-amber-500 text-lg">play_circle</span>
+                        Aegis Mirror Onboarding Guide
+                    </h3>
+                    <div class="relative rounded-xl overflow-hidden aspect-video border border-stone-850 bg-stone-950">
+                        <!-- Setup Video Clip loading local file -->
+                        <video src="hero_clip_30s.mp4" controls class="w-full h-full object-cover"></video>
+                    </div>
+                    <p class="text-[11px] text-stone-500 mt-2 font-mono">
+                        Source: hero_clip_30s.mp4 • Guided Video Tutorial
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -284,7 +277,6 @@
                     <div>
                         <label for="email" class="block text-xs font-medium text-stone-300 uppercase tracking-wider mb-2">Cryptographic Email ID</label>
                         <div class="relative group">
-                            <!-- Dynamic glowing borders on input focus -->
                             <div class="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-emerald-500 rounded-lg blur opacity-10 group-focus-within:opacity-30 transition duration-300"></div>
                             <input type="email" 
                                    id="email" 
@@ -343,11 +335,10 @@
                                     <button @click="shieldActive = !shieldActive" 
                                             :class="shieldActive ? 'bg-emerald-500/20 border-emerald-500' : 'bg-amber-500/20 border-amber-500'"
                                             class="w-16 h-16 rounded-full border-2 flex items-center justify-center shadow-lg transition duration-300 hover:scale-105 active:scale-95 cursor-pointer">
-                                        <svg class="w-8 h-8 transition duration-300"
-                                             :class="shieldActive ? 'text-emerald-400' : 'text-amber-400'"
-                                             fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.07 0a5 5 0 010 7.07M13 12a1 1 0 11-2 0 1 1 0 012 0z" />
-                                        </svg>
+                                        <span class="material-symbols-outlined text-3xl transition duration-300"
+                                              :class="shieldActive ? 'text-emerald-400' : 'text-amber-400'">
+                                            shield_with_heart
+                                        </span>
                                     </button>
                                     <div>
                                         <p class="font-bold text-lg heading-font" :class="shieldActive ? 'text-emerald-400' : 'text-amber-500'">
@@ -378,11 +369,7 @@
 
                     <!-- Cryptographic Alter-Ego Card (Alias Status) -->
                     <div class="bg-gradient-to-r from-stone-900 to-stone-900/60 border border-amber-900/20 p-6 rounded-2xl shadow-xl relative overflow-hidden">
-                        
-                        <!-- High-tech grid background lines -->
                         <div class="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:14px_24px]"></div>
-                        
-                        <!-- Glowing accent line -->
                         <div class="absolute top-0 right-0 w-24 h-[1px] bg-gradient-to-l from-emerald-500 to-transparent"></div>
 
                         <div class="flex justify-between items-start mb-4 relative z-10">
@@ -455,9 +442,7 @@
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                     <div>
                         <h2 class="heading-font text-lg font-bold text-stone-200 flex items-center gap-2">
-                            <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-                            </svg>
+                            <span class="material-symbols-outlined text-amber-500">history_edu</span>
                             Observability Journal Logs
                         </h2>
                         <p class="text-xs text-stone-400 mt-1">Friendly, humanized narratives reflecting real-time traffic filters (Refreshing every 10s)</p>
@@ -466,9 +451,7 @@
                     <button hx-get="/api/journal" 
                             hx-target="#journal-container"
                             class="self-start sm:self-center py-1.5 px-3 bg-stone-900 hover:bg-stone-850 border border-stone-850 text-stone-300 text-xs rounded transition duration-150 flex items-center gap-1.5 cursor-pointer">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-                        </svg>
+                        <span class="material-symbols-outlined text-xs">sync</span>
                         Force Refresh
                     </button>
                 </div>
@@ -506,9 +489,7 @@
             <div class="w-screen max-w-md bg-stone-900 border-l border-amber-900/20 p-6 flex flex-col justify-between shadow-2xl relative">
                 <!-- Close Button -->
                 <button @click="showSandboxModal = false" class="absolute top-4 right-4 text-stone-400 hover:text-stone-100 cursor-pointer">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    <span class="material-symbols-outlined">close</span>
                 </button>
 
                 <div class="flex-1 overflow-y-auto pr-1">

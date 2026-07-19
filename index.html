@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-stone-950 text-stone-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aegis Mirror - Advanced Cryptographic Privacy Shield</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Alpine.js CDN -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- HTMX CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@1.9.10"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0e0d0b; /* Deep Hellenic Black-Bronze */
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(139, 90, 43, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 10% 30%, rgba(16, 185, 129, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 70%, rgba(245, 158, 11, 0.05) 0%, transparent 40%);
+        }
+        .heading-font {
+            font-family: 'Outfit', sans-serif;
+        }
+        .mono-font {
+            font-family: 'Space Mono', monospace;
+        }
+        /* Custom Keyframe Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+        }
+        @keyframes pulse-emerald {
+            0%, 100% { filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.6)); }
+            50% { filter: drop-shadow(0 0 30px rgba(16, 185, 129, 0.9)); }
+        }
+        @keyframes pulse-amber {
+            0%, 100% { filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.6)); }
+            50% { filter: drop-shadow(0 0 30px rgba(245, 158, 11, 0.9)); }
+        }
+        @keyframes pulse-cable {
+            0%, 100% { stroke-dashoffset: 100; opacity: 0.3; }
+            50% { stroke-dashoffset: 0; opacity: 1; }
+        }
+        .medusa-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        .emerald-glow {
+            animation: pulse-emerald 3s ease-in-out infinite;
+        }
+        .amber-glow {
+            animation: pulse-amber 3s ease-in-out infinite;
+        }
+        .glowing-cable {
+            stroke-dasharray: 20, 10;
+            animation: pulse-cable 4s linear infinite;
+        }
+        /* Liquid Mirror transition rules */
+        .mirror-blur {
+            filter: blur(40px);
+            opacity: 0.1;
+            transition: filter 3s cubic-bezier(0.25, 1, 0.5, 1), opacity 3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .mirror-clear {
+            filter: blur(0px);
+            opacity: 1;
+        }
+        .liquid-metal-reveal {
+            clip-path: circle(0% at 50% 50%);
+            transition: clip-path 1.5s cubic-bezier(0.76, 0, 0.24, 1);
+        }
+        .liquid-metal-reveal.active {
+            clip-path: circle(150% at 50% 50%);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(14, 13, 11, 0.5);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(139, 90, 43, 0.3);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(139, 90, 43, 0.5);
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col antialiased selection:bg-amber-500/20 selection:text-amber-200" 
+      x-data="{ 
+          activeView: 'gateway', 
+          shieldActive: true, 
+          showSandboxModal: false,
+          revealed: false,
+          activeProfile: 'Standard',
+          customAlias: 'afi.secure.box2026@tempmail.io',
+          init() {
+              setTimeout(() => {
+                  this.revealed = true;
+              }, 3000);
+          },
+          regenerateAlias() {
+              const prefixes = ['secure.vault', 'shield.node', 'crypto.mask', 'aegis.box', 'zero.trace'];
+              const rand = Math.floor(Math.random() * 10000);
+              this.customAlias = `${prefixes[Math.floor(Math.random() * prefixes.length)]}${rand}@tempmail.io`;
+          }
+      }">
+
+    <!-- Navigation Header -->
+    <header class="border-b border-amber-900/20 bg-stone-950/80 backdrop-blur-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <!-- Bronze Shield Logo -->
+                <svg class="w-8 h-8 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                </svg>
+                <span class="heading-font font-bold text-xl tracking-wider text-stone-100">
+                    AEGIS <span class="text-amber-500 font-light">MIRROR</span>
+                </span>
+            </div>
+            <nav class="flex gap-1 sm:gap-2">
+                <button @click="activeView = 'gateway'" 
+                        :class="activeView === 'gateway' ? 'bg-amber-900/30 text-amber-400 border-amber-500/30' : 'text-stone-400 hover:text-stone-100 hover:bg-stone-900/40 border-transparent'"
+                        class="px-3 py-1.5 rounded-lg text-sm font-medium border transition duration-150 cursor-pointer">
+                    Gateway
+                </button>
+                <button @click="activeView = 'beta'" 
+                        :class="activeView === 'beta' ? 'bg-amber-900/30 text-amber-400 border-amber-500/30' : 'text-stone-400 hover:text-stone-100 hover:bg-stone-900/40 border-transparent'"
+                        class="px-3 py-1.5 rounded-lg text-sm font-medium border transition duration-150 cursor-pointer">
+                    Beta Portal
+                </button>
+                <button @click="activeView = 'hub'" 
+                        :class="activeView === 'hub' ? 'bg-amber-900/30 text-amber-400 border-amber-500/30' : 'text-stone-400 hover:text-stone-100 hover:bg-stone-900/40 border-transparent'"
+                        class="px-3 py-1.5 rounded-lg text-sm font-medium border transition duration-150 cursor-pointer">
+                    Aegis Hub
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow flex items-center justify-center p-4">
+        
+        <!-- ========================================== -->
+        <!-- VIEW 1: GATEWAY SCREEN -->
+        <!-- ========================================== -->
+        <div x-show="activeView === 'gateway'" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-4"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             class="w-full max-w-xl mx-auto text-center"
+             x-cloak>
+            
+            <!-- Liquid Mirror Blur Wrapper -->
+            <div :class="revealed ? 'mirror-clear' : 'mirror-blur'" class="mirror-blur flex flex-col items-center">
+                
+                <!-- Medusa Holographic Core -->
+                <div class="relative w-64 h-64 flex items-center justify-center mb-6 medusa-float">
+                    
+                    <!-- Pulsing Aura Background (Emerald or Amber based on shield status) -->
+                    <div class="absolute inset-0 rounded-full blur-3xl opacity-20 transition-all duration-1000"
+                         :class="shieldActive ? 'bg-emerald-500' : 'bg-amber-500'"></div>
+                    
+                    <!-- Holographic Vector Ring -->
+                    <svg class="absolute w-full h-full animate-[spin_40s_linear_infinite]" viewBox="0 0 200 200">
+                        <circle cx="100" cy="100" r="95" stroke="#8b5a2b" stroke-width="1" fill="none" stroke-opacity="0.3" stroke-dasharray="10 5" />
+                        <circle cx="100" cy="100" r="85" stroke="#d97706" stroke-width="1.5" fill="none" stroke-opacity="0.1" />
+                        <!-- Floating PIP Nodes -->
+                        <circle cx="100" cy="15" r="3" fill="#10b981" />
+                        <circle cx="15" cy="100" r="3" fill="#f59e0b" />
+                        <circle cx="100" cy="185" r="3" fill="#10b981" />
+                        <circle cx="185" cy="100" r="3" fill="#f59e0b" />
+                    </svg>
+
+                    <!-- Glowing Fiber-optic PIP cables -->
+                    <svg class="absolute inset-0 w-full h-full" viewBox="0 0 200 200">
+                        <path d="M100 25 C140 25, 175 60, 175 100" fill="none" stroke="#10b981" stroke-width="1.5" class="glowing-cable" />
+                        <path d="M100 175 C60 175, 25 140, 25 100" fill="none" stroke="#f59e0b" stroke-width="1.5" class="glowing-cable" />
+                    </svg>
+
+                    <!-- Core Medusa Symbol (High detail Bronze Shield structure) -->
+                    <div class="relative w-48 h-48 bg-stone-900 border border-amber-500/30 rounded-full flex items-center justify-center shadow-2xl transition duration-500"
+                         :class="shieldActive ? 'border-emerald-500/50 emerald-glow' : 'border-amber-500/50 amber-glow'">
+                        <svg class="w-24 h-24 text-amber-500 transition-colors duration-1000" 
+                             :class="shieldActive ? 'text-emerald-400' : 'text-amber-500'"
+                             viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Medusa Hellenic Medallion design -->
+                            <circle cx="50" cy="50" r="38" stroke="currentColor" stroke-width="2" stroke-dasharray="4 2" />
+                            <!-- Snake Hair Details -->
+                            <path d="M30 35C25 32 20 38 22 43M38 26C35 20 42 16 46 22M62 22C66 16 73 20 70 26M78 35C83 32 88 38 86 43" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            <path d="M22 57C18 58 17 65 24 67M78 57C82 58 83 65 76 67" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                            <!-- Medusa Eyes (Active glows) -->
+                            <ellipse cx="40" cy="48" rx="3" ry="1.5" fill="currentColor" />
+                            <ellipse cx="60" cy="48" rx="3" ry="1.5" fill="currentColor" />
+                            <!-- Greek key pattern nose/mouth -->
+                            <path d="M50 46V54M46 58H54" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            <path d="M38 65C42 70 58 70 62 65" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Slogan Layout -->
+                <h1 class="heading-font text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">
+                    Scan to reflect your <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-emerald-400">shield.</span>
+                </h1>
+                <p class="text-stone-400 text-sm max-w-sm mb-8 leading-relaxed">
+                    Scan the secure vector configuration to receive full "Aegis Mirror" device loopback protection.
+                </p>
+
+                <!-- Liquid Metal Reveal QR / Barcode element -->
+                <div class="relative w-64 h-64 p-3 rounded-2xl bg-stone-900/90 border border-amber-900/30 shadow-2xl flex items-center justify-center liquid-metal-reveal"
+                     :class="revealed ? 'active' : ''">
+                    <!-- Glass shine -->
+                    <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent rounded-2xl pointer-events-none"></div>
+                    <!-- Detailed Mock QR Code with Aegis center logo -->
+                    <svg class="w-full h-full text-stone-100" viewBox="0 0 100 100" fill="currentColor">
+                        <!-- Corners -->
+                        <path d="M5 5h20v5H10v15H5V5zm70 0h20v20h-5V10H75V5zM5 75h5v15h15v5H5V75zm90 0v20H75v-5h15V75h5z" fill="#b45309" />
+                        <!-- QR Matrix blocks -->
+                        <rect x="15" y="15" width="15" height="15" fill="currentColor" />
+                        <rect x="18" y="18" width="9" height="9" fill="#0e0d0b" />
+                        <rect x="21" y="21" width="3" height="3" fill="#10b981" />
+
+                        <rect x="70" y="15" width="15" height="15" fill="currentColor" />
+                        <rect x="73" y="18" width="9" height="9" fill="#0e0d0b" />
+                        <rect x="76" y="21" width="3" height="3" fill="#f59e0b" />
+
+                        <rect x="15" y="70" width="15" height="15" fill="currentColor" />
+                        <rect x="18" y="73" width="9" height="9" fill="#0e0d0b" />
+                        <rect x="21" y="76" width="3" height="3" fill="#10b981" />
+                        
+                        <!-- Middle Mock QR pixels -->
+                        <path d="M40 15h5v5h-5zM45 25h10v5H45zM35 35h5v10h-5zM55 35h5v5h-5zM65 30h5v10h-5zM45 45h5v5h-5zM75 50h10v5H75zM55 55h5v10h-5zM35 60h10v5H35zM45 70h5v15h-5zM55 75h15v5H55zM60 85h10v5H60z" fill="currentColor" />
+                        
+                        <!-- Embedded Mini Shield inside QR center -->
+                        <rect x="42" y="42" width="16" height="16" rx="4" fill="#8b5a2b" />
+                        <path d="M47 46.5L50 45l3 1.5v3c0 1.8-1.2 3.5-3 4-1.8-.5-3-2.2-3-4v-3z" fill="#0e0d0b" />
+                    </svg>
+                </div>
+                
+                <p x-show="!revealed" class="text-xs text-amber-500 font-mono mt-4 animate-pulse">
+                    Initiating cryptographic handshake...
+                </p>
+                <p x-show="revealed" class="text-xs text-stone-500 font-mono mt-4">
+                    Vector Node: active_handshake_ok_2026
+                </p>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- VIEW 2: BETA PORTAL -->
+        <!-- ========================================== -->
+        <div x-show="activeView === 'beta'" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-4"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             class="w-full max-w-md mx-auto"
+             x-cloak>
+            
+            <div class="bg-stone-900/60 backdrop-blur-md border border-amber-900/20 p-8 rounded-2xl shadow-2xl relative">
+                <!-- Glowing corner borders -->
+                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-amber-500/40 rounded-tl-lg"></div>
+                <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-amber-500/40 rounded-tr-lg"></div>
+                <div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-amber-500/40 rounded-bl-lg"></div>
+                <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-amber-500/40 rounded-br-lg"></div>
+
+                <div class="text-center mb-6">
+                    <h2 class="heading-font text-2xl font-bold text-stone-100">Beta Portal Authorization</h2>
+                    <p class="text-xs text-stone-400 mt-1">Enroll your device to receive real-time cryptographic mirror keys.</p>
+                </div>
+
+                <!-- Registration Form using HTMX -->
+                <form hx-post="/api/register-test" 
+                      hx-swap="outerHTML" 
+                      hx-target="#form-result"
+                      class="space-y-4">
+                    <div>
+                        <label for="email" class="block text-xs font-medium text-stone-300 uppercase tracking-wider mb-2">Cryptographic Email ID</label>
+                        <div class="relative group">
+                            <!-- Dynamic glowing borders on input focus -->
+                            <div class="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-emerald-500 rounded-lg blur opacity-10 group-focus-within:opacity-30 transition duration-300"></div>
+                            <input type="email" 
+                                   id="email" 
+                                   name="email" 
+                                   required 
+                                   placeholder="e.g. user@securebox.io"
+                                   class="relative w-full px-4 py-3 bg-stone-950 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/30 text-sm transition duration-150">
+                        </div>
+                    </div>
+
+                    <button type="submit" 
+                            class="w-full py-3 px-4 bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-stone-100 font-medium text-sm rounded-lg shadow-lg hover:shadow-amber-500/10 active:scale-[0.99] transition duration-150 cursor-pointer">
+                        Request Mirror Shield Credentials
+                    </button>
+                </form>
+
+                <!-- Target placeholder for HTMX response -->
+                <div id="form-result" class="mt-4"></div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- VIEW 3: AEGIS HUB (DASHBOARD) -->
+        <!-- ========================================== -->
+        <div x-show="activeView === 'hub'" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-4"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             class="w-full max-w-4xl mx-auto space-y-6"
+             x-cloak>
+            
+            <!-- Grid Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- COLUMN 1 & 2: CONTROLS & ALIAS STATUS -->
+                <div class="md:col-span-2 space-y-6">
+                    
+                    <!-- Controls Module (Designed for Ages 50+ : Large accessible components) -->
+                    <div class="bg-stone-900/50 backdrop-blur-md border border-amber-900/20 p-6 rounded-2xl shadow-xl">
+                        <h2 class="heading-font text-xl font-bold text-stone-200 mb-5 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                            Aegis Core Control Center
+                        </h2>
+                        
+                        <!-- Flex Controls Stack -->
+                        <div class="flex flex-col sm:flex-row gap-6 items-stretch">
+                            
+                            <!-- 1. Shield Switch Button -->
+                            <div class="flex-1 flex flex-col justify-between p-5 rounded-xl border border-stone-800 bg-stone-950/40">
+                                <div>
+                                    <h3 class="text-xs uppercase tracking-wider text-stone-400 font-semibold mb-1">Mirror Protection</h3>
+                                    <p class="text-xs text-stone-500 leading-relaxed">Toggle the local virtual network encapsulation shield.</p>
+                                </div>
+                                <div class="mt-4 flex items-center gap-4">
+                                    <!-- Round Macro Toggle for aged 50+ accessibility -->
+                                    <button @click="shieldActive = !shieldActive" 
+                                            :class="shieldActive ? 'bg-emerald-500/20 border-emerald-500' : 'bg-amber-500/20 border-amber-500'"
+                                            class="w-16 h-16 rounded-full border-2 flex items-center justify-center shadow-lg transition duration-300 hover:scale-105 active:scale-95 cursor-pointer">
+                                        <svg class="w-8 h-8 transition duration-300"
+                                             :class="shieldActive ? 'text-emerald-400' : 'text-amber-400'"
+                                             fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M5.636 18.364a9 9 0 010-12.728m12.728 0a9 9 0 010 12.728m-9.9-2.829a5 5 0 010-7.07m7.07 0a5 5 0 010 7.07M13 12a1 1 0 11-2 0 1 1 0 012 0z" />
+                                        </svg>
+                                    </button>
+                                    <div>
+                                        <p class="font-bold text-lg heading-font" :class="shieldActive ? 'text-emerald-400' : 'text-amber-500'">
+                                            <span x-text="shieldActive ? 'Protected' : 'Open/Bypass'"></span>
+                                        </p>
+                                        <p class="text-[11px] font-mono text-stone-500">
+                                            <span x-text="shieldActive ? 'Emerald Glowing Aura Active' : 'Amber Quiet Mode'"></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 2. Sandbox Application Settings -->
+                            <div class="flex-1 flex flex-col justify-between p-5 rounded-xl border border-stone-800 bg-stone-950/40">
+                                <div>
+                                    <h3 class="text-xs uppercase tracking-wider text-stone-400 font-semibold mb-1">Sandbox Profile</h3>
+                                    <p class="text-xs text-stone-500 leading-relaxed">Isolate specific device applications within virtual containers.</p>
+                                </div>
+                                <div class="mt-4">
+                                    <button @click="showSandboxModal = true" 
+                                            class="w-full py-3 px-4 bg-stone-900 border border-stone-700 hover:border-amber-500/50 hover:bg-stone-800 text-stone-200 text-sm font-semibold rounded-lg shadow transition duration-150 cursor-pointer">
+                                        Configure Applications
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cryptographic Alter-Ego Card (Alias Status) -->
+                    <div class="bg-gradient-to-r from-stone-900 to-stone-900/60 border border-amber-900/20 p-6 rounded-2xl shadow-xl relative overflow-hidden">
+                        
+                        <!-- High-tech grid background lines -->
+                        <div class="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:14px_24px]"></div>
+                        
+                        <!-- Glowing accent line -->
+                        <div class="absolute top-0 right-0 w-24 h-[1px] bg-gradient-to-l from-emerald-500 to-transparent"></div>
+
+                        <div class="flex justify-between items-start mb-4 relative z-10">
+                            <div>
+                                <h3 class="heading-font font-bold text-sm text-stone-400">Cryptographic Alter-Ego</h3>
+                                <p class="text-[10px] font-mono text-stone-500 uppercase tracking-widest mt-0.5">Identity Masking Vector</p>
+                            </div>
+                            <span class="px-2 py-0.5 text-[9px] font-mono rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">SECURE MASK</span>
+                        </div>
+
+                        <!-- Generated Email Display -->
+                        <div class="p-4 rounded-xl bg-stone-950 border border-stone-850 flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
+                            <div>
+                                <p class="text-[10px] text-stone-500 font-mono uppercase tracking-wider">Active Proxy Mailbox</p>
+                                <p class="text-base sm:text-lg font-bold text-amber-500 font-mono mt-0.5 tracking-tight" x-text="customAlias"></p>
+                            </div>
+                            <button @click="regenerateAlias()" 
+                                    class="py-1.5 px-3 bg-stone-900 hover:bg-stone-850 border border-amber-500/20 hover:border-amber-500/40 text-stone-300 text-xs rounded transition duration-150 cursor-pointer">
+                                Regenerate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMN 3: SYSTEM INSTANCE & POLICIES -->
+                <div class="space-y-6">
+                    
+                    <!-- Sandbox Engine State -->
+                    <div class="bg-stone-900/50 backdrop-blur-md border border-amber-900/20 p-5 rounded-2xl shadow-xl">
+                        <h3 class="heading-font font-semibold text-sm text-stone-300 mb-4">Sandbox Engine State</h3>
+                        <div class="space-y-3 text-xs">
+                            <div class="flex justify-between py-1.5 border-b border-stone-800">
+                                <span class="text-stone-500">WASM Runtime</span>
+                                <span class="text-emerald-400 font-semibold font-mono">RUNNING (Gorgon)</span>
+                            </div>
+                            <div class="flex justify-between py-1.5 border-b border-stone-800">
+                                <span class="text-stone-500">Active Rules</span>
+                                <span class="text-stone-300 font-mono">14 Deterministic</span>
+                            </div>
+                            <div class="flex justify-between py-1.5 border-b border-stone-800">
+                                <span class="text-stone-500">Watchdog Latency</span>
+                                <span class="text-stone-300 font-mono">1.42 ms</span>
+                            </div>
+                            <div class="flex justify-between py-1.5">
+                                <span class="text-stone-500">Failsafe Mode</span>
+                                <span class="text-amber-500 font-mono">FAIL-CLOSED (Active)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Selector -->
+                    <div class="bg-stone-900/50 backdrop-blur-md border border-amber-900/20 p-5 rounded-2xl shadow-xl">
+                        <h3 class="heading-font font-semibold text-sm text-stone-300 mb-3">Enforcement Profile</h3>
+                        <div class="space-y-2">
+                            <template x-for="profile in ['Paranoid', 'Emergency', 'Standard', 'Social Diet']">
+                                <button @click="activeProfile = profile"
+                                        :class="activeProfile === profile ? 'bg-amber-950/40 border-amber-500/40 text-amber-300' : 'bg-stone-950/30 border-stone-800 text-stone-400 hover:bg-stone-900/30'"
+                                        class="w-full p-2.5 text-left text-xs font-semibold rounded-lg border transition duration-150 flex items-center justify-between cursor-pointer">
+                                    <span x-text="profile"></span>
+                                    <span x-show="activeProfile === profile" class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                                </button>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OBSERVABILITY PANEL (Live Journal Logs - HTMX Polling) -->
+            <div class="bg-stone-900/50 backdrop-blur-md border border-amber-900/20 p-6 rounded-2xl shadow-xl">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h2 class="heading-font text-lg font-bold text-stone-200 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                            </svg>
+                            Observability Journal Logs
+                        </h2>
+                        <p class="text-xs text-stone-400 mt-1">Friendly, humanized narratives reflecting real-time traffic filters (Refreshing every 10s)</p>
+                    </div>
+                    
+                    <button hx-get="/api/journal" 
+                            hx-target="#journal-container"
+                            class="self-start sm:self-center py-1.5 px-3 bg-stone-900 hover:bg-stone-850 border border-stone-850 text-stone-300 text-xs rounded transition duration-150 flex items-center gap-1.5 cursor-pointer">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                        </svg>
+                        Force Refresh
+                    </button>
+                </div>
+
+                <!-- HTMX Swapping Container (Polls /api/journal every 10 seconds) -->
+                <div id="journal-container" 
+                     hx-get="/api/journal" 
+                     hx-trigger="load, every 10s"
+                     class="space-y-1 max-h-[350px] overflow-y-auto pr-2 divide-y divide-stone-900">
+                    <!-- Loading Placeholder -->
+                    <div class="py-6 text-center text-stone-500 text-xs font-mono animate-pulse">
+                        Synchronizing logs with Aegis daemon...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Sandbox Modal Drawer -->
+    <div x-show="showSandboxModal" 
+         class="fixed inset-0 z-50 overflow-hidden" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         x-cloak>
+        
+        <!-- Modal Backdrop -->
+        <div class="absolute inset-0 bg-stone-950/80 backdrop-blur-sm" @click="showSandboxModal = false"></div>
+        
+        <!-- Drawer Panel -->
+        <div class="absolute inset-y-0 right-0 pl-10 max-w-full flex">
+            <div class="w-screen max-w-md bg-stone-900 border-l border-amber-900/20 p-6 flex flex-col justify-between shadow-2xl relative">
+                <!-- Close Button -->
+                <button @click="showSandboxModal = false" class="absolute top-4 right-4 text-stone-400 hover:text-stone-100 cursor-pointer">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+
+                <div class="flex-1 overflow-y-auto pr-1">
+                    <h3 class="heading-font font-bold text-xl text-stone-100 mb-2">Sandbox Isolation Settings</h3>
+                    <p class="text-xs text-stone-400 mb-6 leading-relaxed">Exempt or enforce strict profile sandboxing constraints on installed device applications.</p>
+
+                    <!-- Application Checklist -->
+                    <div class="space-y-4">
+                        <template x-for="app in [
+                            { pkg: 'com.whatsapp', name: 'WhatsApp', desc: 'Secure contacts overrides', active: true },
+                            { pkg: 'com.android.chrome', name: 'Google Chrome', desc: 'Virtual network tunneling', active: true },
+                            { pkg: 'com.google.android.apps.maps', name: 'Google Maps', desc: 'GPS offset masking', active: false },
+                            { pkg: 'com.facebook.orca', name: 'Messenger', desc: 'Microphone silence virtualization', active: true },
+                            { pkg: 'com.android.contacts', name: 'System Contacts', desc: 'Alias virtualization', active: false },
+                            { pkg: 'com.twitter.android', name: 'X / Twitter', desc: 'Storage mock routing', active: true }
+                        ]">
+                            <div class="p-3.5 rounded-xl border border-stone-800 bg-stone-950/40 hover:border-amber-500/20 transition flex items-start justify-between gap-4">
+                                <div>
+                                    <p class="text-sm font-semibold text-stone-200" x-text="app.name"></p>
+                                    <p class="text-[11px] font-mono text-stone-500 mt-0.5" x-text="app.pkg"></p>
+                                    <p class="text-xs text-amber-600/70 mt-1" x-text="app.desc"></p>
+                                </div>
+                                <div class="flex items-center h-5">
+                                    <input type="checkbox" 
+                                           :checked="app.active"
+                                           class="w-5 h-5 rounded border-stone-700 text-amber-500 bg-stone-950 focus:ring-amber-500/50 cursor-pointer">
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <div class="pt-6 border-t border-stone-800 flex gap-3 mt-6">
+                    <button @click="showSandboxModal = false" class="flex-1 py-2.5 bg-amber-700 hover:bg-amber-600 text-stone-100 text-sm font-medium rounded-lg transition cursor-pointer">
+                        Save Configurations
+                    </button>
+                    <button @click="showSandboxModal = false" class="flex-1 py-2.5 bg-stone-850 hover:bg-stone-800 border border-stone-800 text-stone-300 text-sm font-medium rounded-lg transition cursor-pointer">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-amber-900/10 bg-stone-950 py-4 text-center mt-auto">
+        <p class="text-[10px] font-mono text-stone-600 tracking-wider">
+            AEGIS MIRROR SHIELD ENGINE PROTOCOL V0.39.0 • CONVERSATIONAL DEFIANCE
+        </p>
+    </footer>
+
+</body>
+</html>

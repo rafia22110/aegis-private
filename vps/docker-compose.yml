@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  pocketbase:
+    build:
+      context: .
+      dockerfile: Dockerfile.pb
+    volumes:
+      - ./pb_data:/pb/pb_data
+      - ./pb_hooks:/pb/pb_hooks
+      - ./pb_public:/pb/pb_public
+    networks:
+      - aegis_bridge
+    restart: always
+
+  caddy:
+    image: caddy:alpine
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+      - ./pb_public:/pb_public
+    depends_on:
+      - pocketbase
+    networks:
+      - aegis_bridge
+
+networks:
+  aegis_bridge:
+    driver: bridge
+
+volumes:
+  caddy_data:
+  caddy_config:

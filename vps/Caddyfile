@@ -1,0 +1,18 @@
+# Aegis Mirror Reverse Proxy Configuration
+:80 {
+    # Serve static frontend files from /pb_public
+    root * /pb_public
+    file_server
+
+    # Forward API routes and Admin Panel to PocketBase
+    reverse_proxy /api/* pocketbase:8080
+    reverse_proxy /_* pocketbase:8080
+
+    # Comforting security header additions
+    header {
+        X-Frame-Options "DENY"
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Content-Security-Policy "default-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https://*; frame-ancestors 'none';"
+    }
+}

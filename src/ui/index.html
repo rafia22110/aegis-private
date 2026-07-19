@@ -10,8 +10,13 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- HTMX CDN -->
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@1.9.10"></script>
-    <!-- QRCode Generator CDN -->
+    <!-- QRCode Generator CDN with unpkg fallback -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script>
+        if (!window.QRCode) {
+            document.write('<script src="https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js"><\/script>');
+        }
+    </script>
     <!-- Google Fonts & Material Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -146,7 +151,6 @@
                               }
                               const ctx = canvas.getContext('2d');
                               const logo = new Image();
-                              logo.src = 'Logo.png';
                               logo.onload = () => {
                                   const logoSize = 50;
                                   const x = (canvas.width - logoSize) / 2;
@@ -157,6 +161,7 @@
                                   ctx.fill();
                                   ctx.drawImage(logo, x, y, logoSize, logoSize);
                               };
+                              logo.src = 'Logo.png';
                           });
                       } else {
                           setTimeout(draw, 50);

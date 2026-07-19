@@ -129,35 +129,40 @@
           },
           generateQRCode() {
               this.$nextTick(() => {
-                  const canvas = document.getElementById('qr-canvas');
-                  if (canvas) {
-                      QRCode.toCanvas(canvas, 'https://aegis-private-indol.vercel.app', {
-                          width: 240,
-                          margin: 1,
-                          color: {
-                              dark: '#0e0d0b',
-                              light: '#ffffff'
-                          }
-                      }, (error) => {
-                          if (error) {
-                              console.error('QR Generation Error:', error);
-                              return;
-                          }
-                          const ctx = canvas.getContext('2d');
-                          const logo = new Image();
-                          logo.src = 'Logo.png';
-                          logo.onload = () => {
-                              const logoSize = 50;
-                              const x = (canvas.width - logoSize) / 2;
-                              const y = (canvas.height - logoSize) / 2;
-                              ctx.fillStyle = '#ffffff';
-                              ctx.beginPath();
-                              ctx.roundRect(x - 4, y - 4, logoSize + 8, logoSize + 8, 8);
-                              ctx.fill();
-                              ctx.drawImage(logo, x, y, logoSize, logoSize);
-                          };
-                      });
-                  }
+                  const draw = () => {
+                      const canvas = document.getElementById('qr-canvas');
+                      if (canvas && window.QRCode) {
+                          QRCode.toCanvas(canvas, 'https://aegis-private-indol.vercel.app', {
+                              width: 240,
+                              margin: 1,
+                              color: {
+                                  dark: '#0e0d0b',
+                                  light: '#ffffff'
+                              }
+                          }, (error) => {
+                              if (error) {
+                                  console.error('QR Generation Error:', error);
+                                  return;
+                              }
+                              const ctx = canvas.getContext('2d');
+                              const logo = new Image();
+                              logo.src = 'Logo.png';
+                              logo.onload = () => {
+                                  const logoSize = 50;
+                                  const x = (canvas.width - logoSize) / 2;
+                                  const y = (canvas.height - logoSize) / 2;
+                                  ctx.fillStyle = '#ffffff';
+                                  ctx.beginPath();
+                                  ctx.roundRect(x - 4, y - 4, logoSize + 8, logoSize + 8, 8);
+                                  ctx.fill();
+                                  ctx.drawImage(logo, x, y, logoSize, logoSize);
+                              };
+                          });
+                      } else {
+                          setTimeout(draw, 50);
+                      }
+                  };
+                  draw();
               });
           },
           regenerateAlias() {

@@ -10,6 +10,8 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- HTMX CDN -->
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@1.9.10"></script>
+    <!-- QRCode Generator CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <!-- Google Fonts & Material Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -105,7 +107,47 @@
           init() {
               setTimeout(() => {
                   this.revealed = true;
+                  this.generateQRCode();
               }, 3000);
+          },
+          generateQRCode() {
+              this.$nextTick(() => {
+                  const canvas = document.getElementById('qr-canvas');
+                  if (canvas) {
+                      // Generate a real scannable QR code pointing to the production Vercel app
+                      QRCode.toCanvas(canvas, 'https://aegis-private-indol.vercel.app', {
+                          width: 240,
+                          margin: 1,
+                          color: {
+                              dark: '#0e0d0b', // Hellenic Dark Bronze
+                              light: '#ffffff'
+                          }
+                      }, (error) => {
+                          if (error) {
+                              console.error('QR Generation Error:', error);
+                              return;
+                          }
+                          // Draw the actual Logo.png in the center of the QR code
+                          const ctx = canvas.getContext('2d');
+                          const logo = new Image();
+                          logo.src = 'Logo.png';
+                          logo.onload = () => {
+                              const logoSize = 50;
+                              const x = (canvas.width - logoSize) / 2;
+                              const y = (canvas.height - logoSize) / 2;
+                              
+                              // Draw clean rounded background card for the logo
+                              ctx.fillStyle = '#ffffff';
+                              ctx.beginPath();
+                              ctx.roundRect(x - 4, y - 4, logoSize + 8, logoSize + 8, 8);
+                              ctx.fill();
+                              
+                              // Draw the logo image
+                              ctx.drawImage(logo, x, y, logoSize, logoSize);
+                          };
+                      });
+                  }
+              });
           },
           regenerateAlias() {
               const prefixes = ['secure.vault', 'shield.node', 'crypto.mask', 'aegis.box', 'zero.trace'];
@@ -219,17 +261,15 @@
                     <!-- Glass shine -->
                     <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent rounded-2xl pointer-events-none"></div>
                     
-                    <!-- REAL SCANNABLE QR CODE linking directly to this live deployed application -->
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://aegis-private-indol.vercel.app" 
-                         class="w-full h-full rounded-xl object-contain bg-stone-950 p-2" 
-                         alt="Aegis Mirror Live Setup QR Code" />
+                    <!-- DYNAMIC CANVAS QR CODE with embedded Logo.png in the center -->
+                    <canvas id="qr-canvas" class="w-full h-full rounded-xl object-contain bg-stone-950 p-2"></canvas>
                 </div>
                 
                 <p x-show="!revealed" class="text-xs text-amber-500 font-mono mt-4 animate-pulse">
                     Initiating cryptographic handshake...
                 </p>
                 
-                <!-- SasukeHiro Area / Onboarding Setup Video Clip -->
+                <!-- Onboarding Setup Video Clip (The hero of the section / Suction Hero area) -->
                 <div x-show="revealed" 
                      class="mt-8 bg-stone-900/60 backdrop-blur-md border border-amber-900/20 p-5 rounded-2xl shadow-xl w-full max-w-md text-left transition duration-550 animate-fade-in">
                     <h3 class="heading-font font-bold text-sm text-stone-200 mb-3 flex items-center gap-2">
@@ -238,10 +278,10 @@
                     </h3>
                     <div class="relative rounded-xl overflow-hidden aspect-video border border-stone-850 bg-stone-950">
                         <!-- Setup Video Clip loading local file -->
-                        <video src="hero_clip_30s.mp4" controls class="w-full h-full object-cover"></video>
+                        <video src="The%20hero%20of%20the%20section.mp4" controls class="w-full h-full object-cover"></video>
                     </div>
                     <p class="text-[11px] text-stone-500 mt-2 font-mono">
-                        Source: hero_clip_30s.mp4 • Guided Video Tutorial
+                        Source: The hero of the section.mp4 • Real-time setup tutorial
                     </p>
                 </div>
             </div>
@@ -257,7 +297,7 @@
              class="w-full max-w-md mx-auto"
              x-cloak>
             
-            <div class="bg-stone-900/60 backdrop-blur-md border border-amber-900/20 p-8 rounded-2xl shadow-2xl relative">
+            <div class="bg-stone-900/60 backdrop-blur-md border border-amber-900/20 p-8 rounded-2xl shadow-2xl relative text-right" dir="rtl">
                 <!-- Glowing corner borders -->
                 <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-amber-500/40 rounded-tl-lg"></div>
                 <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-amber-500/40 rounded-tr-lg"></div>
@@ -265,31 +305,32 @@
                 <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-amber-500/40 rounded-br-lg"></div>
 
                 <div class="text-center mb-6">
-                    <h2 class="heading-font text-2xl font-bold text-stone-100">Beta Portal Authorization</h2>
-                    <p class="text-xs text-stone-400 mt-1">Enroll your device to receive real-time cryptographic mirror keys.</p>
+                    <h2 class="heading-font text-2xl font-bold text-stone-100">אישור פורטל בטא</h2>
+                    <p class="text-xs text-amber-500 mt-1 font-semibold">הרישום והכניסה רק באמצעות הנייד למי שלא רוצה לסרוק</p>
+                    <p class="text-xs text-stone-400 mt-2">רשום את המכשיר שלך כדי לקבל מפתחות שיקוף קריפטוגרפיים בזמן אמת.</p>
                 </div>
 
                 <!-- Registration Form using HTMX -->
                 <form hx-post="/api/register-test" 
                       hx-swap="outerHTML" 
                       hx-target="#form-result"
-                      class="space-y-4">
+                      class="space-y-4 text-right">
                     <div>
-                        <label for="email" class="block text-xs font-medium text-stone-300 uppercase tracking-wider mb-2">Cryptographic Email ID</label>
+                        <label for="email" class="block text-xs font-medium text-stone-300 uppercase tracking-wider mb-2 text-right">מזהה דוא"ל קריפטוגרפי</label>
                         <div class="relative group">
                             <div class="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-emerald-500 rounded-lg blur opacity-10 group-focus-within:opacity-30 transition duration-300"></div>
                             <input type="email" 
                                    id="email" 
                                    name="email" 
                                    required 
-                                   placeholder="e.g. user@securebox.io"
-                                   class="relative w-full px-4 py-3 bg-stone-950 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/30 text-sm transition duration-150">
+                                   placeholder="לדוגמה user@securebox.io"
+                                   class="relative w-full px-4 py-3 bg-stone-950 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/30 text-sm transition duration-150 text-right">
                         </div>
                     </div>
 
                     <button type="submit" 
                             class="w-full py-3 px-4 bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-stone-100 font-medium text-sm rounded-lg shadow-lg hover:shadow-amber-500/10 active:scale-[0.99] transition duration-150 cursor-pointer">
-                        Request Mirror Shield Credentials
+                        בקשת אישורי Mirror Shield
                     </button>
                 </form>
 

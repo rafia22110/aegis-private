@@ -297,7 +297,7 @@
              class="w-full max-w-md mx-auto"
              x-cloak>
             
-            <div class="bg-stone-900/60 backdrop-blur-md border border-amber-900/20 p-8 rounded-2xl shadow-2xl relative text-right" dir="rtl">
+            <div class="bg-stone-900/60 backdrop-blur-md border border-amber-900/20 p-8 rounded-2xl shadow-2xl relative text-left" dir="ltr">
                 <!-- Glowing corner borders -->
                 <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-amber-500/40 rounded-tl-lg"></div>
                 <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-amber-500/40 rounded-tr-lg"></div>
@@ -305,32 +305,32 @@
                 <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-amber-500/40 rounded-br-lg"></div>
 
                 <div class="text-center mb-6">
-                    <h2 class="heading-font text-2xl font-bold text-stone-100">אישור פורטל בטא</h2>
-                    <p class="text-xs text-amber-500 mt-1 font-semibold">הרישום והכניסה רק באמצעות הנייד למי שלא רוצה לסרוק</p>
-                    <p class="text-xs text-stone-400 mt-2">רשום את המכשיר שלך כדי לקבל מפתחות שיקוף קריפטוגרפיים בזמן אמת.</p>
+                    <h2 class="heading-font text-2xl font-bold text-stone-100">Beta Portal Approval</h2>
+                    <p class="text-xs text-amber-500 mt-1 font-semibold">Registration and entry only via mobile for those who do not want to scan</p>
+                    <p class="text-xs text-stone-400 mt-2">Register your device to receive real-time cryptographic mirror keys.</p>
                 </div>
 
                 <!-- Registration Form using HTMX -->
                 <form hx-post="/api/register-test" 
                       hx-swap="outerHTML" 
                       hx-target="#form-result"
-                      class="space-y-4 text-right">
+                      class="space-y-4 text-left">
                     <div>
-                        <label for="email" class="block text-xs font-medium text-stone-300 uppercase tracking-wider mb-2 text-right">מזהה דוא"ל קריפטוגרפי</label>
+                        <label for="email" class="block text-xs font-medium text-stone-300 uppercase tracking-wider mb-2 text-left">Cryptographic Email ID</label>
                         <div class="relative group">
                             <div class="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-emerald-500 rounded-lg blur opacity-10 group-focus-within:opacity-30 transition duration-300"></div>
                             <input type="email" 
                                    id="email" 
                                    name="email" 
                                    required 
-                                   placeholder="לדוגמה user@securebox.io"
-                                   class="relative w-full px-4 py-3 bg-stone-950 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/30 text-sm transition duration-150 text-right">
+                                   placeholder="e.g. user@securebox.io"
+                                   class="relative w-full px-4 py-3 bg-stone-950 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/30 text-sm transition duration-150 text-left">
                         </div>
                     </div>
 
                     <button type="submit" 
                             class="w-full py-3 px-4 bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-stone-100 font-medium text-sm rounded-lg shadow-lg hover:shadow-amber-500/10 active:scale-[0.99] transition duration-150 cursor-pointer">
-                        בקשת אישורי Mirror Shield
+                        Request Mirror Shield Credentials
                     </button>
                 </form>
 

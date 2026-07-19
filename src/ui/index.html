@@ -10,13 +10,6 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- HTMX CDN -->
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@1.9.10"></script>
-    <!-- QRCode Generator CDN with unpkg fallback -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-    <script>
-        if (!window.QRCode) {
-            document.write('<script src="https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js"><\/script>');
-        }
-    </script>
     <!-- Google Fonts & Material Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -114,7 +107,6 @@
           init() {
               setTimeout(() => {
                   this.revealed = true;
-                  this.generateQRCode();
               }, 400); // Instant reveal load time
           },
           startTakeover() {
@@ -131,44 +123,6 @@
                       }, 500);
                   }, 500);
               }, 550);
-          },
-          generateQRCode() {
-              this.$nextTick(() => {
-                  const draw = () => {
-                      const canvas = document.getElementById('qr-canvas');
-                      if (canvas && window.QRCode) {
-                          QRCode.toCanvas(canvas, 'https://aegis-private-indol.vercel.app', {
-                              width: 240,
-                              margin: 1,
-                              color: {
-                                  dark: '#0e0d0b',
-                                  light: '#ffffff'
-                              }
-                          }, (error) => {
-                              if (error) {
-                                  console.error('QR Generation Error:', error);
-                                  return;
-                              }
-                              const ctx = canvas.getContext('2d');
-                              const logo = new Image();
-                              logo.onload = () => {
-                                  const logoSize = 50;
-                                  const x = (canvas.width - logoSize) / 2;
-                                  const y = (canvas.height - logoSize) / 2;
-                                  ctx.fillStyle = '#ffffff';
-                                  ctx.beginPath();
-                                  ctx.roundRect(x - 4, y - 4, logoSize + 8, logoSize + 8, 8);
-                                  ctx.fill();
-                                  ctx.drawImage(logo, x, y, logoSize, logoSize);
-                              };
-                              logo.src = 'Logo.png';
-                          });
-                      } else {
-                          setTimeout(draw, 50);
-                      }
-                  };
-                  draw();
-              });
           },
           regenerateAlias() {
               const prefixes = ['secure.vault', 'shield.node', 'crypto.mask', 'aegis.box', 'zero.trace'];
@@ -284,11 +238,22 @@
                     Scan the secure vector configuration to receive full "Aegis Mirror" device loopback protection.
                 </p>
 
-                <!-- Dynamic QR Canvas -->
+                <!-- Liquid Metal Reveal QR / Barcode element -->
                 <div class="relative w-64 h-64 p-3 rounded-2xl bg-stone-900/90 border border-amber-900/30 shadow-2xl flex items-center justify-center liquid-metal-reveal"
                      :class="revealed ? 'active' : ''">
                     <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent rounded-2xl pointer-events-none"></div>
-                    <canvas id="qr-canvas" class="w-full h-full rounded-xl object-contain bg-stone-950 p-2"></canvas>
+                    
+                    <!-- REAL SCANNABLE QR CODE linking directly to this live deployed application -->
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://aegis-private-indol.vercel.app" 
+                         class="w-full h-full rounded-xl object-contain bg-stone-950 p-2" 
+                         alt="Aegis Mirror Live Setup QR Code" />
+                         
+                    <!-- Overlay Logo in the center using absolute positioning -->
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="bg-white p-1 rounded-lg border border-stone-800 shadow-md">
+                            <img src="Logo.png" class="w-10 h-10 object-contain" alt="Logo" />
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Fast Takeover Button (Simulates mobile approval after scan) -->

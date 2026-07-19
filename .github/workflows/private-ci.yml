@@ -1,0 +1,26 @@
+name: Private Backend CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  test-and-check-secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify no real .env committed
+        run: |
+          if [ -f ".env" ]; then
+            echo "ERROR: .env file committed. Remove immediately."
+            exit 1
+          fi
+          echo "OK: no .env committed."
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: pip install -r server/requirements.txt
+      - name: Basic syntax check
+        run: python -m py_compile server/perseus_proxy.py

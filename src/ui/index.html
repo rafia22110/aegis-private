@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-stone-950 text-stone-100">
+<html lang="en" class="h-full bg-slate-50 text-slate-900">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aegis Mirror - Advanced Cryptographic Privacy Shield</title>
-    <!-- Optimized Stable Tailwind CSS CDN (Instant rendering, no client compile lag) -->
+    <title>Aegis Mirror - Lightspeed Cryptographic Privacy Shield</title>
+    <!-- Optimized Stable Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Alpine.js CDN -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -13,17 +13,17 @@
     <!-- Google Fonts & Material Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
     
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0e0d0b; /* Deep Hellenic Black-Bronze */
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #fbfbfc;
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(139, 90, 43, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 10% 30%, rgba(16, 185, 129, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 90% 70%, rgba(245, 158, 11, 0.05) 0%, transparent 40%);
+                radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.12) 0%, transparent 60%),
+                radial-gradient(circle at 10% 40%, rgba(16, 185, 129, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%);
         }
         .heading-font {
             font-family: 'Outfit', sans-serif;
@@ -31,1028 +31,579 @@
         .mono-font {
             font-family: 'Space Mono', monospace;
         }
-        /* Custom Keyframe Animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(1deg); }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.03);
         }
-        @keyframes pulse-emerald {
-            0%, 100% { filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.6)); }
-            50% { filter: drop-shadow(0 0 30px rgba(16, 185, 129, 0.9)); }
+
+        @keyframes gentle-float {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-8px) scale(1.02); }
         }
-        @keyframes pulse-amber {
-            0%, 100% { filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.6)); }
-            50% { filter: drop-shadow(0 0 30px rgba(245, 158, 11, 0.9)); }
+        .animate-glowing-core {
+            animation: gentle-float 5s ease-in-out infinite;
         }
-        @keyframes pulse-cable {
-            0%, 100% { stroke-dashoffset: 100; opacity: 0.3; }
-            50% { stroke-dashoffset: 0; opacity: 1; }
-        }
-        .medusa-float {
-            animation: float 6s ease-in-out infinite;
-        }
-        .emerald-glow {
-            animation: pulse-emerald 3s ease-in-out infinite;
-        }
-        .amber-glow {
-            animation: pulse-amber 3s ease-in-out infinite;
-        }
-        .glowing-cable {
-            stroke-dasharray: 20, 10;
-            animation: pulse-cable 4s linear infinite;
-        }
-        /* Liquid Mirror transition rules */
-        .mirror-blur {
-            filter: blur(40px);
-            opacity: 0.1;
-            transition: filter 1.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .mirror-clear {
-            filter: blur(0px);
-            opacity: 1;
-        }
-        .liquid-metal-reveal {
-            clip-path: circle(0% at 50% 50%);
-            transition: clip-path 1s cubic-bezier(0.76, 0, 0.24, 1);
-        }
-        .liquid-metal-reveal.active {
-            clip-path: circle(150% at 50% 50%);
-        }
-        /* Custom scrollbar */
+
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
+            height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: rgba(14, 13, 11, 0.5);
+            background: #f1f5f9;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(139, 90, 43, 0.3);
-            border-radius: 3px;
+            background: #cbd5e1;
+            border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(139, 90, 43, 0.5);
+            background: #94a3b8;
         }
     </style>
 </head>
-<body class="h-full flex flex-col antialiased selection:bg-amber-500/20 selection:text-amber-200 text-stone-100"
+<body class="h-full flex flex-col antialiased text-slate-800"
       x-data="{ 
-          activeView: 'gateway', 
-          shieldActive: true, 
-          showSandboxModal: false,
-          revealed: false,
-          loading: false,
-          loadingText: '',
-          activeProfile: 'Standard',
-          customAlias: 'afi.secure.box2026@tempmail.io',
-          selectedPlan: 'pro',
-          paymentStep: 'plan',
-          paymentCard: '',
-          paymentName: '',
-          paymentExpiry: '',
-          paymentCvc: '',
-          activeGuideSection: 'setup',
-          deviceLang: 'en',
-          deviceLangLabel: 'English (US)',
-          init() {
-              // Automatically detect browser/device language
-              const langCode = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
-              this.deviceLang = langCode.startsWith('he') ? 'he' : 'en';
-              this.deviceLangLabel = this.deviceLang === 'he' ? 'עברית (IL)' : 'English (US)';
+          activeView: 'mobile_terms',
+          language: 'en',
+          acceptedTerms: false,
+          protectionLevel: 'balanced',
+          paymentStatus: 'idle',
 
-              setTimeout(() => {
-                  this.revealed = true;
-              }, 400); // Instant reveal load time
-          },
-          startTakeover() {
-              this.loading = true;
+          apps: [
+              { name: 'WhatsApp', pkg: 'com.whatsapp', icon: 'chat', permissions: [ { name: 'Contacts', active: true }, { name: 'Location', active: false }, { name: 'Camera', active: true } ] },
+              { name: 'Google Chrome', pkg: 'com.android.chrome', icon: 'language', permissions: [ { name: 'Network Sync', active: true }, { name: 'Location', active: false } ] },
+              { name: 'Google Maps', pkg: 'com.google.android.apps.maps', icon: 'map', permissions: [ { name: 'GPS Coordinates', active: true }, { name: 'Background Location', active: true } ] },
+              { name: 'Messenger', pkg: 'com.facebook.orca', icon: 'forum', permissions: [ { name: 'Microphone', active: true }, { name: 'Contacts', active: true } ] },
+              { name: 'Instagram', pkg: 'com.instagram.android', icon: 'photo_camera', permissions: [ { name: 'Storage', active: true }, { name: 'Location', active: true } ] }
+          ],
 
-              // Automatically communicate in the device's actual native language!
-              if (this.deviceLang === 'he') {
-                  this.loadingText = 'מאתחל ממשק לולאה מקומי (Loopback)...';
-                  setTimeout(() => {
-                      this.loadingText = 'מזריק טבלאות ניתוב VPN וירטואליות במערכת...';
-                      setTimeout(() => {
-                          this.loadingText = 'מאבטח אנשי קשר ונתוני מיקום GPS במכשיר...';
-                          setTimeout(() => {
-                              this.loading = false;
-                              this.activeView = 'hub';
-                              this.shieldActive = true;
-                          }, 600);
-                      }, 600);
-                  }, 650);
+          initLanguage() {
+              if (navigator.language && navigator.language.startsWith('he')) {
+                  this.language = 'he';
               } else {
-                  this.loadingText = 'Establishing loopback interface...';
-                  setTimeout(() => {
-                      this.loadingText = 'Injecting virtual VPN routing tables...';
-                      setTimeout(() => {
-                          this.loadingText = 'Securing system contacts & GPS location...';
-                          setTimeout(() => {
-                              this.loading = false;
-                              this.activeView = 'hub';
-                              this.shieldActive = true;
-                          }, 500);
-                      }, 500);
-                  }, 550);
+                  this.language = 'en';
               }
           },
-          regenerateAlias() {
-              const prefixes = ['secure.vault', 'shield.node', 'crypto.mask', 'aegis.box', 'zero.trace'];
-              const rand = Math.floor(Math.random() * 10000);
-              this.customAlias = `${prefixes[Math.floor(Math.random() * prefixes.length)]}${rand}@tempmail.io`;
-          },
-          processPayment() {
-              if(!this.paymentCard || !this.paymentName) {
-                  alert('Please fill in all required fields');
-                  return;
-              }
-              this.loading = true;
 
-              if (this.deviceLang === 'he') {
-                  this.loadingText = 'מעבד תשלום מאובטח בערוץ קריפטוגרפי אנונימי...';
+          applyProtectionLevel(level) {
+              this.protectionLevel = level;
+              if (level === 'strict') {
+                  this.apps.forEach(app => {
+                      app.permissions.forEach(p => {
+                          if (p.name.includes('Location') || p.name.includes('GPS')) {
+                              p.active = false;
+                          }
+                      });
+                  });
+              } else if (level === 'paranoid') {
+                  this.apps.forEach(app => {
+                      app.permissions.forEach(p => {
+                          p.active = false;
+                      });
+                  });
               } else {
-                  this.loadingText = 'Processing secure payment via anonymous cryptographic channel...';
+                  this.apps[0].permissions[0].active = true;
+                  this.apps[0].permissions[1].active = false;
+                  this.apps[1].permissions[0].active = true;
+                  this.apps[2].permissions[0].active = true;
               }
+          },
 
+          checkout() {
+              this.paymentStatus = 'processing';
               setTimeout(() => {
-                  this.loading = false;
-                  this.paymentStep = 'success';
+                  this.paymentStatus = 'completed';
               }, 1500);
           },
-          resetPayment() {
-              this.paymentStep = 'plan';
-              this.paymentCard = '';
-              this.paymentName = '';
-              this.paymentExpiry = '';
-              this.paymentCvc = '';
-          }
-      }">
 
-    <!-- System Takeover Loading Overlay -->
-    <div x-show="loading" 
-         class="fixed inset-0 bg-stone-950/95 backdrop-blur-md z-50 flex flex-col items-center justify-center p-6"
-         x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         x-transition:leave="transition ease-in duration-200"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0"
-         x-cloak>
-        <div class="text-center max-w-sm">
-            <div class="relative w-24 h-24 mx-auto mb-6 flex items-center justify-center">
-                <div class="absolute inset-0 rounded-full border-4 border-amber-500/20"></div>
-                <div class="absolute inset-0 rounded-full border-4 border-emerald-500 border-t-transparent animate-spin"></div>
-                <span class="material-symbols-outlined text-4xl text-emerald-400 animate-pulse">sync_saved_locally</span>
-            </div>
-            <h3 class="heading-font font-bold text-lg text-stone-200 mb-2" x-text="deviceLang === 'he' ? 'מערכת השתלטות Aegis בפעולה' : 'Aegis System Takeover'"></h3>
-            <p class="text-xs text-stone-400 font-mono" x-text="loadingText"></p>
-        </div>
-    </div>
+          t(key) {
+              const dict = {
+                  he: {
+                      title: 'אגיס מירור - מגן פרטיות קריפטוגרפי מהיר',
+                      desktopSetup: 'שיוך והגדרת מכשיר',
+                      mobileExperience: 'חוויית מובייל סימולטיבית',
+                      readyPairing: 'מוכן לשיוך QR מיידי',
+                      headline: 'מגן הפרטיות החכם והמתקדם ביותר',
+                      subheadline: 'סרוק את קוד ה-QR המאובטח באמצעות מצלמת האנדרואיד שלך. כל התקשורת תנותב באופן מיידי למכשיר הנייד לצורך ארגז חול מקומי ומאובטח.',
+                      scanWithPhone: 'סרוק עם הטלפון החכם',
+                      launchesSecure: 'מפעיל לחיצת יד מקומית מאובטחת',
+                      walkthroughGuide: 'מדריך שיוך וחיבור',
+                      videoDesc: 'למד כיצד Aegis מגן על המיקום הדינמי שלך, מאבטח שיחות ומסרים פרטיים, וחוסם מעקבי רקע בזמן אמת.',
+                      simulateDirectly: 'פתח את סימולטור המובייל ישירות',
+                      privacySummaryTitle: 'מדיניות פרטיות ואבטחה מובנית',
+                      privacySummaryDesc: 'אגיס פועלת בארכיטקטורת אפס ידיעה (Zero-Knowledge) מקומית לחלוטין. אין שום שרת ענן חיצוני שאוסף או שומר את המידע שלך. ה-VPN מנותב מקומית בלבד (Local Loopback) בהתאם לתקני GDPR ו-CCPA.',
+                      refundPolicyTitle: 'מדיניות החזרים כספיים ברורה והגונה',
+                      refundPolicyText1: 'החזר מלא של 100% בתוך 30 ימים ממועד הרכישה.',
+                      refundPolicyText2: 'החזר חלקי של 50% עד 4 חודשים ממועד הרכישה.',
+                      mobTermsTitle: 'הגדרת מגן ה-Aegis',
+                      mobTermsDesc: 'הגדרת סביבת ארגז חול מאובטחת במכשיר הנייד מתחילה כעת.',
+                      mobVideoTitle: 'סרטון הדרכה במובייל',
+                      mobPitchTitle: 'מה התפקיד של Aegis?',
+                      mobPitchDesc: 'מערכת אגיס מייצרת סביבת עבודה מבודדת המונעת ממעקבי רקע לקרוא את רשימת אנשי הקשר או את מיקומך הדינמי ללא אישור מפורש.',
+                      mobCheckbox: 'אני מסכים לתנאי השירות, אמנת הפרטיות ומדיניות ההחזרים.',
+                      mobButtonConnect: 'התחבר והגן על המכשיר',
+                      mobPaymentTitle: 'פתיחת מגן פרימיום',
+                      mobPaymentDesc: 'הפוך למשתמש ריבון מוגן לחלוטין',
+                      mobActiveChoice: 'הבחירה הפעילה',
+                      mobSovereignPlan: 'תוכנית הגנת הריבון - $10 לכל החיים',
+                      mobRefundSubtitle: 'מדיניות החזרים מלאה וחלקית מובטחת',
+                      mobCardSubtitle: 'כרטיס תשלום סימולטיבי מאובטח',
+                      mobCardholder: 'שם בעל הכרטיס',
+                      mobCardNum: 'מספר כרטיס',
+                      mobButtonPay: 'אשר תשלום חד פעמי של $10',
+                      mobButtonProcessing: 'מעבד תשלום מאובטח...',
+                      mobButtonSuccess: 'התשלום עבר בהצלחה!',
+                      mobShieldActiveTitle: 'מגן ארגז החול פעיל',
+                      mobShieldActiveDesc: 'הגדר את רמות אבטחת האפליקציות מטה',
+                      mobProtLevel: 'דרגת הגנה',
+                      mobAppPermissions: 'הרשאות אפליקציות מבודדות',
+                      mobDeployButton: 'פרוס סביבה וירטואלית',
+                      mobSecuredTitle: 'מכשיר מוגן ומאובטח',
+                      mobTerminalSecured: 'מסוף מאובטח לחלוטין',
+                      mobInteractiveControl: 'לוח בקרה אינטראקטיבי במובייל',
+                      mobWatchdog: 'מצב מנגנון שמירה',
+                      mobTraffic: 'ניתוח תעבורת רשת',
+                      mobBackToDesktop: 'חזור למסך הבית של המחשב',
+                      mobAlertWatchdog: 'מנגנון השמירה המקומי פעיל ב-100%. טבלאות הניתוב מאובטחות.',
+                      mobAlertTelemetry: 'יומני התעבורה מסונכרנים לקובץ המקומי במכשיר. בדוק את יומני המערכת במחשב לפרטים נוספים.',
+                      guideHeadline: 'מדריך מהיר ושאלות נפוצות',
+                      faq1Q: 'מדוע נדרש אישור VPN מקומי?',
+                      faq1A: 'אישור ה-VPN מאפשר למנוע ה-Shield המקומי לנתח ולסנן את תעבורת הרשת ישירות במכשיר ללא שרת חיצוני.',
+                      faq2Q: 'האם זה מאט את מהירות הגלישה?',
+                      faq2A: 'לא! מכיוון שכל הניתוב מבוצע באופן מקומי לחלוטין (Local Loopback), מהירות הגלישה שלכם נשארת מקסימלית.'
+                  },
+                  en: {
+                      title: 'Aegis Mirror - Lightspeed Cryptographic Privacy Shield',
+                      desktopSetup: 'Device Setup & Pairing',
+                      mobileExperience: 'Simulated Mobile Experience',
+                      readyPairing: 'Ready for Instant QR Pairing',
+                      headline: 'The Ultimate Smart Privacy Shield',
+                      subheadline: 'Scan the secure vector configuration code below with your Android camera. All communication instantly shifts to your mobile device for advanced local loopback sandboxing.',
+                      scanWithPhone: 'Scan with your smartphone',
+                      launchesSecure: 'Launches secure local handshaking',
+                      walkthroughGuide: 'Pairing & Walkthrough Guide',
+                      videoDesc: 'Learn how Aegis shields your dynamic location, secures private messaging threads, and blocks background trackers on the fly.',
+                      simulateDirectly: 'Simulate Mobile Experience Directly',
+                      privacySummaryTitle: 'Built-in Security & Privacy Policy',
+                      privacySummaryDesc: 'Aegis runs on a fully offline, local zero-knowledge architecture. No third-party servers ever receive or inspect your connection. Local Loopback VPN complies fully with GDPR and CCPA standards.',
+                      refundPolicyTitle: 'Our Honest Refund Guarantee',
+                      refundPolicyText1: '100% full money-back guarantee within 30 days of purchase.',
+                      refundPolicyText2: '50% partial money-back guarantee up to 4 months of use.',
+                      mobTermsTitle: 'Configure Aegis Shield',
+                      mobTermsDesc: 'Your secure device-level sandbox setup starts now.',
+                      mobVideoTitle: 'Onboarding Video Walkthrough',
+                      mobPitchTitle: 'What does Aegis do?',
+                      mobPitchDesc: 'Aegis creates a highly secure, completely local sandbox container. It isolates dangerous background trackers and prevents telemetry packet leakage.',
+                      mobCheckbox: 'I agree to the terms of service, privacy policy and refund guarantee.',
+                      mobButtonConnect: 'Connect & Protect',
+                      mobPaymentTitle: 'Unlock Premium Shield',
+                      mobPaymentDesc: 'Become a certified Aegis Sovereign',
+                      mobActiveChoice: 'Active Choice',
+                      mobSovereignPlan: 'Sovereign Protection Plan - $10 Lifetime',
+                      mobRefundSubtitle: 'Full & partial refund guarantees included',
+                      mobCardSubtitle: 'Simulated Secure Payment Card',
+                      mobCardholder: 'Cardholder Name',
+                      mobCardNum: 'Card Number',
+                      mobButtonPay: 'Confirm $10 One-time Payment',
+                      mobButtonProcessing: 'Processing secure transaction...',
+                      mobButtonSuccess: 'Payment authorized successfully!',
+                      mobShieldActiveTitle: 'Sandbox Shield Active',
+                      mobShieldActiveDesc: 'Configure app protection level below',
+                      mobProtLevel: 'Protection Level',
+                      mobAppPermissions: 'Sandbox Isolation App permissions',
+                      mobDeployButton: 'Deploy Virtual Sandbox',
+                      mobSecuredTitle: 'AEGIS SOVEREIGN',
+                      mobTerminalSecured: 'Terminal Secured',
+                      mobInteractiveControl: 'Interactive Control Panel',
+                      mobWatchdog: 'Watchdog State',
+                      mobTraffic: 'Traffic telemetry',
+                      mobBackToDesktop: 'Return to Desktop Home',
+                      mobAlertWatchdog: 'Local VPN Watchdog heartbeat: 100% active. Virtual routing tables are secure.',
+                      mobAlertTelemetry: 'Observability Logs synced to local sandbox securely. Check original device terminal for telemetry details.',
+                      guideHeadline: 'Quick Start Guide & FAQ',
+                      faq1Q: 'Why does Aegis require local VPN permission?',
+                      faq1A: 'The permission allows the local sandbox engine to filter tracking attempts directly inside your phone\'s memory.',
+                      faq2Q: 'Does it affect my internet connection speed?',
+                      faq2A: 'No. Since routing is 100% local on-device (Local Loopback), your connection speed remains unaffected.'
+                  }
+              };
+              return dict[this.language][key] || key;
+          }
+      }"
+      x-init="initLanguage()">
 
     <!-- Navigation Header -->
-    <header class="border-b border-amber-900/20 bg-stone-950/80 backdrop-blur-md sticky top-0 z-40">
+    <header class="border-b border-slate-200/60 bg-white/80 backdrop-blur-md sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <img src="Logo.png" class="w-8 h-8 object-contain rounded border border-amber-500/30 shadow-md" alt="Aegis Mirror Logo" />
-                <span class="heading-font font-bold text-xl tracking-wider text-stone-100">
+                <img src="Logo.png" class="w-9 h-9 object-contain rounded-xl border border-amber-200 shadow-sm" alt="Aegis Mirror Logo" />
+                <span class="heading-font font-extrabold text-xl tracking-wider text-slate-900 flex items-center gap-1.5">
                     AEGIS <span class="text-amber-500 font-light">MIRROR</span>
+                    <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-bold uppercase tracking-widest">v0.40</span>
                 </span>
             </div>
 
-            <!-- English Navigation Links (Clean, Premium, Zero Hebrew UI pollution) -->
-            <nav class="hidden md:flex gap-1 sm:gap-2">
+            <!-- Direct view selector switcher -->
+            <div class="flex items-center gap-2 bg-slate-100 p-1 rounded-xl">
                 <button @click="activeView = 'gateway'" 
-                        :class="activeView === 'gateway' ? 'bg-amber-900/30 text-amber-400 border-amber-500/30' : 'text-stone-400 hover:text-stone-100 hover:bg-stone-900/40 border-transparent'"
-                        class="px-3 py-1.5 rounded-lg text-sm font-medium border transition duration-150 cursor-pointer">
-                    Gateway
+                        :class="activeView === 'gateway' ? 'bg-amber-500 text-white shadow' : 'text-slate-600 hover:bg-slate-200/50'"
+                        class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition duration-150 cursor-pointer">
+                    <span x-text="t('desktopSetup')"></span>
                 </button>
-                <button @click="activeView = 'beta'" 
-                        :class="activeView === 'beta' ? 'bg-amber-900/30 text-amber-400 border-amber-500/30' : 'text-stone-400 hover:text-stone-100 hover:bg-stone-900/40 border-transparent'"
-                        class="px-3 py-1.5 rounded-lg text-sm font-medium border transition duration-150 cursor-pointer">
-                    Beta Portal
+                <button @click="activeView = 'mobile_terms'"
+                        :class="activeView.startsWith('mobile') ? 'bg-emerald-500 text-white shadow' : 'text-slate-600 hover:bg-slate-200/50'"
+                        class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition duration-150 cursor-pointer">
+                    <span x-text="t('mobileExperience')"></span>
                 </button>
-                <button @click="activeView = 'hub'" 
-                        :class="activeView === 'hub' ? 'bg-amber-900/30 text-amber-400 border-amber-500/30' : 'text-stone-400 hover:text-stone-100 hover:bg-stone-900/40 border-transparent'"
-                        class="px-3 py-1.5 rounded-lg text-sm font-medium border transition duration-150 cursor-pointer">
-                    Aegis Hub
-                </button>
-                <button @click="activeView = 'pricing'"
-                        :class="activeView === 'pricing' ? 'bg-amber-900/30 text-amber-400 border-amber-500/30' : 'text-stone-400 hover:text-stone-100 hover:bg-stone-900/40 border-transparent'"
-                        class="px-3 py-1.5 rounded-lg text-sm font-medium border transition duration-150 cursor-pointer">
-                    Subscriptions
-                </button>
-                <button @click="activeView = 'guide'"
-                        :class="activeView === 'guide' ? 'bg-amber-900/30 text-amber-400 border-amber-500/30' : 'text-stone-400 hover:text-stone-100 hover:bg-stone-900/40 border-transparent'"
-                        class="px-3 py-1.5 rounded-lg text-sm font-medium border transition duration-150 cursor-pointer">
-                    User Guide
-                </button>
-                <button @click="activeView = 'privacy'"
-                        :class="activeView === 'privacy' ? 'bg-amber-900/30 text-amber-400 border-amber-500/30' : 'text-stone-400 hover:text-stone-100 hover:bg-stone-900/40 border-transparent'"
-                        class="px-3 py-1.5 rounded-lg text-sm font-medium border transition duration-150 cursor-pointer">
-                    Privacy Policy
-                </button>
-            </nav>
-
-            <div class="flex items-center gap-3">
-                <!-- Mobile Navigation Menu -->
-                <div class="md:hidden" x-data="{ open: false }">
-                    <button @click="open = !open" class="p-1.5 rounded border border-stone-800 text-stone-300">
-                        <span class="material-symbols-outlined text-lg">menu</span>
-                    </button>
-                    <div x-show="open" @click.away="open = false" class="absolute left-4 right-4 top-16 bg-stone-900 border border-amber-950/40 p-4 rounded-xl shadow-2xl flex flex-col gap-2 z-50 text-left">
-                        <button @click="activeView = 'gateway'; open = false" class="text-left py-2 px-3 hover:bg-stone-850 rounded text-sm">Gateway</button>
-                        <button @click="activeView = 'beta'; open = false" class="text-left py-2 px-3 hover:bg-stone-850 rounded text-sm">Beta Portal</button>
-                        <button @click="activeView = 'hub'; open = false" class="text-left py-2 px-3 hover:bg-stone-850 rounded text-sm">Aegis Hub</button>
-                        <button @click="activeView = 'pricing'; open = false" class="text-left py-2 px-3 hover:bg-stone-850 rounded text-sm">Subscriptions</button>
-                        <button @click="activeView = 'guide'; open = false" class="text-left py-2 px-3 hover:bg-stone-850 rounded text-sm">User Guide</button>
-                        <button @click="activeView = 'privacy'; open = false" class="text-left py-2 px-3 hover:bg-stone-850 rounded text-sm">Privacy Policy</button>
-                    </div>
-                </div>
-
-                <!-- Hardware Device Language Autodetected Status (Thematically beautiful) -->
-                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-stone-900 border border-stone-800 text-[10px] font-mono text-stone-400">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>Device:</span>
-                    <span class="text-amber-500" x-text="deviceLangLabel"></span>
-                </div>
             </div>
         </div>
     </header>
 
-    <!-- Main Content Area -->
-    <main class="flex-grow flex items-center justify-center p-4">
+    <!-- Main Workspace Container: Clean Side-by-Side Grid Layout -->
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        <!-- ========================================== -->
-        <!-- VIEW 1: GATEWAY SCREEN -->
-        <!-- ========================================== -->
-        <div x-show="activeView === 'gateway'" 
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0 translate-y-4"
-             x-transition:enter-end="opacity-100 translate-y-0"
-             class="w-full max-w-xl mx-auto text-center"
-             x-cloak>
+        <!-- LEFT COLUMN: GATEWAY DESKTOP VIEW (7 Cols) -->
+        <div class="lg:col-span-7 space-y-8 text-left">
             
-            <div :class="revealed ? 'mirror-clear' : 'mirror-blur'" class="mirror-blur flex flex-col items-center">
-                
-                <!-- Medusa Holographic Core -->
-                <div class="relative w-64 h-64 flex items-center justify-center mb-6 medusa-float">
-                    <div class="absolute inset-0 rounded-full blur-3xl opacity-20 transition-all duration-1000"
-                         :class="shieldActive ? 'bg-emerald-500' : 'bg-amber-500'"></div>
-                    
-                    <svg class="absolute w-full h-full animate-[spin_40s_linear_infinite]" viewBox="0 0 200 200">
-                        <circle cx="100" cy="100" r="95" stroke="#8b5a2b" stroke-width="1" fill="none" stroke-opacity="0.3" stroke-dasharray="10 5" />
-                        <circle cx="100" cy="100" r="85" stroke="#d97706" stroke-width="1.5" fill="none" stroke-opacity="0.1" />
-                        <circle cx="100" cy="15" r="3" fill="#10b981" />
-                        <circle cx="15" cy="100" r="3" fill="#f59e0b" />
-                        <circle cx="100" cy="185" r="3" fill="#10b981" />
-                        <circle cx="185" cy="100" r="3" fill="#f59e0b" />
-                    </svg>
-
-                    <svg class="absolute inset-0 w-full h-full" viewBox="0 0 200 200">
-                        <path d="M100 25 C140 25, 175 60, 175 100" fill="none" stroke="#10b981" stroke-width="1.5" class="glowing-cable" />
-                        <path d="M100 175 C60 175, 25 140, 25 100" fill="none" stroke="#f59e0b" stroke-width="1.5" class="glowing-cable" />
-                    </svg>
-
-                    <div class="relative w-48 h-48 bg-stone-900 border border-amber-500/30 rounded-full flex items-center justify-center shadow-2xl transition duration-500"
-                         :class="shieldActive ? 'border-emerald-500/50 emerald-glow' : 'border-amber-500/50 amber-glow'">
-                        <svg class="w-24 h-24 text-amber-500 transition-colors duration-1000" 
-                             :class="shieldActive ? 'text-emerald-400' : 'text-amber-500'"
-                             viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="50" cy="50" r="38" stroke="currentColor" stroke-width="2" stroke-dasharray="4 2" />
-                            <path d="M30 35C25 32 20 38 22 43M38 26C35 20 42 16 46 22M62 22C66 16 73 20 70 26M78 35C83 32 88 38 86 43" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                            <path d="M22 57C18 58 17 65 24 67M78 57C82 58 83 65 76 67" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                            <ellipse cx="40" cy="48" rx="3" ry="1.5" fill="currentColor" />
-                            <ellipse cx="60" cy="48" rx="3" ry="1.5" fill="currentColor" />
-                            <path d="M50 46V54M46 58H54" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                            <path d="M38 65C42 70 58 70 62 65" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                        </svg>
-                    </div>
+            <!-- Standard Desktop Overview & Dynamic Pairing -->
+            <div class="space-y-3">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-100 text-amber-800 text-xs font-semibold animate-pulse">
+                    <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                    <span x-text="t('readyPairing')"></span>
                 </div>
-
-                <h1 class="heading-font text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">
-                    Scan to reflect your <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-emerald-400">shield.</span>
+                <h1 class="heading-font text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
+                    <span x-text="t('headline')"></span>
                 </h1>
-                <p class="text-stone-400 text-sm max-w-sm mb-8 leading-relaxed mx-auto">
-                    Scan the secure vector configuration to receive full "Aegis Mirror" device loopback protection.
-                </p>
+                <p class="text-slate-500 text-sm leading-relaxed" x-text="t('subheadline')"></p>
+            </div>
 
-                <!-- Liquid Metal Reveal QR / Barcode element -->
-                <div class="relative w-64 h-64 p-3 rounded-2xl bg-stone-900/90 border border-amber-900/30 shadow-2xl flex items-center justify-center liquid-metal-reveal"
-                     :class="revealed ? 'active' : ''">
-                    <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent rounded-2xl pointer-events-none"></div>
-                    
-                    <!-- REAL SCANNABLE QR CODE linking directly to this live deployed application -->
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&ecc=H&data=https://aegis-private-indol.vercel.app" 
-                         class="w-full h-full rounded-xl object-contain bg-stone-950 p-2" 
-                         alt="Aegis Mirror Live Setup QR Code" />
-                         
-                    <!-- Overlay Logo in the center using absolute positioning -->
-                    <div class="absolute inset-0 flex items-center justify-center">
-                        <div class="bg-white p-1 rounded-lg border border-stone-800 shadow-md">
-                            <img src="Logo.png" class="w-10 h-10 object-contain" alt="Logo" />
+            <!-- QR Setup Card & Walkthrough Video Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center bg-white border border-slate-100 p-6 rounded-3xl shadow-xl">
+                <!-- QR Code Block -->
+                <div class="flex flex-col items-center space-y-4 bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                    <div class="relative p-3 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center animate-glowing-core">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&ecc=H&data=https://aegis-private-indol.vercel.app"
+                             class="w-40 h-40 rounded-lg object-contain bg-white p-1"
+                             alt="Aegis Mirror Live Setup QR Code" />
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="bg-white p-1 rounded-lg border border-slate-100 shadow-md">
+                                <img src="Logo.png" class="w-7 h-7 object-contain" alt="Logo" />
+                            </div>
                         </div>
                     </div>
+                    <div class="text-center">
+                        <p class="text-xs font-bold text-slate-800" x-text="t('scanWithPhone')"></p>
+                        <p class="text-[10px] text-slate-400 mt-0.5" x-text="t('launchesSecure')"></p>
+                    </div>
                 </div>
-                
-                <!-- Fast Takeover Button (Simulates mobile approval after scan) -->
-                <div x-show="revealed" class="mt-6 w-full max-w-xs mx-auto">
-                    <button @click="startTakeover()" 
-                            class="w-full py-3 px-4 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-stone-100 font-bold text-sm rounded-xl shadow-lg shadow-emerald-900/30 hover:shadow-emerald-500/20 active:scale-[0.98] transition duration-150 cursor-pointer flex items-center justify-center gap-2">
-                        <span class="material-symbols-outlined text-lg">install_mobile</span>
-                        <span>Authorize Loopback Takeover</span>
-                    </button>
-                    <p class="text-[10px] text-stone-500 mt-2 font-mono">
-                        Click to simulate device loopback takeover
-                    </p>
-                </div>
-                
-                <p x-show="!revealed" class="text-xs text-amber-500 font-mono mt-4 animate-pulse">
-                    Initiating cryptographic handshake...
-                </p>
-                
-                <!-- Onboarding Guide Preview -->
-                <div x-show="revealed" 
-                     class="mt-8 bg-stone-900/60 backdrop-blur-md border border-amber-900/20 p-5 rounded-2xl shadow-xl w-full max-w-md text-left transition duration-550 animate-fade-in">
-                    <h3 class="heading-font font-bold text-sm text-stone-200 mb-3 flex items-center gap-2">
-                        <span class="material-symbols-outlined text-amber-500 text-lg">play_circle</span>
-                        <span>Aegis Mirror Onboarding Guide</span>
-                    </h3>
-                    <div class="relative rounded-xl overflow-hidden aspect-video border border-stone-850 bg-stone-950">
+
+                <!-- Onboarding Video Block -->
+                <div class="space-y-3 text-left">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest" x-text="t('walkthroughGuide')"></p>
+                    <div class="relative rounded-xl overflow-hidden aspect-video border border-slate-200/80 bg-slate-200 shadow-sm">
                         <video src="The%20hero%20of%20the%20section.mp4" controls class="w-full h-full object-cover"></video>
                     </div>
-                    <p class="text-[11px] text-stone-500 mt-2 font-mono text-center">
-                        The hero of the section.mp4 • Real-time setup tutorial
-                    </p>
+                    <p class="text-xs text-slate-500 leading-relaxed" x-text="t('videoDesc')"></p>
                 </div>
+            </div>
+
+            <!-- Integrated Privacy Policy and Refund Statement -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                <!-- Privacy Statement -->
+                <div class="p-4 bg-white rounded-2xl border border-slate-100 shadow-sm space-y-2">
+                    <h3 class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-amber-500 text-sm">gavel</span>
+                        <span x-text="t('privacySummaryTitle')"></span>
+                    </h3>
+                    <p class="text-[11px] text-slate-500 leading-relaxed" x-text="t('privacySummaryDesc')"></p>
+                </div>
+
+                <!-- Refund & Pricing Policy -->
+                <div class="p-4 bg-amber-50/60 rounded-2xl border border-amber-100/50 space-y-2">
+                    <h3 class="text-xs font-bold text-amber-800 flex items-center gap-1.5">
+                        <span class="material-symbols-outlined text-amber-600 text-sm">verified_user</span>
+                        <span x-text="t('refundPolicyTitle')"></span>
+                    </h3>
+                    <div class="text-[11px] text-slate-600 space-y-1">
+                        <p class="flex items-center gap-1">
+                            <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
+                            <span x-text="t('refundPolicyText1')"></span>
+                        </p>
+                        <p class="flex items-center gap-1">
+                            <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
+                            <span x-text="t('refundPolicyText2')"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick FAQ & Guide Section -->
+            <div class="bg-white p-5 rounded-3xl border border-slate-150 shadow-sm space-y-4">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest" x-text="t('guideHeadline')"></h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <h4 class="text-xs font-bold text-slate-800" x-text="t('faq1Q')"></h4>
+                        <p class="text-[11px] text-slate-500 leading-relaxed" x-text="t('faq1A')"></p>
+                    </div>
+                    <div class="space-y-1">
+                        <h4 class="text-xs font-bold text-slate-800" x-text="t('faq2Q')"></h4>
+                        <p class="text-[11px] text-slate-500 leading-relaxed" x-text="t('faq2A')"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direct simulator button launcher -->
+            <div class="flex justify-start pt-2">
+                <button @click="activeView = 'mobile_terms'"
+                        class="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-400 text-white font-bold text-xs rounded-xl shadow-md transition duration-150 cursor-pointer">
+                    <span class="material-symbols-outlined text-sm">phone_iphone</span>
+                    <span x-text="t('simulateDirectly')"></span>
+                </button>
             </div>
         </div>
 
-        <!-- ========================================== -->
-        <!-- VIEW 2: BETA PORTAL -->
-        <!-- ========================================== -->
-        <div x-show="activeView === 'beta'" 
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0 translate-y-4"
-             x-transition:enter-end="opacity-100 translate-y-0"
-             class="w-full max-w-md mx-auto"
-             x-cloak>
-            
-            <div class="bg-stone-900/60 backdrop-blur-md border border-amber-900/20 p-8 rounded-2xl shadow-2xl relative text-left">
-                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-amber-500/40 rounded-tl-lg"></div>
-                <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-amber-500/40 rounded-tr-lg"></div>
-                <div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-amber-500/40 rounded-bl-lg"></div>
-                <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-amber-500/40 rounded-br-lg"></div>
+        <!-- RIGHT COLUMN: RESPONSIVE INTERACTIVE MOBILE SIMULATOR (5 Cols) -->
+        <div class="lg:col-span-5 flex justify-center">
 
-                <div class="text-center mb-6">
-                    <h2 class="heading-font text-2xl font-bold text-stone-100">Beta Portal Approval</h2>
-                    <p class="text-xs text-amber-500 mt-1 font-semibold">Registration and entry only via mobile for those who do not want to scan</p>
-                    <p class="text-xs text-stone-400 mt-2">Register your device to receive real-time cryptographic mirror keys.</p>
+            <!-- Mobile Hardware Shell Frame -->
+            <div class="w-full max-w-[320px] bg-white border-4 border-slate-900 rounded-[2.5rem] p-4 shadow-2xl relative overflow-hidden aspect-[9/19] flex flex-col justify-between">
+
+                <!-- Camera Notch and Status Bar -->
+                <div class="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-3.5 bg-slate-900 rounded-full z-20"></div>
+                <div class="flex justify-between items-center text-[9px] font-bold text-slate-400 pt-1.5 mb-2">
+                    <span>09:41</span>
+                    <span class="flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[9px]">wifi</span>
+                        <span class="material-symbols-outlined text-[9px]">battery_full</span>
+                    </span>
                 </div>
 
-                <!-- Registration Form using Alpine-simulated takeover (no static server API roundtrip latency) -->
-                <form @submit.prevent="startTakeover()" class="space-y-4">
-                    <div>
-                        <label for="email" class="block text-xs font-medium text-stone-300 uppercase tracking-wider mb-2">Cryptographic Email ID</label>
-                        <div class="relative group">
-                            <div class="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-emerald-500 rounded-lg blur opacity-10 group-focus-within:opacity-30 transition duration-300"></div>
-                            <input type="email" 
-                                   id="email" 
-                                   name="email" 
-                                   required 
-                                   placeholder="e.g. user@securebox.io"
-                                   class="relative w-full px-4 py-3 bg-stone-950 border border-stone-800 rounded-lg text-stone-100 placeholder-stone-600 focus:outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/30 text-sm transition duration-150">
+                <!-- VIEW 1: INTRO & TERMS ACCEPTANCE -->
+                <div x-show="activeView === 'mobile_terms'" class="flex-grow flex flex-col justify-between" x-transition>
+                    <div class="flex-grow overflow-y-auto space-y-4 px-0.5 text-left">
+                        <div class="text-center space-y-1.5">
+                            <div class="w-10 h-10 bg-amber-50 border border-amber-100 rounded-xl flex items-center justify-center mx-auto shadow-sm">
+                                <img src="Logo.png" class="w-6 h-6 object-contain" />
+                            </div>
+                            <h2 class="heading-font text-sm font-extrabold text-slate-900" x-text="t('mobTermsTitle')"></h2>
+                            <p class="text-[10px] text-slate-500 leading-normal" x-text="t('mobTermsDesc')"></p>
+                        </div>
+
+                        <!-- Onboarding walkthrough video block -->
+                        <div class="space-y-1">
+                            <p class="text-[9px] font-bold uppercase tracking-wider text-slate-400" x-text="t('mobVideoTitle')"></p>
+                            <div class="rounded-lg overflow-hidden aspect-video border border-slate-200 bg-slate-100 shadow-sm">
+                                <video src="hero_clip_30s.mp4" controls class="w-full h-full object-cover"></video>
+                            </div>
+                        </div>
+
+                        <!-- Product Pitch card -->
+                        <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
+                            <p class="text-[10px] font-bold text-slate-800" x-text="t('mobPitchTitle')"></p>
+                            <p class="text-[9px] text-slate-500 leading-relaxed" x-text="t('mobPitchDesc')"></p>
+                        </div>
+
+                        <!-- Terms of service confirmation checkbox -->
+                        <div class="p-2.5 bg-amber-50/50 rounded-xl border border-amber-100/50">
+                            <label class="flex items-start gap-2 cursor-pointer select-none">
+                                <input type="checkbox" x-model="acceptedTerms" class="w-4 h-4 rounded border-amber-300 text-amber-500 focus:ring-amber-400/50 mt-0.5 cursor-pointer">
+                                <span class="text-[9px] text-slate-700 leading-relaxed font-medium" x-text="t('mobCheckbox')"></span>
+                            </label>
                         </div>
                     </div>
 
-                    <button type="submit" 
-                            class="w-full py-3 px-4 bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-stone-100 font-medium text-sm rounded-lg shadow-lg hover:shadow-amber-500/10 active:scale-[0.99] transition duration-150 cursor-pointer">
-                        Request Mirror Shield Credentials
-                    </button>
-                </form>
-            </div>
-        </div>
+                    <div class="pt-3 border-t border-slate-100">
+                        <button @click="activeView = 'mobile_payment'"
+                                :disabled="!acceptedTerms"
+                                :class="acceptedTerms ? 'bg-amber-500 hover:bg-amber-400 text-white cursor-pointer shadow-md' : 'bg-slate-100 text-slate-400 cursor-not-allowed'"
+                                class="w-full py-2.5 rounded-lg text-[10px] font-bold transition duration-150 flex items-center justify-center gap-1.5">
+                            <span x-text="t('mobButtonConnect')"></span>
+                            <span class="material-symbols-outlined text-xs">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
 
-        <!-- ========================================== -->
-        <!-- VIEW 3: HUB -->
-        <!-- ========================================== -->
-        <div x-show="activeView === 'hub'" 
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0 translate-y-4"
-             x-transition:enter-end="opacity-100 translate-y-0"
-             class="w-full max-w-4xl mx-auto space-y-6"
-             x-cloak>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-                
-                <div class="md:col-span-2 space-y-6">
-                    
-                    <div class="bg-stone-900/50 backdrop-blur-md border border-amber-900/20 p-6 rounded-2xl shadow-xl">
-                        <h2 class="heading-font text-xl font-bold text-stone-200 mb-5 flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                            <span>Aegis Core Control Center</span>
-                        </h2>
-                        
-                        <div class="flex flex-col sm:flex-row gap-6 items-stretch">
-                            
-                            <div class="flex-1 flex flex-col justify-between p-5 rounded-xl border border-stone-800 bg-stone-950/40">
+                <!-- VIEW 2: ONE-TAP SUBSCRIPTION PAYMENT -->
+                <div x-show="activeView === 'mobile_payment'" class="flex-grow flex flex-col justify-between" x-cloak x-transition>
+                    <div class="flex-grow overflow-y-auto space-y-4 px-0.5 text-left">
+                        <div class="text-center space-y-1">
+                            <span class="material-symbols-outlined text-2xl text-emerald-500">lock_open</span>
+                            <h2 class="heading-font text-sm font-extrabold text-slate-900" x-text="t('mobPaymentTitle')"></h2>
+                            <p class="text-[10px] text-slate-500" x-text="t('mobPaymentDesc')"></p>
+                        </div>
+
+                        <!-- Active promo billing tier -->
+                        <div class="bg-gradient-to-br from-amber-50 to-amber-100/30 border border-amber-200 p-3.5 rounded-xl relative shadow-sm text-left">
+                            <div class="absolute top-2 right-2 bg-amber-500 text-white text-[7px] font-extrabold px-1.5 py-0.5 rounded-full uppercase tracking-wider" x-text="t('mobActiveChoice')"></div>
+                            <p class="text-[10px] font-bold text-amber-800" x-text="t('mobSovereignPlan')"></p>
+
+                            <div class="my-1.5 flex items-baseline gap-0.5">
+                                <span class="text-2xl font-black text-slate-900">$10</span>
+                                <span class="text-[9px] text-slate-400 font-semibold">/ lifetime</span>
+                            </div>
+
+                            <div class="border-t border-amber-200/50 pt-2 mt-2 space-y-1 text-[9px] text-slate-700 font-medium">
+                                <p class="flex items-center gap-1">
+                                    <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
+                                    <span x-text="t('refundPolicyText1')"></span>
+                                </p>
+                                <p class="flex items-center gap-1">
+                                    <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
+                                    <span x-text="t('refundPolicyText2')"></span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Card details container -->
+                        <div class="space-y-2">
+                            <p class="text-[8px] font-bold uppercase tracking-wider text-slate-400" x-text="t('mobCardSubtitle')"></p>
+                            <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100 space-y-2">
                                 <div>
-                                    <h3 class="text-xs uppercase tracking-wider text-stone-400 font-semibold mb-1">Mirror Protection</h3>
-                                    <p class="text-xs text-stone-500 leading-relaxed">Toggle the local virtual network encapsulation shield.</p>
+                                    <label class="block text-[8px] font-bold text-slate-400 uppercase mb-0.5" x-text="t('mobCardholder')"></label>
+                                    <input type="text" value="Aegis Sovereign Participant" readonly class="w-full bg-white px-2 py-1 border border-slate-200 rounded text-[9px] font-medium text-slate-700">
                                 </div>
-                                <div class="mt-4 flex items-center gap-4">
-                                    <button @click="shieldActive = !shieldActive" 
-                                            :class="shieldActive ? 'bg-emerald-500/20 border-emerald-500' : 'bg-amber-500/20 border-amber-500'"
-                                            class="w-16 h-16 rounded-full border-2 flex items-center justify-center shadow-lg transition duration-300 hover:scale-105 active:scale-95 cursor-pointer">
-                                        <span class="material-symbols-outlined text-3xl transition duration-300"
-                                              :class="shieldActive ? 'text-emerald-400' : 'text-amber-400'">
-                                            shield_with_heart
-                                        </span>
-                                    </button>
+                                <div class="grid grid-cols-3 gap-1">
+                                    <div class="col-span-2">
+                                        <label class="block text-[8px] font-bold text-slate-400 uppercase mb-0.5" x-text="t('mobCardNum')"></label>
+                                        <input type="text" value="4580 1200 4500 9012" readonly class="w-full bg-white px-2 py-1 border border-slate-200 rounded text-[9px] font-mono text-slate-700">
+                                    </div>
                                     <div>
-                                        <p class="font-bold text-lg heading-font" :class="shieldActive ? 'text-emerald-400' : 'text-amber-500'">
-                                            <span x-text="shieldActive ? 'Protected' : 'Open/Bypass'"></span>
-                                        </p>
-                                        <p class="text-[11px] font-mono text-stone-500">
-                                            <span x-text="shieldActive ? 'Emerald Glowing Aura Active' : 'Amber Quiet Mode'"></span>
-                                        </p>
+                                        <label class="block text-[8px] font-bold text-slate-400 uppercase mb-0.5">CVV</label>
+                                        <input type="text" value="777" readonly class="w-full bg-white px-2 py-1 border border-slate-200 rounded text-[9px] font-mono text-center text-slate-700">
                                     </div>
                                 </div>
                             </div>
-                            
-                            <div class="flex-1 flex flex-col justify-between p-5 rounded-xl border border-stone-800 bg-stone-950/40">
-                                <div>
-                                    <h3 class="text-xs uppercase tracking-wider text-stone-400 font-semibold mb-1">Sandbox Profile</h3>
-                                    <p class="text-xs text-stone-500 leading-relaxed">Isolate specific device applications within virtual containers.</p>
-                                </div>
-                                <div class="mt-4">
-                                    <button @click="showSandboxModal = true" 
-                                            class="w-full py-3 px-4 bg-stone-900 border border-stone-700 hover:border-amber-500/50 hover:bg-stone-800 text-stone-200 text-sm font-semibold rounded-lg shadow transition duration-150 cursor-pointer">
-                                        <span>Configure Applications</span>
-                                    </button>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
-                    <div class="bg-gradient-to-r from-stone-900 to-stone-900/60 border border-amber-900/20 p-6 rounded-2xl shadow-xl relative overflow-hidden">
-                        <div class="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:14px_24px]"></div>
-                        <div class="absolute top-0 right-0 w-24 h-[1px] bg-gradient-to-l from-emerald-500 to-transparent"></div>
-
-                        <div class="flex justify-between items-start mb-4 relative z-10">
-                            <div>
-                                <h3 class="heading-font font-bold text-sm text-stone-400">Cryptographic Alter-Ego</h3>
-                                <p class="text-[10px] font-mono text-stone-500 uppercase tracking-widest mt-0.5">Identity Masking Vector</p>
-                            </div>
-                            <span class="px-2 py-0.5 text-[9px] font-mono rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">SECURE MASK</span>
-                        </div>
-
-                        <div class="p-4 rounded-xl bg-stone-950 border border-stone-850 flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
-                            <div>
-                                <p class="text-[10px] text-stone-500 font-mono uppercase tracking-wider">Active Proxy Mailbox</p>
-                                <p class="text-base sm:text-lg font-bold text-amber-500 font-mono mt-0.5 tracking-tight text-left" x-text="customAlias" dir="ltr"></p>
-                            </div>
-                            <button @click="regenerateAlias()" 
-                                    class="py-1.5 px-3 bg-stone-900 hover:bg-stone-850 border border-amber-500/20 hover:border-amber-500/40 text-stone-300 text-xs rounded transition duration-150 cursor-pointer">
-                                <span>Regenerate</span>
-                            </button>
-                        </div>
+                    <div class="pt-3 border-t border-slate-100">
+                        <button @click="checkout(); setTimeout(() => activeView = 'mobile_takeover', 1600)"
+                                :disabled="paymentStatus === 'processing'"
+                                class="w-full py-2.5 bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-[10px] rounded-lg shadow-sm transition duration-150 cursor-pointer flex items-center justify-center gap-1">
+                            <span class="material-symbols-outlined text-xs">payment</span>
+                            <span x-text="paymentStatus === 'processing' ? t('mobButtonProcessing') : (paymentStatus === 'completed' ? t('mobButtonSuccess') : t('mobButtonPay'))"></span>
+                        </button>
                     </div>
                 </div>
 
-                <div class="space-y-6">
-                    
-                    <div class="bg-stone-900/50 backdrop-blur-md border border-amber-900/20 p-5 rounded-2xl shadow-xl">
-                        <h3 class="heading-font font-semibold text-sm text-stone-300 mb-4">Sandbox Engine State</h3>
-                        <div class="space-y-3 text-xs">
-                            <div class="flex justify-between py-1.5 border-b border-stone-800">
-                                <span class="text-stone-500">WASM Runtime</span>
-                                <span class="text-emerald-400 font-semibold font-mono">RUNNING (Gorgon)</span>
-                            </div>
-                            <div class="flex justify-between py-1.5 border-b border-stone-800">
-                                <span class="text-stone-500">Active Rules</span>
-                                <span class="text-stone-300 font-mono">14 Deterministic</span>
-                            </div>
-                            <div class="flex justify-between py-1.5 border-b border-stone-800">
-                                <span class="text-stone-500">Watchdog Latency</span>
-                                <span class="text-stone-300 font-mono">1.42 ms</span>
-                            </div>
-                            <div class="flex justify-between py-1.5">
-                                <span class="text-stone-500">Failsafe Mode</span>
-                                <span class="text-amber-500 font-mono">FAIL-CLOSED (Active)</span>
-                            </div>
+                <!-- VIEW 3: GRANULAR APPLICATION PERMISSIONS BOARD -->
+                <div x-show="activeView === 'mobile_takeover'" class="flex-grow flex flex-col justify-between" x-cloak x-transition>
+                    <div class="flex-grow overflow-y-auto space-y-4 px-0.5 text-left">
+                        <div class="text-center space-y-1">
+                            <span class="material-symbols-outlined text-xl text-amber-500 animate-spin">sync</span>
+                            <h2 class="heading-font text-xs font-extrabold text-slate-900" x-text="t('mobShieldActiveTitle')"></h2>
+                            <p class="text-[9px] text-slate-500" x-text="t('mobShieldActiveDesc')"></p>
                         </div>
-                    </div>
 
-                    <div class="bg-stone-900/50 backdrop-blur-md border border-amber-900/20 p-5 rounded-2xl shadow-xl">
-                        <h3 class="heading-font font-semibold text-sm text-stone-300 mb-3">Enforcement Profile</h3>
-                        <div class="space-y-2">
-                            <template x-for="profile in ['Paranoid', 'Emergency', 'Standard', 'Social Diet']">
-                                <button @click="activeProfile = profile"
-                                        :class="activeProfile === profile ? 'bg-amber-950/40 border-amber-500/40 text-amber-300' : 'bg-stone-950/30 border-stone-800 text-stone-400 hover:bg-stone-900/30'"
-                                        class="w-full p-2.5 text-left text-xs font-semibold rounded-lg border transition duration-150 flex items-center justify-between cursor-pointer">
-                                    <span x-text="profile"></span>
-                                    <span x-show="activeProfile === profile" class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                        <!-- Protection Level selector switches -->
+                        <div class="space-y-1.5">
+                            <p class="text-[8px] font-bold uppercase tracking-wider text-slate-400" x-text="t('mobProtLevel')"></p>
+                            <div class="grid grid-cols-3 gap-1 bg-slate-100 p-0.5 rounded-lg">
+                                <button @click="applyProtectionLevel('balanced')"
+                                        :class="protectionLevel === 'balanced' ? 'bg-white text-amber-600 font-bold shadow-sm' : 'text-slate-500'"
+                                        class="py-1 rounded text-[8px] transition text-center cursor-pointer">
+                                    Balanced
                                 </button>
-                            </template>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Observability Log Journal (Local Loopback Logs - Automatically localizing to the device's native language!) -->
-            <div class="bg-stone-900/50 backdrop-blur-md border border-amber-900/20 p-6 rounded-2xl shadow-xl text-left">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-                    <div>
-                        <h2 class="heading-font text-lg font-bold text-stone-200 flex items-center gap-2">
-                            <span class="material-symbols-outlined text-amber-500">history_edu</span>
-                            <span>Observability Journal Logs</span>
-                        </h2>
-                        <p class="text-xs text-stone-400 mt-1">Friendly, humanized narratives reflecting real-time traffic filters</p>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-stone-950 border border-stone-850 text-stone-500">
-                            Auto-localized to <span class="text-amber-500 font-bold" x-text="deviceLangLabel"></span>
-                        </span>
-                    </div>
-                </div>
-
-                <!-- Hebrew local loopback telemetry logs if user's browser is Hebrew -->
-                <div x-show="deviceLang === 'he'" class="space-y-2 max-h-[350px] overflow-y-auto pr-2 text-xs font-mono text-right" dir="rtl">
-                    <div class="p-3 bg-stone-950/60 rounded-lg border border-stone-850">
-                        <span class="text-emerald-500 font-semibold">[08:42:15]</span> יירוט בקשת WhatsApp: נחסמו 12 פניות ישירות לרשת. הוחלף בסיס הנתונים של אנשי הקשר במבנה דמה וירטואלי (34 אנשי קשר פיקטיביים הוזרקו בהצלחה).
-                    </div>
-                    <div class="p-3 bg-stone-950/60 rounded-lg border border-stone-850">
-                        <span class="text-emerald-500 font-semibold">[08:43:02]</span> ערוץ תקשורת מאובטח Google Chrome: נותבו 4 חבילות נתונים מוצפנות דרך שרת הלולאה המקומי Perseus. מפתח ההצפנה אומת בהצלחה.
-                    </div>
-                    <div class="p-3 bg-stone-950/60 rounded-lg border border-stone-850">
-                        <span class="text-amber-500 font-semibold">[08:44:48]</span> בדיקת מיקום GPS עבור Google Maps: שונו נתוני המיקום מ-32.0853° N, 34.7818° E לפרופיל סטייה וירטואלי (צומת מאובטח תל אביב).
-                    </div>
-                    <div class="p-3 bg-stone-950/60 rounded-lg border border-stone-850">
-                        <span class="text-emerald-500 font-semibold">[08:45:10]</span> מנגנון מעקב כשל: פעימת לב של הלולאה המקומית אומתה בהצלחה. זמן תגובה: 1.39 מילישניות. לא זוהו זליגות מידע.
-                    </div>
-                </div>
-
-                <!-- English local loopback telemetry logs if user's browser is English -->
-                <div x-show="deviceLang !== 'he'" class="space-y-2 max-h-[350px] overflow-y-auto pr-2 text-xs font-mono text-left" dir="ltr">
-                    <div class="p-3 bg-stone-950/60 rounded-lg border border-stone-850">
-                        <span class="text-emerald-500 font-semibold">[08:42:15]</span> WhatsApp query intercept: Suppressed 12 direct network requests. Replaced contact database with mock vector layout (34 virtual contacts injected).
-                    </div>
-                    <div class="p-3 bg-stone-950/60 rounded-lg border border-stone-850">
-                        <span class="text-emerald-500 font-semibold">[08:43:02]</span> Google Chrome connection tunnel: Routed 4 secure packets through local Perseus loopback server. Key exchange authenticated.
-                    </div>
-                    <div class="p-3 bg-stone-950/60 rounded-lg border border-stone-850">
-                        <span class="text-amber-500 font-semibold">[08:44:48]</span> Google Maps GPS check: Modified location requests from 32.0853° N, 34.7818° E to simulated offset profile (Tel Aviv Secure Node).
-                    </div>
-                    <div class="p-3 bg-stone-950/60 rounded-lg border border-stone-850">
-                        <span class="text-emerald-500 font-semibold">[08:45:10]</span> Failsafe Watchdog: Normal loopback heartbeat verified. Latency: 1.39 ms. Zero leaks detected.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ========================================== -->
-        <!-- VIEW 4: PRICING & SUBSCRIPTIONS -->
-        <!-- ========================================== -->
-        <div x-show="activeView === 'pricing'"
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0 translate-y-4"
-             x-transition:enter-end="opacity-100 translate-y-0"
-             class="w-full max-w-4xl mx-auto space-y-8"
-             x-cloak>
-
-            <div class="text-center max-w-xl mx-auto">
-                <h2 class="heading-font text-3xl font-extrabold text-stone-100">Subscription Plans & Cryptographic Protection</h2>
-                <p class="text-stone-400 text-sm mt-2">Select your desired security density. Upgrade or downgrade at any time with no lock-in.</p>
-            </div>
-
-            <!-- Tiers Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-                <!-- Lite Tier -->
-                <div class="bg-stone-900/40 backdrop-blur-md border border-stone-800 rounded-2xl p-6 flex flex-col justify-between hover:border-amber-500/20 transition-all duration-300 relative">
-                    <div>
-                        <span class="px-2.5 py-0.5 text-[10px] font-mono rounded bg-stone-800 text-stone-400 border border-stone-700 uppercase">Lite</span>
-                        <h3 class="heading-font font-bold text-xl text-stone-200 mt-3">Aegis Lite (Free)</h3>
-                        <p class="text-xs text-stone-500 mt-2">Basic local loopback virtual security for single-device shielding</p>
-
-                        <div class="my-6">
-                            <span class="text-3xl font-bold text-stone-100">$0</span>
-                            <span class="text-xs text-stone-500"> / forever</span>
+                                <button @click="applyProtectionLevel('strict')"
+                                        :class="protectionLevel === 'strict' ? 'bg-white text-emerald-600 font-bold shadow-sm' : 'text-slate-500'"
+                                        class="py-1 rounded text-[8px] transition text-center cursor-pointer">
+                                    Strict GPS
+                                </button>
+                                <button @click="applyProtectionLevel('paranoid')"
+                                        :class="protectionLevel === 'paranoid' ? 'bg-white text-rose-600 font-bold shadow-sm' : 'text-slate-500'"
+                                        class="py-1 rounded text-[8px] transition text-center cursor-pointer">
+                                    Lockdown
+                                </button>
+                            </div>
                         </div>
 
-                        <ul class="space-y-3 text-xs text-stone-400 border-t border-stone-850 pt-4">
-                            <li class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-emerald-500 text-base">check</span>
-                                <span>Local Loopback VPN Tunnel</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-emerald-500 text-base">check</span>
-                                <span>Standard Enforcement Profile</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-stone-600 text-base">close</span>
-                                <span class="text-stone-600">Identity Masking & Custom Aliases</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <button @click="alert('Free plan is active by default')"
-                            class="w-full py-2.5 mt-8 bg-stone-800 hover:bg-stone-750 text-stone-300 text-xs font-semibold rounded-lg border border-stone-700 transition cursor-pointer">
-                        Currently Active
-                    </button>
-                </div>
-
-                <!-- Pro Tier -->
-                <div class="bg-stone-900/60 backdrop-blur-md border border-amber-500/50 rounded-2xl p-6 flex flex-col justify-between hover:border-amber-500/70 transition-all duration-300 relative shadow-xl shadow-amber-950/10">
-                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 bg-gradient-to-r from-amber-600 to-amber-500 text-stone-950 text-[10px] font-bold rounded-full uppercase tracking-wider">Recommended</div>
-                    <div>
-                        <span class="px-2.5 py-0.5 text-[10px] font-mono rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 uppercase">Pro</span>
-                        <h3 class="heading-font font-bold text-xl text-stone-100 mt-3">Aegis Pro</h3>
-                        <p class="text-xs text-stone-400 mt-2">Comprehensive perimeter masking, proxy identities, and detailed journal observability</p>
-
-                        <div class="my-6">
-                            <span class="text-3xl font-bold text-amber-400">$9.99</span>
-                            <span class="text-xs text-stone-500"> / month</span>
+                        <!-- App permission list controls -->
+                        <div class="space-y-1.5">
+                            <p class="text-[8px] font-bold uppercase tracking-wider text-slate-400" x-text="t('mobAppPermissions')"></p>
+                            <div class="space-y-1.5 max-h-[160px] overflow-y-auto pr-0.5">
+                                <template x-for="app in apps" :key="app.pkg">
+                                    <div class="p-2 rounded-lg border border-slate-100 bg-slate-50 space-y-1">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center gap-1">
+                                                <span class="material-symbols-outlined text-xs text-amber-500" x-text="app.icon"></span>
+                                                <span class="text-[9px] font-bold text-slate-800" x-text="app.name"></span>
+                                            </div>
+                                            <span class="text-[7px] font-mono text-slate-400" x-text="app.pkg"></span>
+                                        </div>
+                                        <div class="flex flex-wrap gap-1">
+                                            <template x-for="perm in app.permissions">
+                                                <button @click="perm.active = !perm.active"
+                                                        :class="perm.active ? 'bg-emerald-500/10 text-emerald-700 border-emerald-500/20' : 'bg-rose-500/10 text-rose-700 border-rose-500/20'"
+                                                        class="px-1.5 py-0.5 rounded text-[8px] font-medium border transition cursor-pointer flex items-center gap-0.5">
+                                                    <span class="w-0.5 h-0.5 rounded-full" :class="perm.active ? 'bg-emerald-500' : 'bg-rose-500'"></span>
+                                                    <span x-text="perm.name"></span>
+                                                </button>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
                         </div>
-
-                        <ul class="space-y-3 text-xs text-stone-300 border-t border-stone-850 pt-4">
-                            <li class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-emerald-500 text-base">check</span>
-                                <span>All Enforcement Profiles</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-emerald-500 text-base">check</span>
-                                <span>Unlimited Masking Aliases</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-emerald-500 text-base">check</span>
-                                <span>Real-time Observability Log Journal</span>
-                            </li>
-                        </ul>
                     </div>
-                    <button @click="selectedPlan = 'pro'; paymentStep = 'details'"
-                            class="w-full py-2.5 mt-8 bg-amber-600 hover:bg-amber-500 text-stone-100 text-xs font-bold rounded-lg shadow-lg shadow-amber-900/30 transition cursor-pointer">
-                        Upgrade to Pro
-                    </button>
-                </div>
 
-                <!-- Sovereign Tier -->
-                <div class="bg-stone-900/40 backdrop-blur-md border border-stone-800 rounded-2xl p-6 flex flex-col justify-between hover:border-amber-500/20 transition-all duration-300 relative">
-                    <div>
-                        <span class="px-2.5 py-0.5 text-[10px] font-mono rounded bg-stone-800 text-emerald-400 border border-stone-700 uppercase">Sovereign</span>
-                        <h3 class="heading-font font-bold text-xl text-stone-200 mt-3">Aegis Sovereign</h3>
-                        <p class="text-xs text-stone-500 mt-2">Sovereign isolated node hosting, dedicated VPS, and 24/7 custom cryptographic support</p>
-
-                        <div class="my-6">
-                            <span class="text-3xl font-bold text-stone-100">$29.99</span>
-                            <span class="text-xs text-stone-500"> / month</span>
-                        </div>
-
-                        <ul class="space-y-3 text-xs text-stone-400 border-t border-stone-850 pt-4">
-                            <li class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-emerald-500 text-base">check</span>
-                                <span>Dedicated Private VPS Node</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-emerald-500 text-base">check</span>
-                                <span>Custom Latency Failsafe Rules</span>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <span class="material-symbols-outlined text-emerald-500 text-base">check</span>
-                                <span>24/7 Cryptographic Support</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <button @click="selectedPlan = 'sovereign'; paymentStep = 'details'"
-                            class="w-full py-2.5 mt-8 bg-stone-850 hover:bg-stone-800 text-stone-200 text-xs font-semibold rounded-lg border border-stone-850 transition cursor-pointer">
-                        Get Sovereign Plan
-                    </button>
-                </div>
-            </div>
-
-            <!-- Payment Simulation Panel -->
-            <div x-show="paymentStep !== 'plan'" class="bg-stone-900/60 border border-amber-900/30 p-6 rounded-2xl shadow-xl max-w-lg mx-auto" x-transition>
-
-                <!-- Payment Input Form -->
-                <div x-show="paymentStep === 'details'">
-                    <div class="flex justify-between items-center mb-4 pb-2 border-b border-stone-800">
-                        <h3 class="heading-font font-bold text-md text-stone-200">
-                            <span>Complete subscription for </span>
-                            <span class="text-amber-500" x-text="selectedPlan === 'pro' ? 'Aegis Pro' : 'Aegis Sovereign'"></span>
-                        </h3>
-                        <button @click="resetPayment()" class="text-stone-500 hover:text-stone-300 text-xs">
-                            Cancel
+                    <div class="pt-3 border-t border-slate-100">
+                        <button @click="activeView = 'mobile_dashboard'"
+                                class="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-white font-bold text-[10px] rounded-lg shadow-sm transition duration-150 cursor-pointer flex items-center justify-center gap-1">
+                            <span class="material-symbols-outlined text-xs">check_circle</span>
+                            <span x-text="t('mobDeployButton')"></span>
                         </button>
                     </div>
+                </div>
 
-                    <form @submit.prevent="processPayment()" class="space-y-4 text-left">
-                        <div>
-                            <label class="block text-xs font-semibold text-stone-400 mb-1">Cardholder Name</label>
-                            <input type="text" x-model="paymentName" required placeholder="Israel Israeli"
-                                   class="w-full px-4 py-2 bg-stone-950 border border-stone-800 rounded-lg text-sm text-stone-100 placeholder-stone-700 focus:outline-none focus:border-amber-500/50">
+                <!-- VIEW 4: ACTIVE SECURED WALLPAPER DASHBOARD -->
+                <div x-show="activeView === 'mobile_dashboard'" class="flex-grow flex flex-col justify-between" x-cloak x-transition>
+                    <div class="flex-grow flex flex-col items-center justify-center space-y-4">
+                        <div class="w-16 h-16 bg-white/90 rounded-2xl border border-amber-200 shadow-lg flex items-center justify-center animate-glowing-core">
+                            <img src="Logo.png" class="w-10 h-10 object-contain" />
                         </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-stone-400 mb-1">Credit Card Number (Secure Simulation)</label>
-                            <input type="text" x-model="paymentCard" required placeholder="4580 1234 5678 9012" maxlength="19"
-                                   class="w-full px-4 py-2 bg-stone-950 border border-stone-800 rounded-lg text-sm text-stone-100 placeholder-stone-700 focus:outline-none focus:border-amber-500/50">
+                        <div class="text-center space-y-0.5 bg-white/80 px-3 py-1.5 rounded-xl border border-white/50">
+                            <h2 class="heading-font text-[11px] font-extrabold text-slate-900" x-text="t('mobSecuredTitle')"></h2>
+                            <p class="text-[8px] font-bold text-emerald-600 uppercase tracking-wider flex items-center justify-center gap-0.5">
+                                <span class="w-1 h-1 rounded-full bg-emerald-500 animate-ping"></span>
+                                <span x-text="t('mobTerminalSecured')"></span>
+                            </p>
                         </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-semibold text-stone-400 mb-1">Expiry Date</label>
-                                <input type="text" x-model="paymentExpiry" required placeholder="MM/YY" maxlength="5"
-                                       class="w-full px-4 py-2 bg-stone-950 border border-stone-800 rounded-lg text-sm text-stone-100 placeholder-stone-700 focus:outline-none focus:border-amber-500/50 text-center">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-stone-400 mb-1">CVV</label>
-                                <input type="password" x-model="paymentCvc" required placeholder="•••" maxlength="3"
-                                       class="w-full px-4 py-2 bg-stone-950 border border-stone-800 rounded-lg text-sm text-stone-100 placeholder-stone-700 focus:outline-none focus:border-amber-500/50 text-center">
-                            </div>
-                        </div>
+                    </div>
 
-                        <div class="p-3 bg-stone-950 border border-amber-900/10 rounded-lg flex items-start gap-2 mt-4 text-[11px] text-stone-500">
-                            <span class="material-symbols-outlined text-amber-500 text-sm">lock</span>
-                            <span x-text="deviceLang === 'he' ? 'תשלום זה מעובד בהדמיה מקומית מאובטחת. כל הפרטים מוצפנים בצד הלקוח ואינם נשלחים לשום שרת צד שלישי.' : 'This payment is processed in a secure local simulation. All details are encrypted client-side and never sent to any third-party server.'"></span>
+                    <!-- Interactive control dashboard utilities -->
+                    <div class="space-y-2 bg-white/90 p-2.5 rounded-2xl border border-white/90 shadow-md">
+                        <p class="text-[8px] font-bold uppercase tracking-wider text-slate-400 text-center" x-text="t('mobInteractiveControl')"></p>
+                        <div class="grid grid-cols-2 gap-1.5 text-left">
+                            <button @click="alert(t('mobAlertWatchdog'))"
+                                    class="p-2 rounded-lg border border-slate-100 bg-slate-50 hover:bg-slate-100 transition text-left cursor-pointer">
+                                <span class="material-symbols-outlined text-amber-500 text-xs">settings_suggest</span>
+                                <p class="text-[8px] font-bold text-slate-800 mt-0.5" x-text="t('mobWatchdog')"></p>
+                            </button>
+                            <button @click="alert(t('mobAlertTelemetry'))"
+                                    class="p-2 rounded-lg border border-slate-100 bg-slate-50 hover:bg-slate-100 transition text-left cursor-pointer">
+                                <span class="material-symbols-outlined text-emerald-500 text-xs">bar_chart</span>
+                                <p class="text-[8px] font-bold text-slate-800 mt-0.5" x-text="t('mobTraffic')"></p>
+                            </button>
                         </div>
-
-                        <button type="submit"
-                                class="w-full py-3 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-stone-100 font-bold text-sm rounded-lg transition duration-150 cursor-pointer flex items-center justify-center gap-2">
-                            <span class="material-symbols-outlined text-lg">credit_card</span>
-                            <span>Authorize Payment & Activate</span>
+                        <button @click="activeView = 'gateway'"
+                                class="w-full py-2 bg-slate-900 hover:bg-slate-850 text-white font-bold text-[9px] rounded-lg transition cursor-pointer"
+                                x-text="t('mobBackToDesktop')">
                         </button>
-                    </form>
-                </div>
-
-                <!-- Payment Success Screen -->
-                <div x-show="paymentStep === 'success'" class="text-center p-4">
-                    <div class="w-16 h-16 bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
-                        <span class="material-symbols-outlined text-4xl">verified_user</span>
-                    </div>
-                    <h3 class="heading-font font-bold text-xl text-emerald-400">Subscription Activated!</h3>
-                    <p class="text-stone-300 text-sm mt-2" x-text="deviceLang === 'he' ? 'תודה שבחרת ב-Aegis Mirror. המכשיר שלך מוגן כעת ברמה הגבוהה ביותר.' : 'Thank you for choosing Aegis Mirror. Your device is now protected at the highest cryptographic standard.'"></p>
-
-                    <div class="mt-6 p-4 rounded-xl border border-stone-800 bg-stone-950 text-left text-xs space-y-2 font-mono" dir="ltr">
-                        <p><span class="text-stone-500">Transaction ID:</span> <span class="text-amber-500">TXN_84920492</span></p>
-                        <p><span class="text-stone-500">Security Tier:</span> <span class="text-emerald-400 font-bold uppercase" x-text="selectedPlan"></span></p>
-                        <p><span class="text-stone-500">Active Status:</span> <span class="text-emerald-400">ACTIVE / LICENSED</span></p>
-                    </div>
-
-                    <button @click="resetPayment(); activeView = 'hub'"
-                            class="w-full py-2.5 mt-6 bg-stone-850 hover:bg-stone-800 text-stone-200 text-xs font-semibold rounded-lg transition border border-stone-800 cursor-pointer">
-                        Return to Control Hub
-                    </button>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- ========================================== -->
-        <!-- VIEW 5: USER GUIDE -->
-        <!-- ========================================== -->
-        <div x-show="activeView === 'guide'"
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0 translate-y-4"
-             x-transition:enter-end="opacity-100 translate-y-0"
-             class="w-full max-w-4xl mx-auto space-y-6"
-             x-cloak>
-
-            <div class="bg-stone-900/50 backdrop-blur-md border border-amber-900/20 p-6 rounded-2xl shadow-xl text-left">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="material-symbols-outlined text-3xl text-amber-500">menu_book</span>
-                    <h2 class="heading-font text-2xl font-bold text-stone-100">Aegis Mirror User Manual</h2>
-                </div>
-                <p class="text-xs text-stone-400 mb-6">Step-by-step guidance on scanning, setting up your cryptographic shield, and understanding the Aegis architecture.</p>
-
-                <!-- Navigation Tabs inside Guide -->
-                <div class="flex border-b border-stone-800 gap-2 mb-6">
-                    <button @click="activeGuideSection = 'setup'"
-                            :class="activeGuideSection === 'setup' ? 'border-amber-500 text-amber-400' : 'border-transparent text-stone-500 hover:text-stone-300'"
-                            class="pb-2 px-3 text-sm font-medium border-b-2 transition cursor-pointer">
-                        First-time Setup
-                    </button>
-                    <button @click="activeGuideSection = 'profiles'"
-                            :class="activeGuideSection === 'profiles' ? 'border-amber-500 text-amber-400' : 'border-transparent text-stone-500 hover:text-stone-300'"
-                            class="pb-2 px-3 text-sm font-medium border-b-2 transition cursor-pointer">
-                        Understanding Profiles
-                    </button>
-                    <button @click="activeGuideSection = 'trouble'"
-                            :class="activeGuideSection === 'trouble' ? 'border-amber-500 text-amber-400' : 'border-transparent text-stone-500 hover:text-stone-300'"
-                            class="pb-2 px-3 text-sm font-medium border-b-2 transition cursor-pointer">
-                        Troubleshooting FAQ
-                    </button>
-                </div>
-
-                <!-- Section: First-time Setup -->
-                <div x-show="activeGuideSection === 'setup'" class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
-                        <div class="space-y-4">
-                            <div class="flex gap-3 items-start">
-                                <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">1</span>
-                                <div>
-                                    <h4 class="font-bold text-stone-200 text-sm">Scan the Setup QR</h4>
-                                    <p class="text-xs text-stone-400 mt-1">Open your Android camera and scan the dynamic gateway QR on page 1 to bind your device credentials.</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-3 items-start">
-                                <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">2</span>
-                                <div>
-                                    <h4 class="font-bold text-stone-200 text-sm">Approve VPN Loopback</h4>
-                                    <p class="text-xs text-stone-400 mt-1">Accept the operating system prompt to launch MirrorVpnService. Rest assured, your traffic remains entirely local.</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-3 items-start">
-                                <span class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">3</span>
-                                <div>
-                                    <h4 class="font-bold text-stone-200 text-sm">Configure Sandbox Isolation</h4>
-                                    <p class="text-xs text-stone-400 mt-1">Exempt or target apps like WhatsApp and Maps in the Sandbox modal. Real-time logging details can be watched in the journal.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="rounded-xl overflow-hidden aspect-video border border-stone-850 bg-stone-950 p-1">
-                            <video src="hero_clip_30s.mp4" controls class="w-full h-full object-cover rounded-lg"></video>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Section: Profiles -->
-                <div x-show="activeGuideSection === 'profiles'" class="space-y-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="p-4 rounded-xl border border-stone-800 bg-stone-950/40">
-                            <div class="flex items-center gap-2 mb-2 text-rose-400">
-                                <span class="material-symbols-outlined text-md">emergency_home</span>
-                                <h4 class="font-bold text-sm">Paranoid Profile</h4>
-                            </div>
-                            <p class="text-xs text-stone-400 leading-relaxed">Absolute lockdown. Disallows fail-open, ensuring zero leaks even during massive system processing overhead.</p>
-                        </div>
-
-                        <div class="p-4 rounded-xl border border-stone-800 bg-stone-950/40">
-                            <div class="flex items-center gap-2 mb-2 text-amber-500">
-                                <span class="material-symbols-outlined text-md">warning</span>
-                                <h4 class="font-bold text-sm">Emergency Profile</h4>
-                            </div>
-                            <p class="text-xs text-stone-400 leading-relaxed">Strict failsafe active. Bypasses tunnel constraints strictly for certified emergencies while isolating general apps.</p>
-                        </div>
-
-                        <div class="p-4 rounded-xl border border-stone-800 bg-stone-950/40">
-                            <div class="flex items-center gap-2 mb-2 text-emerald-400">
-                                <span class="material-symbols-outlined text-md">shield</span>
-                                <h4 class="font-bold text-sm">Standard Profile</h4>
-                            </div>
-                            <p class="text-xs text-stone-400 leading-relaxed">Balanced default protection. Allows fail-open mode if processing latency spikes, protecting baseline user access.</p>
-                        </div>
-
-                        <div class="p-4 rounded-xl border border-stone-800 bg-stone-950/40">
-                            <div class="flex items-center gap-2 mb-2 text-sky-400">
-                                <span class="material-symbols-outlined text-md">restaurant</span>
-                                <h4 class="font-bold text-sm">Social Diet Profile</h4>
-                            </div>
-                            <p class="text-xs text-stone-400 leading-relaxed">Specifically curtails background permissions and background beacons on major social network application footprints.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Section: Troubleshooting -->
-                <div x-show="activeGuideSection === 'trouble'" class="space-y-4">
-                    <div class="space-y-3">
-                        <div class="border-b border-stone-850 pb-3" x-data="{ open: false }">
-                            <button @click="open = !open" class="w-full text-left flex justify-between items-center text-stone-200 font-bold text-xs cursor-pointer">
-                                <span>Does the loopback tunnel drain my battery or latency?</span>
-                                <span class="material-symbols-outlined text-xs" x-text="open ? 'expand_less' : 'expand_more'"></span>
-                            </button>
-                            <p x-show="open" class="text-xs text-stone-400 mt-2 leading-relaxed">No. Since the network interception occurs locally on your hardware at the socket level, there is no roundtrip packet overhead. Battery and network performance are highly preserved.</p>
-                        </div>
-
-                        <div class="border-b border-stone-850 pb-3" x-data="{ open: false }">
-                            <button @click="open = !open" class="w-full text-left flex justify-between items-center text-stone-200 font-bold text-xs cursor-pointer">
-                                <span>What is the Fail-Closed Architecture?</span>
-                                <span class="material-symbols-outlined text-xs" x-text="open ? 'expand_less' : 'expand_more'"></span>
-                            </button>
-                            <p x-show="open" class="text-xs text-stone-400 mt-2 leading-relaxed">Under strict profiles (like Paranoid), if the local background process crashes, Aegis blocks all outbound internet access at the OS kernel socket layer, ensuring your structural identity is never leaked in plain-text.</p>
-                        </div>
-
-                        <div class="border-b border-stone-850 pb-3" x-data="{ open: false }">
-                            <button @click="open = !open" class="w-full text-left flex justify-between items-center text-stone-200 font-bold text-xs cursor-pointer">
-                                <span>How do I synchronize with the cloud VPS?</span>
-                                <span class="material-symbols-outlined text-xs" x-text="open ? 'expand_less' : 'expand_more'"></span>
-                            </button>
-                            <p x-show="open" class="text-xs text-stone-400 mt-2 leading-relaxed">Aegis supports anonymous background replication with your pocketbase databases. It encrypts schema updates and routes outbound sync payloads natively through protected exempt socket structures.</p>
-                        </div>
                     </div>
                 </div>
 
             </div>
-        </div>
 
-        <!-- ========================================== -->
-        <!-- VIEW 6: PRIVACY POLICY -->
-        <!-- ========================================== -->
-        <div x-show="activeView === 'privacy'"
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0 translate-y-4"
-             x-transition:enter-end="opacity-100 translate-y-0"
-             class="w-full max-w-4xl mx-auto space-y-6"
-             x-cloak>
-
-            <div class="bg-stone-900/50 backdrop-blur-md border border-amber-900/20 p-6 rounded-2xl shadow-xl text-left">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="material-symbols-outlined text-3xl text-emerald-400">gavel</span>
-                    <h2 class="heading-font text-2xl font-bold text-stone-100">Zero-Knowledge Cryptographic Privacy Covenant</h2>
-                </div>
-
-                <p class="text-xs text-stone-400 leading-relaxed mb-6">At Aegis, privacy is not a text file filled with legal jargon. It is an engineering guarantee enforced by cryptographic protocols and physical hardware isolation.</p>
-
-                <div class="space-y-6 text-xs text-stone-300">
-                    <div class="p-4 rounded-xl border border-stone-850 bg-stone-950/40">
-                        <h3 class="heading-font font-bold text-sm text-amber-500 mb-2">1. Zero Telemetry & Collection</h3>
-                        <p class="leading-relaxed">We do not collect, monitor, store, or sell any aspect of your digital footprint. All VPN traffic routing rules and permission overrides run locally on your terminal device.</p>
-                    </div>
-
-                    <div class="p-4 rounded-xl border border-stone-850 bg-stone-950/40">
-                        <h3 class="heading-font font-bold text-sm text-amber-500 mb-2">2. Client-Side Sandboxing</h3>
-                        <p class="leading-relaxed">Our application structures function completely isolated from outside networks. When telemetry checks and permission requests occur, they are defused in real-time by a local WebAssembly module.</p>
-                    </div>
-
-                    <div class="p-4 rounded-xl border border-stone-850 bg-stone-950/40">
-                        <h3 class="heading-font font-bold text-sm text-amber-500 mb-2">3. Total Auditable Transparency</h3>
-                        <p class="leading-relaxed">We believe absolute privacy demands absolute verification. Users are free to compile and run their own isolated VPS nodes and bypass our cloud endpoints completely.</p>
-                    </div>
-                </div>
-
-                <div class="mt-8 pt-4 border-t border-stone-850 text-center text-[10px] text-stone-500 font-mono">
-                    <p>Last Updated: January 2026 • Aegis Mirror Cryptographic Protocol v0.39.0</p>
-                </div>
-            </div>
         </div>
 
     </main>
 
-    <!-- Sandbox Modal Drawer -->
-    <div x-show="showSandboxModal" 
-         class="fixed inset-0 z-50 overflow-hidden" 
-         x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         x-transition:leave="transition ease-in duration-200"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0"
-         x-cloak>
-        
-        <div class="absolute inset-0 bg-stone-950/80 backdrop-blur-sm" @click="showSandboxModal = false"></div>
-        
-        <div class="absolute inset-y-0 right-0 pl-10 max-w-full flex">
-            <div class="w-screen max-w-md bg-stone-900 border-l border-amber-900/20 p-6 flex flex-col justify-between shadow-2xl relative text-left">
-                <button @click="showSandboxModal = false" class="absolute top-4 right-4 text-stone-400 hover:text-stone-100 cursor-pointer">
-                    <span class="material-symbols-outlined">close</span>
-                </button>
-
-                <div class="flex-1 overflow-y-auto pr-1">
-                    <h3 class="heading-font font-bold text-xl text-stone-100 mb-2">Sandbox Isolation Settings</h3>
-                    <p class="text-xs text-stone-400 mb-6 leading-relaxed">Exempt or enforce strict profile sandboxing constraints on installed device applications.</p>
-
-                    <div class="space-y-4">
-                        <template x-for="app in [
-                            { pkg: 'com.whatsapp', name: 'WhatsApp', desc: 'Secure contacts overrides', active: true },
-                            { pkg: 'com.android.chrome', name: 'Google Chrome', desc: 'Virtual network tunneling', active: true },
-                            { pkg: 'com.google.android.apps.maps', name: 'Google Maps', desc: 'GPS offset masking', active: false },
-                            { pkg: 'com.facebook.orca', name: 'Messenger', desc: 'Microphone silence virtualization', active: true },
-                            { pkg: 'com.android.contacts', name: 'System Contacts', desc: 'Alias virtualization', active: false },
-                            { pkg: 'com.twitter.android', name: 'X / Twitter', desc: 'Storage mock routing', active: true }
-                        ]">
-                            <div class="p-3.5 rounded-xl border border-stone-800 bg-stone-950/40 hover:border-amber-500/20 transition flex items-start justify-between gap-4">
-                                <div class="text-left">
-                                    <p class="text-sm font-semibold text-stone-200" x-text="app.name"></p>
-                                    <p class="text-[11px] font-mono text-stone-500 mt-0.5" x-text="app.pkg" dir="ltr"></p>
-                                    <p class="text-xs text-amber-600/70 mt-1" x-text="app.desc"></p>
-                                </div>
-                                <div class="flex items-center h-5">
-                                    <input type="checkbox" 
-                                           :checked="app.active"
-                                           class="w-5 h-5 rounded border-stone-700 text-amber-500 bg-stone-950 focus:ring-amber-500/50 cursor-pointer">
-                                </div>
-                            </div>
-                        </template>
-                    </div>
-                </div>
-
-                <div class="pt-6 border-t border-stone-800 flex gap-3 mt-6">
-                    <button @click="showSandboxModal = false" class="flex-1 py-2.5 bg-amber-700 hover:bg-amber-600 text-stone-100 text-sm font-medium rounded-lg transition cursor-pointer">
-                        Save Configurations
-                    </button>
-                    <button @click="showSandboxModal = false" class="flex-1 py-2.5 bg-stone-850 hover:bg-stone-800 border border-stone-800 text-stone-300 text-sm font-medium rounded-lg transition cursor-pointer">
-                        Cancel
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="border-t border-amber-900/10 bg-stone-950 py-6 text-center mt-auto">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-stone-500 font-mono">
-            <p class="tracking-wider">
-                AEGIS MIRROR SHIELD ENGINE PROTOCOL V0.39.0 • CONVERSATIONAL DEFIANCE
-            </p>
-            <div class="flex gap-4">
-                <button @click="activeView = 'pricing'" class="hover:text-stone-300 cursor-pointer">Subscriptions</button>
-                <button @click="activeView = 'guide'" class="hover:text-stone-300 cursor-pointer">User Guide</button>
-                <button @click="activeView = 'privacy'" class="hover:text-stone-300 cursor-pointer">Privacy Policy</button>
-            </div>
+    <!-- Footer with simple friendly branding links -->
+    <footer class="border-t border-slate-200/60 bg-white/80 backdrop-blur-md py-6 text-center mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-[10px] text-slate-400 font-mono tracking-wider">
+            AEGIS MIRROR SHIELD ENGINE PROTOCOL V0.40.0 • ILLUMINATED SECURE NETWORKS
         </div>
     </footer>
 

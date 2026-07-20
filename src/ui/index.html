@@ -105,6 +105,7 @@
                       });
                   });
                   this.addLog('System', 'Strict GPS Protection enabled. GPS telemetry spoofed.');
+                  this.triggerRealTelemetry('System', 'com.android.system', 'LOCATION', false);
               } else if (level === 'paranoid') {
                   this.apps.forEach(app => {
                       app.permissions.forEach(p => {
@@ -112,6 +113,7 @@
                       });
                   });
                   this.addLog('System', 'Paranoid Lockdown Mode active. All app trackers isolated.');
+                  this.triggerRealTelemetry('System', 'com.android.system', 'CAMERA', false);
               } else {
                   this.apps[0].permissions[0].active = true;
                   this.apps[0].permissions[1].active = false;
@@ -145,6 +147,33 @@
               const timeStr = now.toTimeString().split(' ')[0];
               this.logs.unshift({ time: timeStr, app: app, msg: msg });
               if (this.logs.length > 30) this.logs.pop();
+          },
+
+          async triggerRealTelemetry(appName, pkg, permName, isActive) {
+              try {
+                  const response = await fetch('/api/telemetry', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
+                          package_name: pkg,
+                          target_destination: 'telemetry.' + appName.toLowerCase().replace(' ', '') + '.com',
+                          permission_type: permName.toUpperCase()
+                      })
+                  });
+                  if (response.ok) {
+                      const data = await response.json();
+                      this.addLog(appName, data.narrative);
+                      // Instantly refresh the HTMX live journals
+                      const el = document.getElementById('journal-live-logs');
+                      if (el && el.htmx) {
+                          htmx.trigger(el, 'refresh');
+                      }
+                  } else {
+                      this.addLog(appName, `Toggled ${permName} permission to ${isActive ? 'Active' : 'Isolated'}`);
+                  }
+              } catch (e) {
+                  this.addLog(appName, `Toggled ${permName} permission to ${isActive ? 'Active' : 'Isolated'}`);
+              }
           },
 
           resetSystem() {
@@ -285,8 +314,18 @@
 
                         <!-- Live Logging Console Output -->
                         <div class="space-y-2">
-                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Aegis Sandbox Observability Logs</p>
-                            <div class="bg-black/90 p-4 rounded-xl border border-slate-800 font-mono text-[10px] text-emerald-400 space-y-1.5 max-h-[160px] overflow-y-auto">
+                            <div class="flex justify-between items-center">
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Aegis Sandbox Observability Logs</p>
+                                <span class="text-[8px] bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded font-mono">Live SQL Database Sync</span>
+                            </div>
+
+                            <!-- Real SQL-backed HTMX container with seamless Alpine logs fallback -->
+                            <div id="journal-live-logs"
+                                 hx-get="/api/journal"
+                                 hx-trigger="load, every 4s, refresh"
+                                 hx-swap="innerHTML"
+                                 class="bg-black/90 p-4 rounded-xl border border-slate-800 font-mono text-[10px] text-emerald-400 space-y-1.5 max-h-[160px] overflow-y-auto">
+
                                 <template x-for="log in logs" :key="log.time">
                                     <div class="flex items-start gap-2">
                                         <span class="text-slate-500" x-text="log.time"></span>
@@ -300,17 +339,31 @@
                 </div>
             </template>
 
-            <!-- Integrated Privacy Policy and Refund Statement -->
+            <!-- Integrated Privacy Policy, Refund Statement and Live PocketBase Registration -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-                <!-- Privacy Statement -->
-                <div class="p-4 bg-white rounded-2xl border border-slate-100 shadow-sm space-y-2">
+                <!-- Live Beta/User Registration Form (Directly populates SQLite table) -->
+                <div class="p-4 bg-white rounded-2xl border border-slate-100 shadow-sm space-y-3" id="beta-registration-card">
                     <h3 class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                        <span class="material-symbols-outlined text-amber-500 text-sm">gavel</span>
-                        <span>Built-in Security & Privacy Policy</span>
+                        <span class="material-symbols-outlined text-indigo-500 text-sm">key</span>
+                        <span>Sovereign Beta Registration</span>
                     </h3>
-                    <p class="text-[11px] text-slate-500 leading-relaxed">
-                        Aegis runs on a fully offline, local zero-knowledge architecture. No third-party servers ever receive or inspect your connection. Local Loopback VPN complies fully with GDPR and CCPA standards.
-                    </p>
+                    <form hx-post="/api/register-test"
+                          hx-target="#beta-response-container"
+                          hx-swap="innerHTML"
+                          class="space-y-2">
+                        <p class="text-[11px] text-slate-500 leading-normal">Register a local beta profile straight into the SQLite user registry.</p>
+                        <div class="flex gap-1.5">
+                            <input type="email"
+                                   name="email"
+                                   required
+                                   placeholder="Enter cryptographic email..."
+                                   class="flex-grow bg-slate-50 px-2.5 py-1.5 border border-slate-200 rounded-lg text-xs placeholder-slate-400 focus:outline-none focus:border-amber-500/50">
+                            <button type="submit" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-lg shadow-sm transition cursor-pointer">
+                                Register
+                            </button>
+                        </div>
+                        <div id="beta-response-container" class="text-[10px] font-mono mt-1 text-slate-600"></div>
+                    </form>
                 </div>
 
                 <!-- Refund & Pricing Policy -->
@@ -330,6 +383,17 @@
                         </p>
                     </div>
                 </div>
+            </div>
+
+            <!-- Built-in Security & Privacy Policy full-width row -->
+            <div class="p-4 bg-white rounded-2xl border border-slate-100 shadow-sm space-y-2">
+                <h3 class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-amber-500 text-sm">gavel</span>
+                    <span>Built-in Security & Privacy Covenant</span>
+                </h3>
+                <p class="text-[11px] text-slate-500 leading-relaxed">
+                    Aegis Mirror runs on a fully offline, local zero-knowledge routing matrix. No third-party relays ever inspect or store decrypted payload metrics. Local loopback VPN complies in full with CCPA, GDPR, and sovereign self-custodial protocol benchmarks.
+                </p>
             </div>
 
             <!-- Quick FAQ & Guide Section -->
@@ -524,7 +588,7 @@
                                         </div>
                                         <div class="flex flex-wrap gap-1">
                                             <template x-for="perm in app.permissions">
-                                                <button @click="perm.active = !perm.active; addLog(app.name, 'Toggled ' + perm.name + ' permission to ' + perm.active)"
+                                                <button @click="perm.active = !perm.active; triggerRealTelemetry(app.name, app.pkg, perm.name, perm.active)"
                                                         :class="perm.active ? 'bg-emerald-500/10 text-emerald-700 border-emerald-500/20' : 'bg-rose-500/10 text-rose-700 border-rose-500/20'"
                                                         class="px-1.5 py-0.5 rounded text-[8px] font-medium border transition cursor-pointer flex items-center gap-0.5">
                                                     <span class="w-0.5 h-0.5 rounded-full" :class="perm.active ? 'bg-emerald-500' : 'bg-rose-500'"></span>

@@ -47,6 +47,16 @@
             animation: gentle-float 5s ease-in-out infinite;
         }
 
+        /* Scan line animation */
+        @keyframes scan-move {
+            0% { top: 0%; }
+            50% { top: 100%; }
+            100% { top: 0%; }
+        }
+        .scan-line {
+            animation: scan-move 3s linear infinite;
+        }
+
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -69,6 +79,12 @@
           acceptedTerms: false,
           protectionLevel: 'balanced',
           paymentStatus: 'idle',
+          isScanning: false,
+          isPaired: false,
+          logs: [
+              { time: '09:41:02', app: 'System', msg: 'Secure loopback local tunnel configured' },
+              { time: '09:41:05', app: 'Chrome', msg: 'Connection established to aegis-mirror secure local interface' }
+          ],
 
           apps: [
               { name: 'WhatsApp', pkg: 'com.whatsapp', icon: 'chat', permissions: [ { name: 'Contacts', active: true }, { name: 'Location', active: false }, { name: 'Camera', active: true } ] },
@@ -88,25 +104,60 @@
                           }
                       });
                   });
+                  this.addLog('System', 'Strict GPS Protection enabled. GPS telemetry spoofed.');
               } else if (level === 'paranoid') {
                   this.apps.forEach(app => {
                       app.permissions.forEach(p => {
                           p.active = false;
                       });
                   });
+                  this.addLog('System', 'Paranoid Lockdown Mode active. All app trackers isolated.');
               } else {
                   this.apps[0].permissions[0].active = true;
                   this.apps[0].permissions[1].active = false;
                   this.apps[1].permissions[0].active = true;
                   this.apps[2].permissions[0].active = true;
+                  this.addLog('System', 'Balanced protection preset loaded.');
               }
+          },
+
+          triggerScan() {
+              this.isScanning = true;
+              setTimeout(() => {
+                  this.isScanning = false;
+                  this.isPaired = true;
+                  this.activeView = 'mobile_terms';
+                  this.addLog('Gateway', 'Device handshaking initialised. Secure pair completed.');
+              }, 2000);
           },
 
           checkout() {
               this.paymentStatus = 'processing';
+              this.addLog('Payment', 'Authorising lifetime sovereign license...');
               setTimeout(() => {
                   this.paymentStatus = 'completed';
+                  this.addLog('Payment', 'Payment successfully authorized! Aegis lifetime license activated.');
               }, 1500);
+          },
+
+          addLog(app, msg) {
+              const now = new Date();
+              const timeStr = now.toTimeString().split(' ')[0];
+              this.logs.unshift({ time: timeStr, app: app, msg: msg });
+              if (this.logs.length > 30) this.logs.pop();
+          },
+
+          resetSystem() {
+              this.activeView = 'mobile_terms';
+              this.acceptedTerms = false;
+              this.protectionLevel = 'balanced';
+              this.paymentStatus = 'idle';
+              this.isPaired = false;
+              this.isScanning = false;
+              this.logs = [
+                  { time: '09:41:02', app: 'System', msg: 'Secure loopback local tunnel configured' }
+              ];
+              this.addLog('Gateway', 'All paired sessions terminated. Ready for new pair.');
           }
       }">
 
@@ -123,15 +174,9 @@
 
             <!-- Direct view selector switcher -->
             <div class="flex items-center gap-2 bg-slate-100 p-1 rounded-xl">
-                <button @click="activeView = 'gateway'" 
-                        :class="activeView === 'gateway' ? 'bg-amber-500 text-white shadow' : 'text-slate-600 hover:bg-slate-200/50'"
-                        class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition duration-150 cursor-pointer">
-                    Device Setup & Pairing
-                </button>
-                <button @click="activeView = 'mobile_terms'"
-                        :class="activeView.startsWith('mobile') ? 'bg-emerald-500 text-white shadow' : 'text-slate-600 hover:bg-slate-200/50'"
-                        class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition duration-150 cursor-pointer">
-                    Simulated Mobile Experience
+                <button @click="resetSystem()"
+                        class="px-3.5 py-1.5 rounded-lg text-xs font-bold text-slate-600 hover:bg-slate-200/50 transition duration-150 cursor-pointer">
+                    Reset Demo Console
                 </button>
             </div>
         </div>
@@ -143,51 +188,117 @@
         <!-- LEFT COLUMN: GATEWAY DESKTOP VIEW (7 Cols) -->
         <div class="lg:col-span-7 space-y-8 text-left">
             
-            <!-- Standard Desktop Overview & Dynamic Pairing -->
-            <div class="space-y-3">
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-100 text-amber-800 text-xs font-semibold animate-pulse">
-                    <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                    <span>Ready for Instant QR Pairing</span>
-                </div>
-                <h1 class="heading-font text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
-                    <span>The Ultimate Smart Privacy Shield</span>
-                </h1>
-                <p class="text-slate-500 text-sm leading-relaxed">
-                    Scan the secure vector configuration code below with your Android camera. All communication instantly shifts to your mobile device for advanced local loopback sandboxing.
-                </p>
-            </div>
+            <!-- Dynamic State Switch 1: Pre-Pairing Setup (Scanning/Unpaired) -->
+            <template x-if="!isPaired">
+                <div class="space-y-8">
+                    <div class="space-y-3">
+                        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-100 text-amber-800 text-xs font-semibold animate-pulse">
+                            <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                            <span>Ready for Instant QR Pairing</span>
+                        </div>
+                        <h1 class="heading-font text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
+                            <span>The Ultimate Smart Privacy Shield</span>
+                        </h1>
+                        <p class="text-slate-500 text-sm leading-relaxed">
+                            Scan the secure vector configuration code below with your Android camera. All communication instantly shifts to your mobile device for advanced local loopback sandboxing.
+                        </p>
+                    </div>
 
-            <!-- QR Setup Card & Walkthrough Video Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center bg-white border border-slate-100 p-6 rounded-3xl shadow-xl">
-                <!-- QR Code Block -->
-                <div class="flex flex-col items-center space-y-4 bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                    <div class="relative p-3 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center animate-glowing-core">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&ecc=H&data=https://aegis-private-indol.vercel.app"
-                             class="w-40 h-40 rounded-lg object-contain bg-white p-1"
-                             alt="Aegis Mirror Live Setup QR Code" />
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="bg-white p-1 rounded-lg border border-slate-100 shadow-md">
-                                <img src="Logo.png" class="w-7 h-7 object-contain" alt="Logo" />
+                    <!-- QR Setup Card & Walkthrough Video Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center bg-white border border-slate-100 p-6 rounded-3xl shadow-xl">
+                        <!-- QR Code Block with simulated scanning click trigger -->
+                        <div class="flex flex-col items-center space-y-4 bg-slate-50 p-4 rounded-2xl border border-slate-100 relative group overflow-hidden">
+                            <div class="relative p-3 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center cursor-pointer" @click="triggerScan()">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&ecc=H&data=https://aegis-private-indol.vercel.app"
+                                     class="w-40 h-40 rounded-lg object-contain bg-white p-1 transition filter group-hover:blur-[2px]"
+                                     alt="Aegis Mirror Live Setup QR Code" />
+
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="bg-white p-1 rounded-lg border border-slate-100 shadow-md">
+                                        <img src="Logo.png" class="w-7 h-7 object-contain" alt="Logo" />
+                                    </div>
+                                </div>
+
+                                <!-- Scanning bar simulator -->
+                                <div x-show="isScanning" class="absolute left-0 right-0 h-1 bg-emerald-500 shadow-lg shadow-emerald-500/50 scan-line"></div>
+                            </div>
+
+                            <div class="text-center">
+                                <button @click="triggerScan()" class="px-4 py-1.5 bg-emerald-500 text-white font-bold text-[10px] rounded-lg shadow hover:bg-emerald-400 transition cursor-pointer flex items-center gap-1 mx-auto">
+                                    <span class="material-symbols-outlined text-xs">qr_code_scanner</span>
+                                    <span x-text="isScanning ? 'Pairing Device...' : 'Simulate Phone QR Scan'"></span>
+                                </button>
+                                <p class="text-[9px] text-slate-400 mt-1.5">Click the scan simulator to initiate the paired loopback protocol.</p>
+                            </div>
+                        </div>
+
+                        <!-- Onboarding Video Block -->
+                        <div class="space-y-3 text-left">
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Pairing & Walkthrough Guide</p>
+                            <div class="relative rounded-xl overflow-hidden aspect-video border border-slate-200/80 bg-slate-200 shadow-sm">
+                                <video src="The%20hero%20of%20the%20section.mp4" controls class="w-full h-full object-cover"></video>
+                            </div>
+                            <p class="text-xs text-slate-500 leading-relaxed">
+                                Learn how Aegis shields your dynamic location, secures private messaging threads, and blocks background trackers on the fly.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <!-- Dynamic State Switch 2: Post-Pairing Active Console (Device Connected & Running) -->
+            <template x-if="isPaired">
+                <div class="space-y-8" x-transition>
+                    <div class="p-6 bg-slate-900 text-white rounded-3xl border border-slate-850 shadow-2xl space-y-6">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-slate-800">
+                            <div class="flex items-center gap-3">
+                                <div class="w-3 h-3 rounded-full bg-emerald-500 animate-ping"></div>
+                                <div>
+                                    <h2 class="heading-font text-lg font-bold tracking-tight">Active Cryptographic Loopback Tunnel</h2>
+                                    <p class="text-[10px] text-slate-400 font-mono">Secured Connection ID: aegis-peer-829</p>
+                                </div>
+                            </div>
+                            <button @click="resetSystem()" class="px-3.5 py-1.5 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs rounded-lg shadow transition cursor-pointer">
+                                Disconnect Device
+                            </button>
+                        </div>
+
+                        <!-- Real-time Stat Grid -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                            <div class="p-3 bg-slate-850 rounded-xl border border-slate-800">
+                                <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Tunnel Protocol</p>
+                                <p class="text-base font-extrabold text-amber-400 mt-1">WireGuard SDK</p>
+                            </div>
+                            <div class="p-3 bg-slate-850 rounded-xl border border-slate-800">
+                                <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Intercepted Trackers</p>
+                                <p class="text-base font-extrabold text-rose-400 mt-1">1,482 blocked</p>
+                            </div>
+                            <div class="p-3 bg-slate-850 rounded-xl border border-slate-800">
+                                <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Throughput</p>
+                                <p class="text-base font-extrabold text-emerald-400 mt-1">142.8 Mbps</p>
+                            </div>
+                            <div class="p-3 bg-slate-850 rounded-xl border border-slate-800">
+                                <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Latency</p>
+                                <p class="text-base font-extrabold text-blue-400 mt-1">1.2 ms (Local)</p>
+                            </div>
+                        </div>
+
+                        <!-- Live Logging Console Output -->
+                        <div class="space-y-2">
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Aegis Sandbox Observability Logs</p>
+                            <div class="bg-black/90 p-4 rounded-xl border border-slate-800 font-mono text-[10px] text-emerald-400 space-y-1.5 max-h-[160px] overflow-y-auto">
+                                <template x-for="log in logs" :key="log.time">
+                                    <div class="flex items-start gap-2">
+                                        <span class="text-slate-500" x-text="log.time"></span>
+                                        <span class="text-amber-500 font-bold" x-text="'[' + log.app + ']'"></span>
+                                        <span class="text-slate-300" x-text="log.msg"></span>
+                                    </div>
+                                </template>
                             </div>
                         </div>
                     </div>
-                    <div class="text-center">
-                        <p class="text-xs font-bold text-slate-800">Scan with your smartphone</p>
-                        <p class="text-[10px] text-slate-400 mt-0.5">Launches secure local handshaking</p>
-                    </div>
                 </div>
-
-                <!-- Onboarding Video Block -->
-                <div class="space-y-3 text-left">
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Pairing & Walkthrough Guide</p>
-                    <div class="relative rounded-xl overflow-hidden aspect-video border border-slate-200/80 bg-slate-200 shadow-sm">
-                        <video src="The%20hero%20of%20the%20section.mp4" controls class="w-full h-full object-cover"></video>
-                    </div>
-                    <p class="text-xs text-slate-500 leading-relaxed">
-                        Learn how Aegis shields your dynamic location, secures private messaging threads, and blocks background trackers on the fly.
-                    </p>
-                </div>
-            </div>
+            </template>
 
             <!-- Integrated Privacy Policy and Refund Statement -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
@@ -238,15 +349,6 @@
                         </p>
                     </div>
                 </div>
-            </div>
-
-            <!-- Direct simulator button launcher -->
-            <div class="flex justify-start pt-2">
-                <button @click="activeView = 'mobile_terms'"
-                        class="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-400 text-white font-bold text-xs rounded-xl shadow-md transition duration-150 cursor-pointer">
-                    <span class="material-symbols-outlined text-sm">phone_iphone</span>
-                    <span>Simulate Mobile Experience Directly</span>
-                </button>
             </div>
         </div>
 
@@ -422,7 +524,7 @@
                                         </div>
                                         <div class="flex flex-wrap gap-1">
                                             <template x-for="perm in app.permissions">
-                                                <button @click="perm.active = !perm.active"
+                                                <button @click="perm.active = !perm.active; addLog(app.name, 'Toggled ' + perm.name + ' permission to ' + perm.active)"
                                                         :class="perm.active ? 'bg-emerald-500/10 text-emerald-700 border-emerald-500/20' : 'bg-rose-500/10 text-rose-700 border-rose-500/20'"
                                                         class="px-1.5 py-0.5 rounded text-[8px] font-medium border transition cursor-pointer flex items-center gap-0.5">
                                                     <span class="w-0.5 h-0.5 rounded-full" :class="perm.active ? 'bg-emerald-500' : 'bg-rose-500'"></span>
@@ -437,7 +539,7 @@
                     </div>
 
                     <div class="pt-3 border-t border-slate-100">
-                        <button @click="activeView = 'mobile_dashboard'"
+                        <button @click="activeView = 'mobile_dashboard'; isPaired = true; addLog('System', 'Sovereign virtual sandbox deployed.')"
                                 class="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-white font-bold text-[10px] rounded-lg shadow-sm transition duration-150 cursor-pointer flex items-center justify-center gap-1">
                             <span class="material-symbols-outlined text-xs">check_circle</span>
                             <span>Deploy Virtual Sandbox</span>

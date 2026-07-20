@@ -66,7 +66,6 @@
 <body class="h-full flex flex-col antialiased text-slate-800"
       x-data="{ 
           activeView: 'mobile_terms',
-          language: 'en',
           acceptedTerms: false,
           protectionLevel: 'balanced',
           paymentStatus: 'idle',
@@ -78,14 +77,6 @@
               { name: 'Messenger', pkg: 'com.facebook.orca', icon: 'forum', permissions: [ { name: 'Microphone', active: true }, { name: 'Contacts', active: true } ] },
               { name: 'Instagram', pkg: 'com.instagram.android', icon: 'photo_camera', permissions: [ { name: 'Storage', active: true }, { name: 'Location', active: true } ] }
           ],
-
-          initLanguage() {
-              if (navigator.language && navigator.language.startsWith('he')) {
-                  this.language = 'he';
-              } else {
-                  this.language = 'en';
-              }
-          },
 
           applyProtectionLevel(level) {
               this.protectionLevel = level;
@@ -116,123 +107,8 @@
               setTimeout(() => {
                   this.paymentStatus = 'completed';
               }, 1500);
-          },
-
-          t(key) {
-              const dict = {
-                  he: {
-                      title: 'אגיס מירור - מגן פרטיות קריפטוגרפי מהיר',
-                      desktopSetup: 'שיוך והגדרת מכשיר',
-                      mobileExperience: 'חוויית מובייל סימולטיבית',
-                      readyPairing: 'מוכן לשיוך QR מיידי',
-                      headline: 'מגן הפרטיות החכם והמתקדם ביותר',
-                      subheadline: 'סרוק את קוד ה-QR המאובטח באמצעות מצלמת האנדרואיד שלך. כל התקשורת תנותב באופן מיידי למכשיר הנייד לצורך ארגז חול מקומי ומאובטח.',
-                      scanWithPhone: 'סרוק עם הטלפון החכם',
-                      launchesSecure: 'מפעיל לחיצת יד מקומית מאובטחת',
-                      walkthroughGuide: 'מדריך שיוך וחיבור',
-                      videoDesc: 'למד כיצד Aegis מגן על המיקום הדינמי שלך, מאבטח שיחות ומסרים פרטיים, וחוסם מעקבי רקע בזמן אמת.',
-                      simulateDirectly: 'פתח את סימולטור המובייל ישירות',
-                      privacySummaryTitle: 'מדיניות פרטיות ואבטחה מובנית',
-                      privacySummaryDesc: 'אגיס פועלת בארכיטקטורת אפס ידיעה (Zero-Knowledge) מקומית לחלוטין. אין שום שרת ענן חיצוני שאוסף או שומר את המידע שלך. ה-VPN מנותב מקומית בלבד (Local Loopback) בהתאם לתקני GDPR ו-CCPA.',
-                      refundPolicyTitle: 'מדיניות החזרים כספיים ברורה והגונה',
-                      refundPolicyText1: 'החזר מלא של 100% בתוך 30 ימים ממועד הרכישה.',
-                      refundPolicyText2: 'החזר חלקי של 50% עד 4 חודשים ממועד הרכישה.',
-                      mobTermsTitle: 'הגדרת מגן ה-Aegis',
-                      mobTermsDesc: 'הגדרת סביבת ארגז חול מאובטחת במכשיר הנייד מתחילה כעת.',
-                      mobVideoTitle: 'סרטון הדרכה במובייל',
-                      mobPitchTitle: 'מה התפקיד של Aegis?',
-                      mobPitchDesc: 'מערכת אגיס מייצרת סביבת עבודה מבודדת המונעת ממעקבי רקע לקרוא את רשימת אנשי הקשר או את מיקומך הדינמי ללא אישור מפורש.',
-                      mobCheckbox: 'אני מסכים לתנאי השירות, אמנת הפרטיות ומדיניות ההחזרים.',
-                      mobButtonConnect: 'התחבר והגן על המכשיר',
-                      mobPaymentTitle: 'פתיחת מגן פרימיום',
-                      mobPaymentDesc: 'הפוך למשתמש ריבון מוגן לחלוטין',
-                      mobActiveChoice: 'הבחירה הפעילה',
-                      mobSovereignPlan: 'תוכנית הגנת הריבון - $10 לכל החיים',
-                      mobRefundSubtitle: 'מדיניות החזרים מלאה וחלקית מובטחת',
-                      mobCardSubtitle: 'כרטיס תשלום סימולטיבי מאובטח',
-                      mobCardholder: 'שם בעל הכרטיס',
-                      mobCardNum: 'מספר כרטיס',
-                      mobButtonPay: 'אשר תשלום חד פעמי של $10',
-                      mobButtonProcessing: 'מעבד תשלום מאובטח...',
-                      mobButtonSuccess: 'התשלום עבר בהצלחה!',
-                      mobShieldActiveTitle: 'מגן ארגז החול פעיל',
-                      mobShieldActiveDesc: 'הגדר את רמות אבטחת האפליקציות מטה',
-                      mobProtLevel: 'דרגת הגנה',
-                      mobAppPermissions: 'הרשאות אפליקציות מבודדות',
-                      mobDeployButton: 'פרוס סביבה וירטואלית',
-                      mobSecuredTitle: 'מכשיר מוגן ומאובטח',
-                      mobTerminalSecured: 'מסוף מאובטח לחלוטין',
-                      mobInteractiveControl: 'לוח בקרה אינטראקטיבי במובייל',
-                      mobWatchdog: 'מצב מנגנון שמירה',
-                      mobTraffic: 'ניתוח תעבורת רשת',
-                      mobBackToDesktop: 'חזור למסך הבית של המחשב',
-                      mobAlertWatchdog: 'מנגנון השמירה המקומי פעיל ב-100%. טבלאות הניתוב מאובטחות.',
-                      mobAlertTelemetry: 'יומני התעבורה מסונכרנים לקובץ המקומי במכשיר. בדוק את יומני המערכת במחשב לפרטים נוספים.',
-                      guideHeadline: 'מדריך מהיר ושאלות נפוצות',
-                      faq1Q: 'מדוע נדרש אישור VPN מקומי?',
-                      faq1A: 'אישור ה-VPN מאפשר למנוע ה-Shield המקומי לנתח ולסנן את תעבורת הרשת ישירות במכשיר ללא שרת חיצוני.',
-                      faq2Q: 'האם זה מאט את מהירות הגלישה?',
-                      faq2A: 'לא! מכיוון שכל הניתוב מבוצע באופן מקומי לחלוטין (Local Loopback), מהירות הגלישה שלכם נשארת מקסימלית.'
-                  },
-                  en: {
-                      title: 'Aegis Mirror - Lightspeed Cryptographic Privacy Shield',
-                      desktopSetup: 'Device Setup & Pairing',
-                      mobileExperience: 'Simulated Mobile Experience',
-                      readyPairing: 'Ready for Instant QR Pairing',
-                      headline: 'The Ultimate Smart Privacy Shield',
-                      subheadline: 'Scan the secure vector configuration code below with your Android camera. All communication instantly shifts to your mobile device for advanced local loopback sandboxing.',
-                      scanWithPhone: 'Scan with your smartphone',
-                      launchesSecure: 'Launches secure local handshaking',
-                      walkthroughGuide: 'Pairing & Walkthrough Guide',
-                      videoDesc: 'Learn how Aegis shields your dynamic location, secures private messaging threads, and blocks background trackers on the fly.',
-                      simulateDirectly: 'Simulate Mobile Experience Directly',
-                      privacySummaryTitle: 'Built-in Security & Privacy Policy',
-                      privacySummaryDesc: 'Aegis runs on a fully offline, local zero-knowledge architecture. No third-party servers ever receive or inspect your connection. Local Loopback VPN complies fully with GDPR and CCPA standards.',
-                      refundPolicyTitle: 'Our Honest Refund Guarantee',
-                      refundPolicyText1: '100% full money-back guarantee within 30 days of purchase.',
-                      refundPolicyText2: '50% partial money-back guarantee up to 4 months of use.',
-                      mobTermsTitle: 'Configure Aegis Shield',
-                      mobTermsDesc: 'Your secure device-level sandbox setup starts now.',
-                      mobVideoTitle: 'Onboarding Video Walkthrough',
-                      mobPitchTitle: 'What does Aegis do?',
-                      mobPitchDesc: 'Aegis creates a highly secure, completely local sandbox container. It isolates dangerous background trackers and prevents telemetry packet leakage.',
-                      mobCheckbox: 'I agree to the terms of service, privacy policy and refund guarantee.',
-                      mobButtonConnect: 'Connect & Protect',
-                      mobPaymentTitle: 'Unlock Premium Shield',
-                      mobPaymentDesc: 'Become a certified Aegis Sovereign',
-                      mobActiveChoice: 'Active Choice',
-                      mobSovereignPlan: 'Sovereign Protection Plan - $10 Lifetime',
-                      mobRefundSubtitle: 'Full & partial refund guarantees included',
-                      mobCardSubtitle: 'Simulated Secure Payment Card',
-                      mobCardholder: 'Cardholder Name',
-                      mobCardNum: 'Card Number',
-                      mobButtonPay: 'Confirm $10 One-time Payment',
-                      mobButtonProcessing: 'Processing secure transaction...',
-                      mobButtonSuccess: 'Payment authorized successfully!',
-                      mobShieldActiveTitle: 'Sandbox Shield Active',
-                      mobShieldActiveDesc: 'Configure app protection level below',
-                      mobProtLevel: 'Protection Level',
-                      mobAppPermissions: 'Sandbox Isolation App permissions',
-                      mobDeployButton: 'Deploy Virtual Sandbox',
-                      mobSecuredTitle: 'AEGIS SOVEREIGN',
-                      mobTerminalSecured: 'Terminal Secured',
-                      mobInteractiveControl: 'Interactive Control Panel',
-                      mobWatchdog: 'Watchdog State',
-                      mobTraffic: 'Traffic telemetry',
-                      mobBackToDesktop: 'Return to Desktop Home',
-                      mobAlertWatchdog: 'Local VPN Watchdog heartbeat: 100% active. Virtual routing tables are secure.',
-                      mobAlertTelemetry: 'Observability Logs synced to local sandbox securely. Check original device terminal for telemetry details.',
-                      guideHeadline: 'Quick Start Guide & FAQ',
-                      faq1Q: 'Why does Aegis require local VPN permission?',
-                      faq1A: 'The permission allows the local sandbox engine to filter tracking attempts directly inside your phone\'s memory.',
-                      faq2Q: 'Does it affect my internet connection speed?',
-                      faq2A: 'No. Since routing is 100% local on-device (Local Loopback), your connection speed remains unaffected.'
-                  }
-              };
-              return dict[this.language][key] || key;
           }
-      }"
-      x-init="initLanguage()">
+      }">
 
     <!-- Navigation Header -->
     <header class="border-b border-slate-200/60 bg-white/80 backdrop-blur-md sticky top-0 z-40">
@@ -250,12 +126,12 @@
                 <button @click="activeView = 'gateway'" 
                         :class="activeView === 'gateway' ? 'bg-amber-500 text-white shadow' : 'text-slate-600 hover:bg-slate-200/50'"
                         class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition duration-150 cursor-pointer">
-                    <span x-text="t('desktopSetup')"></span>
+                    Device Setup & Pairing
                 </button>
                 <button @click="activeView = 'mobile_terms'"
                         :class="activeView.startsWith('mobile') ? 'bg-emerald-500 text-white shadow' : 'text-slate-600 hover:bg-slate-200/50'"
                         class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition duration-150 cursor-pointer">
-                    <span x-text="t('mobileExperience')"></span>
+                    Simulated Mobile Experience
                 </button>
             </div>
         </div>
@@ -271,12 +147,14 @@
             <div class="space-y-3">
                 <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-50 border border-amber-100 text-amber-800 text-xs font-semibold animate-pulse">
                     <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                    <span x-text="t('readyPairing')"></span>
+                    <span>Ready for Instant QR Pairing</span>
                 </div>
                 <h1 class="heading-font text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
-                    <span x-text="t('headline')"></span>
+                    <span>The Ultimate Smart Privacy Shield</span>
                 </h1>
-                <p class="text-slate-500 text-sm leading-relaxed" x-text="t('subheadline')"></p>
+                <p class="text-slate-500 text-sm leading-relaxed">
+                    Scan the secure vector configuration code below with your Android camera. All communication instantly shifts to your mobile device for advanced local loopback sandboxing.
+                </p>
             </div>
 
             <!-- QR Setup Card & Walkthrough Video Grid -->
@@ -294,18 +172,20 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <p class="text-xs font-bold text-slate-800" x-text="t('scanWithPhone')"></p>
-                        <p class="text-[10px] text-slate-400 mt-0.5" x-text="t('launchesSecure')"></p>
+                        <p class="text-xs font-bold text-slate-800">Scan with your smartphone</p>
+                        <p class="text-[10px] text-slate-400 mt-0.5">Launches secure local handshaking</p>
                     </div>
                 </div>
 
                 <!-- Onboarding Video Block -->
                 <div class="space-y-3 text-left">
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest" x-text="t('walkthroughGuide')"></p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Pairing & Walkthrough Guide</p>
                     <div class="relative rounded-xl overflow-hidden aspect-video border border-slate-200/80 bg-slate-200 shadow-sm">
                         <video src="The%20hero%20of%20the%20section.mp4" controls class="w-full h-full object-cover"></video>
                     </div>
-                    <p class="text-xs text-slate-500 leading-relaxed" x-text="t('videoDesc')"></p>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                        Learn how Aegis shields your dynamic location, secures private messaging threads, and blocks background trackers on the fly.
+                    </p>
                 </div>
             </div>
 
@@ -315,25 +195,27 @@
                 <div class="p-4 bg-white rounded-2xl border border-slate-100 shadow-sm space-y-2">
                     <h3 class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
                         <span class="material-symbols-outlined text-amber-500 text-sm">gavel</span>
-                        <span x-text="t('privacySummaryTitle')"></span>
+                        <span>Built-in Security & Privacy Policy</span>
                     </h3>
-                    <p class="text-[11px] text-slate-500 leading-relaxed" x-text="t('privacySummaryDesc')"></p>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">
+                        Aegis runs on a fully offline, local zero-knowledge architecture. No third-party servers ever receive or inspect your connection. Local Loopback VPN complies fully with GDPR and CCPA standards.
+                    </p>
                 </div>
 
                 <!-- Refund & Pricing Policy -->
                 <div class="p-4 bg-amber-50/60 rounded-2xl border border-amber-100/50 space-y-2">
                     <h3 class="text-xs font-bold text-amber-800 flex items-center gap-1.5">
                         <span class="material-symbols-outlined text-amber-600 text-sm">verified_user</span>
-                        <span x-text="t('refundPolicyTitle')"></span>
+                        <span>Our Honest Refund Guarantee</span>
                     </h3>
                     <div class="text-[11px] text-slate-600 space-y-1">
                         <p class="flex items-center gap-1">
                             <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
-                            <span x-text="t('refundPolicyText1')"></span>
+                            <span>100% full money-back guarantee within 30 days of purchase.</span>
                         </p>
                         <p class="flex items-center gap-1">
                             <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
-                            <span x-text="t('refundPolicyText2')"></span>
+                            <span>50% partial money-back guarantee up to 4 months of use.</span>
                         </p>
                     </div>
                 </div>
@@ -341,15 +223,19 @@
 
             <!-- Quick FAQ & Guide Section -->
             <div class="bg-white p-5 rounded-3xl border border-slate-150 shadow-sm space-y-4">
-                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest" x-text="t('guideHeadline')"></h3>
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Quick Start Guide & FAQ</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="space-y-1">
-                        <h4 class="text-xs font-bold text-slate-800" x-text="t('faq1Q')"></h4>
-                        <p class="text-[11px] text-slate-500 leading-relaxed" x-text="t('faq1A')"></p>
+                        <h4 class="text-xs font-bold text-slate-800">Why does Aegis require local VPN permission?</h4>
+                        <p class="text-[11px] text-slate-500 leading-relaxed">
+                            The permission allows the local sandbox engine to filter tracking attempts directly inside your phone's memory.
+                        </p>
                     </div>
                     <div class="space-y-1">
-                        <h4 class="text-xs font-bold text-slate-800" x-text="t('faq2Q')"></h4>
-                        <p class="text-[11px] text-slate-500 leading-relaxed" x-text="t('faq2A')"></p>
+                        <h4 class="text-xs font-bold text-slate-800">Does it affect my internet connection speed?</h4>
+                        <p class="text-[11px] text-slate-500 leading-relaxed">
+                            No. Since routing is 100% local on-device (Local Loopback), your connection speed remains unaffected.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -359,7 +245,7 @@
                 <button @click="activeView = 'mobile_terms'"
                         class="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-400 text-white font-bold text-xs rounded-xl shadow-md transition duration-150 cursor-pointer">
                     <span class="material-symbols-outlined text-sm">phone_iphone</span>
-                    <span x-text="t('simulateDirectly')"></span>
+                    <span>Simulate Mobile Experience Directly</span>
                 </button>
             </div>
         </div>
@@ -387,13 +273,13 @@
                             <div class="w-10 h-10 bg-amber-50 border border-amber-100 rounded-xl flex items-center justify-center mx-auto shadow-sm">
                                 <img src="Logo.png" class="w-6 h-6 object-contain" />
                             </div>
-                            <h2 class="heading-font text-sm font-extrabold text-slate-900" x-text="t('mobTermsTitle')"></h2>
-                            <p class="text-[10px] text-slate-500 leading-normal" x-text="t('mobTermsDesc')"></p>
+                            <h2 class="heading-font text-sm font-extrabold text-slate-900">Configure Aegis Shield</h2>
+                            <p class="text-[10px] text-slate-500 leading-normal">Your secure device-level sandbox setup starts now.</p>
                         </div>
 
                         <!-- Onboarding walkthrough video block -->
                         <div class="space-y-1">
-                            <p class="text-[9px] font-bold uppercase tracking-wider text-slate-400" x-text="t('mobVideoTitle')"></p>
+                            <p class="text-[9px] font-bold uppercase tracking-wider text-slate-400">Onboarding Video Walkthrough</p>
                             <div class="rounded-lg overflow-hidden aspect-video border border-slate-200 bg-slate-100 shadow-sm">
                                 <video src="hero_clip_30s.mp4" controls class="w-full h-full object-cover"></video>
                             </div>
@@ -401,15 +287,17 @@
 
                         <!-- Product Pitch card -->
                         <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
-                            <p class="text-[10px] font-bold text-slate-800" x-text="t('mobPitchTitle')"></p>
-                            <p class="text-[9px] text-slate-500 leading-relaxed" x-text="t('mobPitchDesc')"></p>
+                            <p class="text-[10px] font-bold text-slate-800">What does Aegis do?</p>
+                            <p class="text-[9px] text-slate-500 leading-relaxed">
+                                Aegis creates a highly secure, completely local sandbox container. It isolates dangerous background trackers and prevents telemetry packet leakage.
+                            </p>
                         </div>
 
                         <!-- Terms of service confirmation checkbox -->
                         <div class="p-2.5 bg-amber-50/50 rounded-xl border border-amber-100/50">
                             <label class="flex items-start gap-2 cursor-pointer select-none">
                                 <input type="checkbox" x-model="acceptedTerms" class="w-4 h-4 rounded border-amber-300 text-amber-500 focus:ring-amber-400/50 mt-0.5 cursor-pointer">
-                                <span class="text-[9px] text-slate-700 leading-relaxed font-medium" x-text="t('mobCheckbox')"></span>
+                                <span class="text-[9px] text-slate-700 leading-relaxed font-medium">I agree to the terms of service, privacy policy and refund guarantee.</span>
                             </label>
                         </div>
                     </div>
@@ -419,7 +307,7 @@
                                 :disabled="!acceptedTerms"
                                 :class="acceptedTerms ? 'bg-amber-500 hover:bg-amber-400 text-white cursor-pointer shadow-md' : 'bg-slate-100 text-slate-400 cursor-not-allowed'"
                                 class="w-full py-2.5 rounded-lg text-[10px] font-bold transition duration-150 flex items-center justify-center gap-1.5">
-                            <span x-text="t('mobButtonConnect')"></span>
+                            <span>Connect & Protect</span>
                             <span class="material-symbols-outlined text-xs">arrow_forward</span>
                         </button>
                     </div>
@@ -430,14 +318,14 @@
                     <div class="flex-grow overflow-y-auto space-y-4 px-0.5 text-left">
                         <div class="text-center space-y-1">
                             <span class="material-symbols-outlined text-2xl text-emerald-500">lock_open</span>
-                            <h2 class="heading-font text-sm font-extrabold text-slate-900" x-text="t('mobPaymentTitle')"></h2>
-                            <p class="text-[10px] text-slate-500" x-text="t('mobPaymentDesc')"></p>
+                            <h2 class="heading-font text-sm font-extrabold text-slate-900">Unlock Premium Shield</h2>
+                            <p class="text-[10px] text-slate-500">Become a certified Aegis Sovereign</p>
                         </div>
 
                         <!-- Active promo billing tier -->
                         <div class="bg-gradient-to-br from-amber-50 to-amber-100/30 border border-amber-200 p-3.5 rounded-xl relative shadow-sm text-left">
-                            <div class="absolute top-2 right-2 bg-amber-500 text-white text-[7px] font-extrabold px-1.5 py-0.5 rounded-full uppercase tracking-wider" x-text="t('mobActiveChoice')"></div>
-                            <p class="text-[10px] font-bold text-amber-800" x-text="t('mobSovereignPlan')"></p>
+                            <div class="absolute top-2 right-2 bg-amber-500 text-white text-[7px] font-extrabold px-1.5 py-0.5 rounded-full uppercase tracking-wider">Active Choice</div>
+                            <p class="text-[10px] font-bold text-amber-800">Sovereign Protection Plan - $10 Lifetime</p>
 
                             <div class="my-1.5 flex items-baseline gap-0.5">
                                 <span class="text-2xl font-black text-slate-900">$10</span>
@@ -447,26 +335,26 @@
                             <div class="border-t border-amber-200/50 pt-2 mt-2 space-y-1 text-[9px] text-slate-700 font-medium">
                                 <p class="flex items-center gap-1">
                                     <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
-                                    <span x-text="t('refundPolicyText1')"></span>
+                                    <span>100% full money-back guarantee within 30 days of purchase.</span>
                                 </p>
                                 <p class="flex items-center gap-1">
                                     <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
-                                    <span x-text="t('refundPolicyText2')"></span>
+                                    <span>50% partial money-back guarantee up to 4 months of use.</span>
                                 </p>
                             </div>
                         </div>
 
                         <!-- Card details container -->
                         <div class="space-y-2">
-                            <p class="text-[8px] font-bold uppercase tracking-wider text-slate-400" x-text="t('mobCardSubtitle')"></p>
+                            <p class="text-[8px] font-bold uppercase tracking-wider text-slate-400">Simulated Secure Payment Card</p>
                             <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-100 space-y-2">
                                 <div>
-                                    <label class="block text-[8px] font-bold text-slate-400 uppercase mb-0.5" x-text="t('mobCardholder')"></label>
+                                    <label class="block text-[8px] font-bold text-slate-400 uppercase mb-0.5">Cardholder Name</label>
                                     <input type="text" value="Aegis Sovereign Participant" readonly class="w-full bg-white px-2 py-1 border border-slate-200 rounded text-[9px] font-medium text-slate-700">
                                 </div>
                                 <div class="grid grid-cols-3 gap-1">
                                     <div class="col-span-2">
-                                        <label class="block text-[8px] font-bold text-slate-400 uppercase mb-0.5" x-text="t('mobCardNum')"></label>
+                                        <label class="block text-[8px] font-bold text-slate-400 uppercase mb-0.5">Card Number</label>
                                         <input type="text" value="4580 1200 4500 9012" readonly class="w-full bg-white px-2 py-1 border border-slate-200 rounded text-[9px] font-mono text-slate-700">
                                     </div>
                                     <div>
@@ -483,7 +371,7 @@
                                 :disabled="paymentStatus === 'processing'"
                                 class="w-full py-2.5 bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-[10px] rounded-lg shadow-sm transition duration-150 cursor-pointer flex items-center justify-center gap-1">
                             <span class="material-symbols-outlined text-xs">payment</span>
-                            <span x-text="paymentStatus === 'processing' ? t('mobButtonProcessing') : (paymentStatus === 'completed' ? t('mobButtonSuccess') : t('mobButtonPay'))"></span>
+                            <span x-text="paymentStatus === 'processing' ? 'Processing secure transaction...' : (paymentStatus === 'completed' ? 'Payment authorized successfully!' : 'Confirm $10 One-time Payment')"></span>
                         </button>
                     </div>
                 </div>
@@ -493,13 +381,13 @@
                     <div class="flex-grow overflow-y-auto space-y-4 px-0.5 text-left">
                         <div class="text-center space-y-1">
                             <span class="material-symbols-outlined text-xl text-amber-500 animate-spin">sync</span>
-                            <h2 class="heading-font text-xs font-extrabold text-slate-900" x-text="t('mobShieldActiveTitle')"></h2>
-                            <p class="text-[9px] text-slate-500" x-text="t('mobShieldActiveDesc')"></p>
+                            <h2 class="heading-font text-xs font-extrabold text-slate-900">Sandbox Shield Active</h2>
+                            <p class="text-[9px] text-slate-500">Configure app protection level below</p>
                         </div>
 
                         <!-- Protection Level selector switches -->
                         <div class="space-y-1.5">
-                            <p class="text-[8px] font-bold uppercase tracking-wider text-slate-400" x-text="t('mobProtLevel')"></p>
+                            <p class="text-[8px] font-bold uppercase tracking-wider text-slate-400">Protection Level</p>
                             <div class="grid grid-cols-3 gap-1 bg-slate-100 p-0.5 rounded-lg">
                                 <button @click="applyProtectionLevel('balanced')"
                                         :class="protectionLevel === 'balanced' ? 'bg-white text-amber-600 font-bold shadow-sm' : 'text-slate-500'"
@@ -521,7 +409,7 @@
 
                         <!-- App permission list controls -->
                         <div class="space-y-1.5">
-                            <p class="text-[8px] font-bold uppercase tracking-wider text-slate-400" x-text="t('mobAppPermissions')"></p>
+                            <p class="text-[8px] font-bold uppercase tracking-wider text-slate-400">Sandbox Isolation App permissions</p>
                             <div class="space-y-1.5 max-h-[160px] overflow-y-auto pr-0.5">
                                 <template x-for="app in apps" :key="app.pkg">
                                     <div class="p-2 rounded-lg border border-slate-100 bg-slate-50 space-y-1">
@@ -552,7 +440,7 @@
                         <button @click="activeView = 'mobile_dashboard'"
                                 class="w-full py-2.5 bg-amber-500 hover:bg-amber-400 text-white font-bold text-[10px] rounded-lg shadow-sm transition duration-150 cursor-pointer flex items-center justify-center gap-1">
                             <span class="material-symbols-outlined text-xs">check_circle</span>
-                            <span x-text="t('mobDeployButton')"></span>
+                            <span>Deploy Virtual Sandbox</span>
                         </button>
                     </div>
                 </div>
@@ -564,32 +452,32 @@
                             <img src="Logo.png" class="w-10 h-10 object-contain" />
                         </div>
                         <div class="text-center space-y-0.5 bg-white/80 px-3 py-1.5 rounded-xl border border-white/50">
-                            <h2 class="heading-font text-[11px] font-extrabold text-slate-900" x-text="t('mobSecuredTitle')"></h2>
+                            <h2 class="heading-font text-[11px] font-extrabold text-slate-900">AEGIS SOVEREIGN</h2>
                             <p class="text-[8px] font-bold text-emerald-600 uppercase tracking-wider flex items-center justify-center gap-0.5">
                                 <span class="w-1 h-1 rounded-full bg-emerald-500 animate-ping"></span>
-                                <span x-text="t('mobTerminalSecured')"></span>
+                                <span>Terminal Secured</span>
                             </p>
                         </div>
                     </div>
 
                     <!-- Interactive control dashboard utilities -->
                     <div class="space-y-2 bg-white/90 p-2.5 rounded-2xl border border-white/90 shadow-md">
-                        <p class="text-[8px] font-bold uppercase tracking-wider text-slate-400 text-center" x-text="t('mobInteractiveControl')"></p>
+                        <p class="text-[8px] font-bold uppercase tracking-wider text-slate-400 text-center">Interactive Control Panel</p>
                         <div class="grid grid-cols-2 gap-1.5 text-left">
-                            <button @click="alert(t('mobAlertWatchdog'))"
+                            <button @click="alert('Local VPN Watchdog heartbeat: 100% active. Virtual routing tables are secure.')"
                                     class="p-2 rounded-lg border border-slate-100 bg-slate-50 hover:bg-slate-100 transition text-left cursor-pointer">
                                 <span class="material-symbols-outlined text-amber-500 text-xs">settings_suggest</span>
-                                <p class="text-[8px] font-bold text-slate-800 mt-0.5" x-text="t('mobWatchdog')"></p>
+                                <p class="text-[8px] font-bold text-slate-800 mt-0.5">Watchdog State</p>
                             </button>
-                            <button @click="alert(t('mobAlertTelemetry'))"
+                            <button @click="alert('Observability Logs synced to local sandbox securely. Check original device terminal for telemetry details.')"
                                     class="p-2 rounded-lg border border-slate-100 bg-slate-50 hover:bg-slate-100 transition text-left cursor-pointer">
                                 <span class="material-symbols-outlined text-emerald-500 text-xs">bar_chart</span>
-                                <p class="text-[8px] font-bold text-slate-800 mt-0.5" x-text="t('mobTraffic')"></p>
+                                <p class="text-[8px] font-bold text-slate-800 mt-0.5">Traffic telemetry</p>
                             </button>
                         </div>
                         <button @click="activeView = 'gateway'"
-                                class="w-full py-2 bg-slate-900 hover:bg-slate-850 text-white font-bold text-[9px] rounded-lg transition cursor-pointer"
-                                x-text="t('mobBackToDesktop')">
+                                class="w-full py-2 bg-slate-900 hover:bg-slate-850 text-white font-bold text-[9px] rounded-lg transition cursor-pointer">
+                            Return to Desktop Home
                         </button>
                     </div>
                 </div>

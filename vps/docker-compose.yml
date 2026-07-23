@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  caddy:
+    image: caddy:2.7-alpine
+    container_name: aegis_caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - pocketbase
+    networks:
+      - aegis_net
+
+  pocketbase:
+    image: alpine:latest
+    container_name: aegis_pocketbase
+    restart: unless-stopped
+    volumes:
+      - ../pb_data:/pb/pb_data
+      - ../pb_hooks:/pb/pb_hooks
+      - ../pb_public:/pb/pb_public
+    expose:
+      - "8090"
+    working_dir: /pb
+    command: sh -c "
+      apk add --no-cache wget unzip ca-certificates &&
+      wget https://github.com/pocketbase/pocketbase/releases/download/v0.39.0/pocketbase_0.39.0_linux_amd64.zip &&
+      unzip pocketbase_0.39.0_linux_amd64.zip &&
+      rm pocketbase_0.39.0_linux_amd64.zip &&
+      ./pocketbase serve --http=0.0.0.0:8090"
+    networks:
+      - aegis_net
+
+networks:
+  aegis_net:
+    driver: bridge
+
+volumes:
+  caddy_data:
+  caddy_config:

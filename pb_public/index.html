@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html class="dark" lang="en" x-data="{ 
+    currentScreen: 'gateway', 
+    isSecure: true, 
+    showSandbox: false, 
+    isBlurred: true,
+    theme: 'dark',
+    username: 'Operator-71',
+    emailAlias: 'afi.secure.box2026@tempmail.io',
+    registered: false,
+    sandboxApps: [
+        { name: 'Microphone Obfuscator', desc: 'Virtualize on-device audio stream', active: true, icon: 'mic' },
+        { name: 'GPS Fuzzer', desc: 'Offset precise coordinates by 35m', active: true, icon: 'location_on' },
+        { name: 'Contacts Neutralizer', desc: 'Prevent telemetry lookup', active: false, icon: 'contacts' },
+        { name: 'System Watchdog', desc: 'Auto fail-open on 50ms latency', active: true, icon: 'security' }
+    ]
+}" x-init="
+    setTimeout(() => { isBlurred = false }, 3000);
+    $watch('theme', value => {
+        if (value === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.classList.remove('light');
+        } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+        }
+    });
+">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aegis Mirror - Digital Sovereignty</title>
+    <link rel="manifest" href="/manifest.json">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;600;800&family=Manrope:wght@600;700;800&family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        // Technological Aegis Colors
+                        "bronze-deep": "#5D3A1A",
+                        "bronze-glow": "#CD7F32",
+                        "cyber-charcoal": "#121212",
+                        "secure-emerald": "#00E676",
+                        "alert-amber": "#FFAB00",
+                        
+                        // Serene Protection Colors
+                        "on-secondary-fixed-variant": "#38485d",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#f7f9fb",
+                        "tertiary": "#006242",
+                        "on-tertiary-fixed": "#002113",
+                        "secondary": "#505f76",
+                        "surface": "#f7f9fb",
+                        "surface-dim": "#d8dadc",
+                        "outline": "#737686",
+                        "tertiary-container": "#007d55",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-surface-variant": "#434655",
+                        "on-secondary-fixed": "#0b1c30",
+                        "surface-container-highest": "#e0e3e5",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#b4c5ff",
+                        "surface-container-high": "#e6e8ea",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-primary-container": "#eeefff",
+                        "inverse-surface": "#2d3133",
+                        "primary-container": "#2563eb",
+                        "secondary-fixed": "#d3e4fe",
+                        "primary": "#004ac6",
+                        "inverse-on-surface": "#eff1f3",
+                        "secondary-fixed-dim": "#b7c8e1",
+                        "secondary-container": "#d0e1fb",
+                        "background": "#f7f9fb",
+                        "error": "#ba1a1a",
+                        "surface-container": "#eceef0",
+                        "on-primary": "#ffffff",
+                        "surface-tint": "#0053db",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "surface-variant": "#e0e3e5",
+                        "outline-variant": "#c3c6d7",
+                        "on-tertiary-container": "#bdffdb",
+                        "on-secondary-container": "#54647a",
+                        "surface-container-low": "#f2f4f6",
+                        "primary-fixed": "#dbe1ff",
+                        "on-background": "#191c1e",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "on-primary-fixed": "#00174b"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "xl": "32px",
+                        "margin-desktop": "40px",
+                        "lg": "24px",
+                        "margin-mobile": "16px",
+                        "sm": "8px",
+                        "gutter": "24px",
+                        "3xl": "64px",
+                        "2xl": "48px",
+                        "base": "4px",
+                        "md": "16px",
+                        "xs": "4px"
+                    },
+                    fontFamily: {
+                        "myth-font": ["Cinzel", "serif"],
+                        "prose-font": ["Inter", "sans-serif"],
+                        "headline-lg": ["Manrope", "sans-serif"],
+                        "headline-xl": ["Space Grotesk", "sans-serif"],
+                        "data-mono": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-shield { animation: pulse-emerald 4s infinite ease-in-out; }
+        .bypass-shield { animation: pulse-amber 4s infinite ease-in-out; }
+        @keyframes pulse-emerald {
+            0%, 100% { filter: drop-shadow(0 0 15px rgba(0, 230, 118, 0.4)); }
+            50% { filter: drop-shadow(0 0 30px rgba(0, 230, 118, 0.8)); }
+        }
+        @keyframes pulse-amber {
+            0%, 100% { filter: drop-shadow(0 0 15px rgba(245, 171, 0, 0.4)); }
+            50% { filter: drop-shadow(0 0 30px rgba(245, 171, 0, 0.8)); }
+        }
+        .liquid-glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .dark .liquid-glass {
+            background: rgba(18, 18, 18, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        @keyframes scan-line {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        .qr-block {
+            background: linear-gradient(135deg, rgba(205, 127, 50, 0.2), rgba(0, 228, 117, 0.2));
+            aspect-ratio: 1;
+        }
+        .medusa-glow {
+            animation: pulse-emerald 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-prose-font min-h-screen flex flex-col transition-colors duration-300 dark:bg-zinc-950 dark:text-zinc-200">
+
+    <!-- GLOBAL NAVBAR (Hidden in Gateway view) -->
+    <header x-show="currentScreen !== 'gateway'" class="w-full bg-surface-container-lowest border-b border-outline-variant px-margin-desktop py-md flex justify-between items-center z-40 dark:bg-zinc-900 dark:border-zinc-800">
+        <div class="flex items-center gap-xl">
+            <span class="font-myth-font text-xl font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-emerald-400 cursor-pointer" @click="currentScreen = 'gateway'">AEGIS MIRROR</span>
+            <nav class="hidden md:flex gap-lg">
+                <button 
+                    :class="currentScreen === 'dashboard' ? 'text-primary dark:text-emerald-400 border-b-2 border-primary dark:border-emerald-400 font-semibold' : 'text-on-surface-variant hover:text-primary dark:text-zinc-400 dark:hover:text-emerald-300'"
+                    class="pb-1 font-headline-lg text-sm cursor-pointer transition-all"
+                    @click="currentScreen = 'dashboard'">
+                    Shield Control
+                </button>
+                <button 
+                    :class="currentScreen === 'vault' ? 'text-primary dark:text-emerald-400 border-b-2 border-primary dark:border-emerald-400 font-semibold' : 'text-on-surface-variant hover:text-primary dark:text-zinc-400 dark:hover:text-emerald-300'"
+                    class="pb-1 font-headline-lg text-sm cursor-pointer transition-all"
+                    @click="currentScreen = 'vault'">
+                    Identity Vault
+                </button>
+                <button 
+                    x-show="!registered"
+                    :class="currentScreen === 'beta' ? 'text-primary dark:text-emerald-400 border-b-2 border-primary dark:border-emerald-400 font-semibold' : 'text-on-surface-variant hover:text-primary dark:text-zinc-400 dark:hover:text-emerald-300'"
+                    class="pb-1 font-headline-lg text-sm cursor-pointer transition-all"
+                    @click="currentScreen = 'beta'">
+                    Register Node
+                </button>
+            </nav>
+        </div>
+        <div class="flex items-center gap-md">
+            <!-- Theme Toggle Button -->
+            <button class="p-2 rounded-full hover:bg-surface-container-low transition-colors cursor-pointer dark:hover:bg-zinc-850" @click="theme = theme === 'dark' ? 'light' : 'dark'">
+                <span class="material-symbols-outlined text-on-surface-variant dark:text-zinc-300" x-text="theme === 'dark' ? 'light_mode' : 'dark_mode'"></span>
+            </button>
+            <div class="flex items-center gap-sm cursor-pointer text-on-surface-variant hover:text-primary dark:hover:text-emerald-400">
+                <span class="material-symbols-outlined">account_circle</span>
+                <span class="font-data-mono text-xs hidden sm:inline" x-text="username"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENT WRAPPER -->
+    <main class="flex-grow flex flex-col">
+
+        <!-- 1. GATEWAY SCREEN -->
+        <section x-show="currentScreen === 'gateway'" class="flex-grow w-full min-h-screen bg-[#0b0c10] text-slate-200 flex flex-col items-center justify-center p-6 relative overflow-hidden" x-data="{ scanning: false }">
+            <!-- Glass background effect -->
+            <div class="absolute inset-0 z-0 flex justify-center items-center pointer-events-none">
+                <div class="w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[120px]"></div>
+                <div class="w-[300px] h-[300px] bg-amber-500/5 rounded-full blur-[100px]"></div>
+            </div>
+
+            <!-- Central Content Container -->
+            <div class="relative z-10 w-full max-w-lg flex flex-col items-center text-center space-y-8" :class="isBlurred ? 'blur-md opacity-50' : 'blur-none opacity-100'" style="transition: all 1.5s ease-out;">
+                
+                <header class="space-y-1">
+                    <h1 class="font-myth-font text-4xl md:text-5xl font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-100 to-emerald-300">AEGIS MIRROR</h1>
+                    <p class="text-xs text-slate-500 font-semibold tracking-widest uppercase">Digital Sovereignty Engine</p>
+                </header>
+
+                <!-- Holographic Medusa Core -->
+                <div class="relative w-64 h-64 md:w-72 md:h-72 rounded-full flex justify-center items-center group cursor-pointer" @click="scanning = true">
+                    <!-- Spinning metallic rings -->
+                    <div class="absolute inset-0 rounded-full border border-amber-500/20 scale-110 group-hover:rotate-180 transition-transform duration-[4000ms] ease-in-out"></div>
+                    <div class="absolute inset-0 rounded-full border-2 border-emerald-500/10 scale-105 animate-pulse"></div>
+                    
+                    <!-- Core Medusa Image -->
+                    <div class="relative w-52 h-52 md:w-60 md:h-60 rounded-full overflow-hidden medusa-glow bg-[radial-gradient(circle,rgba(27,38,59,0.6)_0%,rgba(11,12,16,1)_100%)] border-2 border-amber-600/30 flex items-center justify-center">
+                        <img class="w-full h-full object-cover opacity-80" src="/medusa-core.png" onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuAGYKPDMmMA91jWxKmGPZHO9_-IWtpvSn--JA4QwYQzPUP_O5nJ4ZU8nDTWAYKtFg1gsL8Mt3GxAWQGNImH59s02X1rcq2A0_b30FrO57sYKjEAivcUadqFeXzuxBFdipjLnnwRbcKXGQsmN8c_r5c9cDRFnKsL2J_7MVPop-QpXfTZ12siK_AO-S7JcrzIXJYGkCmJPfYSHuHHemwJqJTCULXJW3jrtzIm9aLUI2CsTsab1Iyf2Frd0yxwhl_gWisZaCQ'">
+                    </div>
+
+                    <!-- Overlay text -->
+                    <div class="absolute bottom-4 bg-slate-950/80 border border-emerald-500/20 px-3 py-1 rounded-full text-[10px] text-emerald-400 font-data-mono uppercase tracking-widest">
+                        [ Secure Core Active ]
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h2 class="font-myth-font text-xl text-amber-200">Scan and receive full "Aegis Mirror" protection.</h2>
+                    <p class="text-xs text-slate-400 max-w-sm mx-auto">
+                        Deploy your cryptographic alter-ego. Our Hellenic-grade encryption protocols ensure your identity remains unseen, untouched, and absolute.
+                    </p>
+                </div>
+
+                <!-- Action Button -->
+                <button class="relative bg-gradient-to-br from-amber-500 to-bronze-deep hover:from-amber-400 hover:to-amber-600 px-8 py-3.5 rounded-xl text-black font-bold text-sm tracking-wider uppercase transition-all shadow-[0_4px_20px_rgba(205,127,50,0.3)] hover:scale-105 active:scale-95 flex items-center gap-2" @click="scanning = true">
+                    <span class="material-symbols-outlined">qr_code_scanner</span>
+                    Initiate Shield Scan
+                </button>
+            </div>
+
+            <!-- SCANNING OVERLAY -->
+            <div x-show="scanning" class="fixed inset-0 z-50 bg-black/95 transition-opacity duration-500 flex flex-col items-center justify-center p-6" x-init="
+                $watch('scanning', value => {
+                    if (value) {
+                        setTimeout(() => {
+                            scanning = false;
+                            currentScreen = registered ? 'dashboard' : 'beta';
+                        }, 3000);
+                    }
+                })
+            ">
+                <div class="relative w-72 h-72 md:w-80 md:h-80 bg-zinc-950 rounded-3xl p-6 border border-emerald-500/30 overflow-hidden shadow-2xl">
+                    <!-- Green laser scan line -->
+                    <div class="absolute inset-x-0 h-1 bg-emerald-400 shadow-[0_0_20px_#00e475] z-30 animate-[scan-line_3s_infinite_linear]"></div>
+                    
+                    <!-- Dynamic Matrix Block Grid -->
+                    <div class="grid grid-cols-10 grid-rows-10 gap-1 h-full opacity-60">
+                        <template x-for="i in 100">
+                            <div class="rounded-sm" :class="Math.random() > 0.75 ? 'qr-block animate-pulse' : 'border border-zinc-900'"></div>
+                        </template>
+                    </div>
+
+                    <!-- Target Focus corners -->
+                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div class="w-3/4 h-3/4 border-2 border-emerald-400/20 rounded-2xl flex items-center justify-center">
+                            <span class="material-symbols-outlined text-emerald-400 text-6xl opacity-30 animate-pulse">filter_center_focus</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center space-y-2">
+                    <p class="font-myth-font text-emerald-400 text-lg tracking-wider animate-pulse">Synchronizing Aegis Mirror Network...</p>
+                    <p class="font-data-mono text-zinc-500 text-xs">COMMUNICATION HANDSHAKE: 0x88F...BC9A</p>
+                    <button class="mt-8 text-zinc-400 hover:text-white underline text-xs uppercase tracking-widest" @click="scanning = false">Cancel Alignment</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. BETA REGISTRATION SCREEN -->
+        <section x-show="currentScreen === 'beta'" class="flex-grow flex items-center justify-center px-margin-mobile md:px-margin-desktop py-12 relative overflow-hidden bg-surface dark:bg-zinc-950">
+            <!-- Background lights -->
+            <div class="absolute inset-0 pointer-events-none">
+                <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-container/10 dark:bg-emerald-500/5 rounded-full blur-[100px]"></div>
+            </div>
+
+            <div class="max-w-md w-full z-10" id="registration-container">
+                <div class="bg-surface-container-lowest dark:bg-zinc-900 p-8 rounded-2xl border border-outline-variant dark:border-zinc-800 shadow-xl space-y-6">
+                    <div class="space-y-3">
+                        <div class="inline-flex items-center px-3 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-full text-xs font-semibold uppercase tracking-wider">
+                            <span class="material-symbols-outlined text-sm mr-1">verified_user</span>
+                            Beta Access Protocol
+                        </div>
+                        <h2 class="font-headline-lg text-2xl text-on-surface dark:text-zinc-100">Secure Entry</h2>
+                        <p class="text-sm text-on-surface-variant dark:text-zinc-400">Configure your terminal identity to join the Aegis Mirror secure network.</p>
+                    </div>
+
+                    <!-- Beta portal form utilizing HTMX -->
+                    <form hx-post="/api/register-test" hx-target="#registration-container" class="space-y-4" x-on:submit="registered = true; username = document.getElementById('operator-name').value">
+                        <div class="space-y-1">
+                            <label class="font-data-mono text-xs text-on-surface-variant dark:text-zinc-400" for="operator-name">Operator Name</label>
+                            <div class="relative group">
+                                <input class="w-full bg-surface-bright dark:bg-zinc-800 border border-outline-variant dark:border-zinc-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/20 dark:focus:ring-emerald-400/20 focus:border-primary dark:focus:border-emerald-400 outline-none transition-all dark:text-zinc-100" id="operator-name" name="operator-name" placeholder="Codename or Legal Identity" required type="text">
+                                <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline dark:text-zinc-500 group-focus-within:text-primary dark:group-focus-within:text-emerald-400">person</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="font-data-mono text-xs text-on-surface-variant dark:text-zinc-400" for="email">Secure Email Address</label>
+                            <div class="relative group">
+                                <input class="w-full bg-surface-bright dark:bg-zinc-800 border border-outline-variant dark:border-zinc-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/20 dark:focus:ring-emerald-400/20 focus:border-primary dark:focus:border-emerald-400 outline-none transition-all dark:text-zinc-100" id="email" name="email" placeholder="operator@secure-mirror.io" required type="email">
+                                <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline dark:text-zinc-500 group-focus-within:text-primary dark:group-focus-within:text-emerald-400">alternate_email</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="font-data-mono text-xs text-on-surface-variant dark:text-zinc-400" for="encryption-focus">Encryption Focus</label>
+                            <div class="relative group">
+                                <select class="w-full bg-surface-bright dark:bg-zinc-800 border border-outline-variant dark:border-zinc-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/20 dark:focus:ring-emerald-400/20 focus:border-primary dark:focus:border-emerald-400 outline-none transition-all dark:text-zinc-100 appearance-none" id="encryption-focus" name="encryption-focus" required>
+                                    <option disabled selected value="">Select priority...</option>
+                                    <option value="quantum">Post-Quantum Cryptography</option>
+                                    <option value="zero-knowledge">Zero-Knowledge Proofs</option>
+                                    <option value="homomorphic">Homomorphic Systems</option>
+                                    <option value="standard">Standard AES-256 GCM</option>
+                                </select>
+                                <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline dark:text-zinc-500 pointer-events-none">expand_more</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-secondary-container/30 dark:bg-emerald-500/5 border border-secondary-fixed dark:border-emerald-500/20 p-4 rounded-xl flex items-start gap-3">
+                            <span class="material-symbols-outlined text-secondary dark:text-emerald-400 mt-0.5">info</span>
+                            <p class="text-xs text-on-secondary-container dark:text-zinc-400">Your registration will trigger a local RSA-4096 key pair generation. Ensure your biometric environment is stable.</p>
+                        </div>
+
+                        <button class="w-full bg-primary text-on-primary dark:bg-emerald-500 dark:text-zinc-950 py-3.5 rounded-xl font-semibold hover:bg-primary-container dark:hover:bg-emerald-400 transition-all active:scale-[0.98] flex justify-center items-center gap-2" type="submit">
+                            <span>Initialize Registration</span>
+                            <span class="material-symbols-outlined">bolt</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. HUB DASHBOARD SCREEN -->
+        <section x-show="currentScreen === 'dashboard'" class="flex-grow p-4 md:p-8 space-y-6 max-w-6xl mx-auto w-full">
+            
+            <div class="grid grid-cols-12 gap-6">
+                <!-- LEFT COLUMN: Main Controls & Medusa Aura -->
+                <div class="col-span-12 lg:col-span-5 flex flex-col gap-6">
+                    <!-- SHIELD TOGGLE MODULE -->
+                    <div class="bg-surface-container-lowest dark:bg-zinc-900 p-6 rounded-3xl border border-outline-variant dark:border-zinc-800 shadow-md flex flex-col items-center text-center space-y-6">
+                        <div class="w-full flex justify-between items-center">
+                            <span class="font-data-mono text-xs text-on-surface-variant dark:text-zinc-400 uppercase tracking-widest">Sovereignty Shield</span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold" :class="isSecure ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20' : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20'" x-text="isSecure ? 'ACTIVE' : 'BYPASS'"></span>
+                        </div>
+
+                        <!-- Macro Shield Toggle Button -->
+                        <div class="relative w-56 h-56 rounded-full flex justify-center items-center">
+                            <!-- Glow Aura -->
+                            <div class="absolute inset-0 rounded-full transition-all duration-1000" :class="isSecure ? 'bg-emerald-500/10 active-shield' : 'bg-amber-500/10 bypass-shield'"></div>
+                            
+                            <!-- Master Switch Circular Medallion -->
+                            <button @click="isSecure = !isSecure" class="relative z-10 w-44 h-44 rounded-full bg-surface-container-low dark:bg-zinc-800 border-4 flex flex-col justify-center items-center shadow-lg transition-all duration-500 active:scale-95" :class="isSecure ? 'border-emerald-500/40 text-emerald-500' : 'border-amber-500/40 text-amber-500'">
+                                <span class="material-symbols-outlined text-6xl animate-pulse" x-text="isSecure ? 'shield' : 'shield_with_heart'"></span>
+                                <span class="font-myth-font text-xs tracking-widest mt-2 uppercase" x-text="isSecure ? 'DEACTIVATE' : 'ACTIVATE'"></span>
+                            </button>
+                        </div>
+
+                        <div class="space-y-1">
+                            <h3 class="font-headline-lg text-lg" x-text="isSecure ? 'Shield Virtualizing Network' : 'Shield Temporarily Bypassed'"></h3>
+                            <p class="text-xs text-on-surface-variant dark:text-zinc-400 max-w-xs">Gorgon Matrix intercepts background trackers and virtualizes sensor telemetry.</p>
+                        </div>
+                    </div>
+
+                    <!-- DYNAMIC CONTROL MACROS -->
+                    <div class="bg-surface-container-lowest dark:bg-zinc-900 p-6 rounded-3xl border border-outline-variant dark:border-zinc-800 shadow-md space-y-4">
+                        <h3 class="font-data-mono text-xs text-on-surface-variant dark:text-zinc-400 uppercase tracking-widest">Active Control Matrix</h3>
+                        
+                        <button @click="showSandbox = true" class="w-full bg-surface-bright dark:bg-zinc-800 text-on-surface dark:text-zinc-100 border border-outline-variant dark:border-zinc-700 hover:border-primary dark:hover:border-emerald-400 py-3.5 px-6 rounded-xl font-semibold text-sm tracking-wider uppercase flex items-center justify-between transition-all active:scale-[0.98]">
+                            <span class="flex items-center gap-2">
+                                <span class="material-symbols-outlined">widgets</span>
+                                Configure Sandbox
+                            </span>
+                            <span class="text-xs font-data-mono text-on-surface-variant dark:text-zinc-500">OPEN</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: Alias & Live Defense Feed -->
+                <div class="col-span-12 lg:col-span-7 flex flex-col gap-6">
+                    
+                    <!-- CRYPTOGRAPHIC ALTER-EGO CARD -->
+                    <div class="bg-gradient-to-br from-emerald-950/20 to-zinc-950 border border-emerald-500/20 rounded-3xl p-6 shadow-xl relative overflow-hidden" x-show="isSecure">
+                        <div class="absolute right-0 top-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl"></div>
+                        
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center border-b border-zinc-800 pb-3">
+                                <div>
+                                    <h3 class="text-xs font-bold font-data-mono tracking-widest text-emerald-400 uppercase">Cryptographic Alter-Ego</h3>
+                                    <p class="text-[10px] text-zinc-500 font-data-mono">ALIAS NODE ID: 0x902A...E476</p>
+                                </div>
+                                <span class="px-2 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded font-data-mono text-[9px] uppercase tracking-wider">[ Active Mask ]</span>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label class="text-[10px] text-zinc-500 font-data-mono uppercase">Virtual Email Redirector</label>
+                                <div class="bg-zinc-900 border border-emerald-500/20 rounded-xl p-4 flex justify-between items-center">
+                                    <span class="font-data-mono text-sm text-emerald-400" x-text="emailAlias"></span>
+                                    <button class="text-xs font-semibold text-zinc-400 hover:text-emerald-300 uppercase font-data-mono hover:scale-105 active:scale-95 transition-all" @click="
+                                        navigator.clipboard.writeText(emailAlias);
+                                        alert('Alias copied to clipboard!');
+                                    ">Copy</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- OBSERVABILITY JOURNAL / LIVE DEFENSE FEED -->
+                    <div class="bg-surface-container-lowest dark:bg-zinc-900 p-6 rounded-3xl border border-outline-variant dark:border-zinc-800 shadow-md space-y-4 flex-grow flex flex-col">
+                        <div class="flex justify-between items-center border-b border-outline-variant dark:border-zinc-800 pb-3">
+                            <div>
+                                <h3 class="font-data-mono text-xs text-on-surface-variant dark:text-zinc-400 uppercase tracking-widest">Live Defense Feed</h3>
+                                <p class="text-[10px] text-on-surface-variant/60 dark:text-zinc-500">Auto-refresh (10s)</p>
+                            </div>
+                            <button hx-get="/api/journal" hx-target="#journal-container" class="p-1 rounded hover:bg-surface-container-low dark:hover:bg-zinc-800 transition-colors flex items-center justify-center">
+                                <span class="material-symbols-outlined text-sm text-on-surface-variant dark:text-zinc-400">refresh</span>
+                            </button>
+                        </div>
+
+                        <!-- Scrollable Feed Container -->
+                        <div 
+                            id="journal-container" 
+                            hx-get="/api/journal" 
+                            hx-trigger="load, every 10s" 
+                            class="space-y-3 text-xs max-h-80 overflow-y-auto flex-grow"
+                        >
+                            <!-- HTMX will inject live logs here. Fallback placeholders: -->
+                            <div class="p-2.5 bg-emerald-950/20 border border-emerald-500/10 rounded-lg text-emerald-400/90 flex flex-col gap-1">
+                                <div class="flex justify-between font-semibold text-[10px] uppercase">
+                                    <span>✨ Status Secure</span>
+                                    <span>Just now</span>
+                                </div>
+                                <p>Microphone and location data virtualized safely.</p>
+                            </div>
+                            <div class="p-2.5 bg-zinc-950/40 border border-zinc-900 rounded-lg text-zinc-400/90 flex flex-col gap-1">
+                                <div class="flex justify-between font-semibold text-[10px] uppercase">
+                                    <span>🛡️ Aegis intercept</span>
+                                    <span>1m ago</span>
+                                </div>
+                                <p>Deflected 4 background tracking beacons from on-device apps.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <!-- SANDBOX DRAWER MODAL -->
+            <div x-show="showSandbox" class="fixed inset-0 z-50 overflow-hidden flex justify-end transition-opacity duration-300" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+                <!-- Backdrop overlay -->
+                <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" @click="showSandbox = false"></div>
+
+                <!-- Content Drawer Panel -->
+                <div class="relative w-full max-w-md bg-surface-container-lowest dark:bg-zinc-900 h-full p-6 border-l border-outline-variant dark:border-zinc-800 shadow-2xl flex flex-col space-y-6" x-transition:enter="transform transition ease-in-out duration-300" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0" x-transition:leave="transform transition ease-in-out duration-200" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
+                    <div class="flex justify-between items-center border-b border-outline-variant dark:border-zinc-800 pb-4">
+                        <div>
+                            <h3 class="font-headline-lg text-lg text-on-surface dark:text-zinc-100">Configure Sandbox</h3>
+                            <p class="text-xs text-on-surface-variant dark:text-zinc-400">Toggle active isolation rules per device sensor.</p>
+                        </div>
+                        <button class="p-2 rounded-full hover:bg-surface-container-low dark:hover:bg-zinc-800 transition-colors cursor-pointer" @click="showSandbox = false">
+                            <span class="material-symbols-outlined text-on-surface-variant dark:text-zinc-400">close</span>
+                        </button>
+                    </div>
+
+                    <div class="space-y-4 flex-grow overflow-y-auto">
+                        <template x-for="(app, index) in sandboxApps" :key="index">
+                            <div class="p-4 bg-surface dark:bg-zinc-800/50 rounded-2xl border border-outline-variant/60 dark:border-zinc-800 flex items-center justify-between hover:border-primary dark:hover:border-emerald-500 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-surface-container dark:bg-zinc-700 flex items-center justify-center text-primary dark:text-emerald-400">
+                                        <span class="material-symbols-outlined" x-text="app.icon"></span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-sm text-on-surface dark:text-zinc-200" x-text="app.name"></h4>
+                                        <p class="text-xs text-on-surface-variant dark:text-zinc-400" x-text="app.desc"></p>
+                                    </div>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input class="sr-only peer" type="checkbox" x-model="app.active">
+                                    <div class="w-9 h-5 bg-surface-container-highest dark:bg-zinc-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary dark:peer-checked:bg-emerald-400"></div>
+                                </label>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. IDENTITY & NETWORK VAULT SCREEN -->
+        <section x-show="currentScreen === 'vault'" class="flex-grow p-4 md:p-8 space-y-6 max-w-6xl mx-auto w-full">
+            <div class="grid grid-cols-12 gap-6">
+                <!-- Left Main Section: Aliases and Routing Table -->
+                <div class="col-span-12 lg:col-span-8 space-y-6">
+                    
+                    <!-- ALIAS MANAGEMENT CARDS -->
+                    <div class="space-y-3">
+                        <h3 class="font-headline-lg text-lg text-on-surface dark:text-zinc-100">Cryptographic Identity Aliases</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-surface-container-lowest dark:bg-zinc-900 p-5 rounded-2xl border border-outline-variant dark:border-zinc-800 shadow-sm flex items-start gap-4">
+                                <div class="w-10 h-10 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-xl flex items-center justify-center">
+                                    <span class="material-symbols-outlined">alternate_email</span>
+                                </div>
+                                <div class="space-y-1 flex-grow">
+                                    <span class="text-[10px] text-zinc-500 font-data-mono">EMAIL alias</span>
+                                    <h4 class="font-data-mono text-sm text-emerald-600 dark:text-emerald-400" x-text="emailAlias"></h4>
+                                    <p class="text-xs text-on-surface-variant dark:text-zinc-400">Forwarding secure logs to primary operator envelope.</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-surface-container-lowest dark:bg-zinc-900 p-5 rounded-2xl border border-outline-variant dark:border-zinc-800 shadow-sm flex items-start gap-4">
+                                <div class="w-10 h-10 bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded-xl flex items-center justify-center">
+                                    <span class="material-symbols-outlined">phone_android</span>
+                                </div>
+                                <div class="space-y-1 flex-grow">
+                                    <span class="text-[10px] text-zinc-500 font-data-mono">PHONE alias</span>
+                                    <h4 class="font-data-mono text-sm text-amber-600 dark:text-amber-400">+1-202-555-0143</h4>
+                                    <p class="text-xs text-on-surface-variant dark:text-zinc-400">SIM virtualization active. Directing caller vectors to silent loop.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ROUTING TABLE / POLICY DICTIONARY -->
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-headline-lg text-lg text-on-surface dark:text-zinc-100">Dynamic Connection Router</h3>
+                            <span class="font-data-mono text-xs text-emerald-500">15 Active SQLite Rules Connected</span>
+                        </div>
+                        
+                        <div class="bg-surface-container-lowest dark:bg-zinc-900 border border-outline-variant dark:border-zinc-800 rounded-2xl overflow-hidden shadow-md">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse" x-data="{
+                                    rules: [
+                                        { app: 'google.analytics.api', type: 'HTTPS', rule: 'Telemetry Beacon', action: 'DENY' },
+                                        { app: 'co.il.redalert', type: 'UDP', rule: 'National Emergency Bypass', action: 'ALLOW' },
+                                        { app: 'facebook.tracker.daemon', type: 'HTTPS', rule: 'Marketing Telemetry', action: 'MOCK' },
+                                        { app: 'unknown.daemon.net', type: 'UDP', rule: 'Default Routing Rule', action: 'MOCK' }
+                                    ]
+                                }">
+                                    <thead>
+                                        <tr class="bg-surface-container-low/50 dark:bg-zinc-850 border-b border-outline-variant dark:border-zinc-800 text-xs font-data-mono text-on-surface-variant dark:text-zinc-400">
+                                            <th class="px-6 py-4">APPLICATION OR DOMAIN</th>
+                                            <th class="px-6 py-4">PROTOCOL</th>
+                                            <th class="px-6 py-4">NARRATIVE RULE</th>
+                                            <th class="px-6 py-4">STATUS</th>
+                                            <th class="px-6 py-4 text-right">ACTION</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-sm dark:text-zinc-300">
+                                        <template x-for="(rule, index) in rules" :key="index">
+                                            <tr class="border-b border-outline-variant/30 dark:border-zinc-800/50 hover:bg-surface-container-low dark:hover:bg-zinc-850/50 transition-colors">
+                                                <td class="px-6 py-4 font-semibold font-data-mono" x-text="rule.app"></td>
+                                                <td class="px-6 py-4">
+                                                    <span class="px-2 py-0.5 rounded text-[10px] font-data-mono" :class="rule.type === 'HTTPS' ? 'bg-primary/10 text-primary dark:text-emerald-400' : 'bg-secondary-container text-on-secondary-container'" x-text="rule.type"></span>
+                                                </td>
+                                                <td class="px-6 py-4 text-xs text-on-surface-variant dark:text-zinc-400" x-text="rule.rule"></td>
+                                                <td class="px-6 py-4">
+                                                    <div class="flex items-center gap-1.5">
+                                                        <div class="w-2 h-2 rounded-full" :class="{
+                                                            'bg-emerald-500': rule.action === 'ALLOW',
+                                                            'bg-red-500': rule.action === 'DENY',
+                                                            'bg-primary': rule.action === 'MOCK'
+                                                        }"></div>
+                                                        <span class="font-data-mono text-xs font-semibold" :class="{
+                                                            'text-emerald-500': rule.action === 'ALLOW',
+                                                            'text-red-500': rule.action === 'DENY',
+                                                            'text-primary': rule.action === 'MOCK'
+                                                        }" x-text="rule.action === 'ALLOW' ? 'Allowed' : (rule.action === 'DENY' ? 'Blocked' : 'Mocking')"></span>
+                                                    </div>
+                                                </td>
+                                                <td class="px-6 py-4 text-right">
+                                                    <div class="flex justify-end gap-2">
+                                                        <button @click="rule.action = 'ALLOW'" class="text-[10px] font-data-mono text-emerald-500 hover:underline">Allow</button>
+                                                        <button @click="rule.action = 'DENY'" class="text-[10px] font-data-mono text-red-500 hover:underline">Deny</button>
+                                                        <button @click="rule.action = 'MOCK'" class="text-[10px] font-data-mono text-primary hover:underline">Mock</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar Section: Policy Engine Config -->
+                <div class="col-span-12 lg:col-span-4 space-y-6">
+                    <div class="bg-surface-container-lowest dark:bg-zinc-900 border border-outline-variant dark:border-zinc-800 rounded-3xl p-6 shadow-md space-y-6">
+                        <div class="flex items-center gap-2 border-b border-outline-variant dark:border-zinc-800 pb-3">
+                            <span class="material-symbols-outlined text-primary dark:text-emerald-400">analytics</span>
+                            <h3 class="font-headline-lg text-lg text-on-surface dark:text-zinc-100">Policy Engine</h3>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="p-4 bg-surface dark:bg-zinc-800/30 rounded-xl border border-outline-variant/60 dark:border-zinc-800 space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold text-sm">Silent Defense</span>
+                                    <label class="relative inline-flex items-center cursor-pointer">
+                                        <input class="sr-only peer" type="checkbox" checked>
+                                        <div class="w-9 h-5 bg-surface-container-highest dark:bg-zinc-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-zinc-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary dark:peer-checked:bg-emerald-400"></div>
+                                    </label>
+                                </div>
+                                <p class="text-xs text-on-surface-variant dark:text-zinc-400">Automatically injects randomized noise/fuzzed templates for untrusted packets.</p>
+                            </div>
+
+                            <div class="p-4 bg-surface dark:bg-zinc-800/30 rounded-xl border border-outline-variant/60 dark:border-zinc-800 space-y-3">
+                                <h4 class="font-data-mono text-[10px] text-on-surface-variant dark:text-zinc-400 uppercase tracking-wider">Active Heuristics</h4>
+                                <ul class="space-y-3 text-xs">
+                                    <li class="flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-emerald-500 text-sm">verified</span>
+                                        <div>
+                                            <p class="font-semibold text-on-surface dark:text-zinc-200">DNS Pinning</p>
+                                            <p class="text-on-surface-variant dark:text-zinc-400 text-[10px]">Prevents rebinding attacks on alias local-nodes.</p>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-emerald-500 text-sm">verified</span>
+                                        <div>
+                                            <p class="font-semibold text-on-surface dark:text-zinc-200">Header Obfuscation</p>
+                                            <p class="text-on-surface-variant dark:text-zinc-400 text-[10px]">Injects random jitter into HTTP headers.</p>
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-on-surface-variant dark:text-zinc-500 text-sm">unpublished</span>
+                                        <div>
+                                            <p class="font-semibold text-on-surface-variant dark:text-zinc-400">Packet Fragmenting</p>
+                                            <p class="text-on-surface-variant/60 dark:text-zinc-500 text-[10px]">Disabled. High local CPU workload detected.</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <button class="w-full py-3 bg-primary text-on-primary dark:bg-emerald-500 dark:text-zinc-950 rounded-xl font-semibold text-sm hover:opacity-90 transition-all flex items-center justify-center gap-2 active:scale-95 shadow-md">
+                                <span class="material-symbols-outlined text-sm">refresh</span>
+                                Recalibrate Policies
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- GLOBAL FOOTER -->
+    <footer class="w-full bg-surface-container-lowest border-t border-outline-variant px-margin-desktop py-6 text-xs text-on-surface-variant/80 flex flex-col md:flex-row justify-between items-center gap-4 dark:bg-zinc-900 dark:border-zinc-800 dark:text-zinc-400">
+        <div class="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
+            <span>© 2026 Aegis Mirror. Digital Sovereignty Engine.</span>
+            <div class="flex gap-3">
+                <a class="hover:underline text-primary dark:text-emerald-400" href="#">Privacy Protocol</a>
+                <a class="hover:underline" href="#">Audit Documentation</a>
+                <a class="hover:underline" href="#">Compliances</a>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="font-data-mono font-bold tracking-widest text-emerald-500 text-[10px] uppercase">Shield Status: Secure</span>
+        </div>
+    </footer>
+
+    <!-- Service Worker Script -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').catch(console.error);
+        }
+    </script>
+</body>
+</html>

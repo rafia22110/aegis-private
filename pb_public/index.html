@@ -225,73 +225,80 @@
                     <p class="text-xs text-slate-500 font-semibold tracking-widest uppercase">Digital Sovereignty Engine</p>
                 </header>
 
-                <!-- Holographic Medusa Core -->
-                <div class="relative w-64 h-64 md:w-72 md:h-72 rounded-full flex justify-center items-center group cursor-pointer" @click="scanning = true">
-                    <!-- Spinning metallic rings -->
-                    <div class="absolute inset-0 rounded-full border border-amber-500/20 scale-110 group-hover:rotate-180 transition-transform duration-[4000ms] ease-in-out"></div>
-                    <div class="absolute inset-0 rounded-full border-2 border-emerald-500/10 scale-105 animate-pulse"></div>
-                    
-                    <!-- Core Medusa Image -->
-                    <div class="relative w-52 h-52 md:w-60 md:h-60 rounded-full overflow-hidden medusa-glow bg-[radial-gradient(circle,rgba(27,38,59,0.6)_0%,rgba(11,12,16,1)_100%)] border-2 border-amber-600/30 flex items-center justify-center">
-                        <img class="w-full h-full object-cover opacity-80" src="/medusa-core.png" onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuAGYKPDMmMA91jWxKmGPZHO9_-IWtpvSn--JA4QwYQzPUP_O5nJ4ZU8nDTWAYKtFg1gsL8Mt3GxAWQGNImH59s02X1rcq2A0_b30FrO57sYKjEAivcUadqFeXzuxBFdipjLnnwRbcKXGQsmN8c_r5c9cDRFnKsL2J_7MVPop-QpXfTZ12siK_AO-S7JcrzIXJYGkCmJPfYSHuHHemwJqJTCULXJW3jrtzIm9aLUI2CsTsab1Iyf2Frd0yxwhl_gWisZaCQ'">
+                <!-- Holographic Medusa Core & QR Scan Grid Dual-Layout -->
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8 w-full">
+                    <!-- Medusa Core -->
+                    <div class="relative w-56 h-56 rounded-full flex justify-center items-center group cursor-pointer" @click="
+                        scanning = true;
+                        setTimeout(() => {
+                            scanning = false;
+                            window.triggerDownload();
+                            currentScreen = registered ? 'dashboard' : 'beta';
+                        }, 1500);
+                    ">
+                        <div class="absolute inset-0 rounded-full border border-amber-500/20 scale-110 group-hover:rotate-180 transition-transform duration-[4000ms] ease-in-out"></div>
+                        <div class="absolute inset-0 rounded-full border-2 border-emerald-500/10 scale-105 animate-pulse"></div>
+                        <div class="relative w-44 h-44 rounded-full overflow-hidden medusa-glow bg-[radial-gradient(circle,rgba(27,38,59,0.6)_0%,rgba(11,12,16,1)_100%)] border-2 border-amber-600/30 flex items-center justify-center">
+                            <img class="w-full h-full object-cover opacity-80" src="/medusa-core.png" onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuAGYKPDMmMA91jWxKmGPZHO9_-IWtpvSn--JA4QwYQzPUP_O5nJ4ZU8nDTWAYKtFg1gsL8Mt3GxAWQGNImH59s02X1rcq2A0_b30FrO57sYKjEAivcUadqFeXzuxBFdipjLnnwRbcKXGQsmN8c_r5c9cDRFnKsL2J_7MVPop-QpXfTZ12siK_AO-S7JcrzIXJYGkCmJPfYSHuHHemwJqJTCULXJW3jrtzIm9aLUI2CsTsab1Iyf2Frd0yxwhl_gWisZaCQ'">
+                        </div>
+                        <div class="absolute bottom-2 bg-slate-950/80 border border-emerald-500/20 px-2 py-0.5 rounded-full text-[9px] text-emerald-400 font-data-mono uppercase tracking-widest">
+                            [ Core Active ]
+                        </div>
                     </div>
 
-                    <!-- Overlay text -->
-                    <div class="absolute bottom-4 bg-slate-950/80 border border-emerald-500/20 px-3 py-1 rounded-full text-[10px] text-emerald-400 font-data-mono uppercase tracking-widest">
-                        [ Secure Core Active ]
+                    <!-- Embedded QR Barcode Scanner Grid -->
+                    <div class="relative w-56 h-56 bg-zinc-950/80 rounded-3xl p-4 border border-emerald-500/30 overflow-hidden shadow-2xl cursor-pointer hover:border-emerald-400 transition-all duration-300 group/qr" @click="
+                        scanning = true;
+                        setTimeout(() => {
+                            scanning = false;
+                            window.triggerDownload();
+                            currentScreen = registered ? 'dashboard' : 'beta';
+                        }, 1500);
+                    ">
+                        <!-- Green laser scan line -->
+                        <div class="absolute inset-x-0 h-1 bg-emerald-400 shadow-[0_0_20px_#00e475] z-30 animate-[scan-line_3s_infinite_linear]"></div>
+                        
+                        <!-- Dynamic Matrix Block Grid -->
+                        <div class="grid grid-cols-12 grid-rows-12 gap-1 h-full">
+                            <template x-for="(item, index) in qrBlocks" :key="index">
+                                <div class="rounded-sm" :class="(item % 3 === 0 || item % 7 === 0 || item % 11 === 0) ? 'bg-emerald-400 shadow-[0_0_8px_#00e475] animate-pulse' : 'bg-zinc-900/50 border border-zinc-800/40'"></div>
+                            </template>
+                        </div>
+
+                        <!-- Target Focus corners -->
+                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                            <div class="w-3/4 h-3/4 border-2 border-emerald-400/20 rounded-2xl flex items-center justify-center">
+                                <span class="material-symbols-outlined text-emerald-400 text-5xl opacity-30 group-hover/qr:scale-110 transition-transform duration-300">filter_center_focus</span>
+                            </div>
+                        </div>
+
+                        <!-- Scan overlay status -->
+                        <div x-show="scanning" class="absolute inset-0 bg-black/90 flex flex-col items-center justify-center z-40 transition-opacity duration-300">
+                            <span class="material-symbols-outlined text-emerald-400 text-4xl animate-spin">sync</span>
+                            <span class="text-[9px] font-data-mono text-emerald-400 mt-2 text-center">ALIGNED & DOWNLOADING...</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="space-y-3">
-                    <h2 class="font-myth-font text-xl text-amber-200">Scan and receive full "Aegis Mirror" protection.</h2>
+                    <h2 class="font-myth-font text-xl text-amber-200">Scan QR Code to receive "Aegis Mirror" protection.</h2>
                     <p class="text-xs text-slate-400 max-w-sm mx-auto">
                         Deploy your cryptographic alter-ego. Our Hellenic-grade encryption protocols ensure your identity remains unseen, untouched, and absolute.
                     </p>
                 </div>
 
                 <!-- Action Button -->
-                <button class="relative bg-gradient-to-br from-amber-500 to-bronze-deep hover:from-amber-400 hover:to-amber-600 px-8 py-3.5 rounded-xl text-black font-bold text-sm tracking-wider uppercase transition-all shadow-[0_4px_20px_rgba(205,127,50,0.3)] hover:scale-105 active:scale-95 flex items-center gap-2" @click="scanning = true">
-                    <span class="material-symbols-outlined">qr_code_scanner</span>
-                    Initiate Shield Scan
+                <button class="relative bg-gradient-to-br from-amber-500 to-bronze-deep hover:from-amber-400 hover:to-amber-600 px-8 py-3.5 rounded-xl text-black font-bold text-sm tracking-wider uppercase transition-all shadow-[0_4px_20px_rgba(205,127,50,0.3)] hover:scale-105 active:scale-95 flex items-center gap-2" @click="
+                    scanning = true;
+                    setTimeout(() => {
+                        scanning = false;
+                        window.triggerDownload();
+                        currentScreen = registered ? 'dashboard' : 'beta';
+                    }, 1500);
+                ">
+                    <span class="material-symbols-outlined">download</span>
+                    Get Aegis Shield
                 </button>
-            </div>
-
-            <!-- SCANNING OVERLAY -->
-            <div x-show="scanning" class="fixed inset-0 z-50 bg-black/95 transition-opacity duration-500 flex flex-col items-center justify-center p-6" x-init="
-                $watch('scanning', value => {
-                    if (value) {
-                        setTimeout(() => {
-                            scanning = false;
-                            window.triggerDownload();
-                            currentScreen = registered ? 'dashboard' : 'beta';
-                        }, 3000);
-                    }
-                })
-            ">
-                <div class="relative w-72 h-72 md:w-80 md:h-80 bg-zinc-950 rounded-3xl p-6 border border-emerald-500/30 overflow-hidden shadow-2xl">
-                    <!-- Green laser scan line -->
-                    <div class="absolute inset-x-0 h-1 bg-emerald-400 shadow-[0_0_20px_#00e475] z-30 animate-[scan-line_3s_infinite_linear]"></div>
-                    
-                    <!-- Dynamic Matrix Block Grid -->
-                    <div class="grid grid-cols-12 grid-rows-12 gap-1 h-full">
-                        <template x-for="(item, index) in qrBlocks" :key="index">
-                            <div class="rounded-sm" :class="(item % 3 === 0 || item % 7 === 0 || item % 11 === 0) ? 'bg-emerald-400 shadow-[0_0_8px_#00e475] animate-pulse' : 'bg-zinc-900/50 border border-zinc-800/40'"></div>
-                        </template>
-                    </div>
-
-                    <!-- Target Focus corners -->
-                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <div class="w-3/4 h-3/4 border-2 border-emerald-400/20 rounded-2xl flex items-center justify-center">
-                            <span class="material-symbols-outlined text-emerald-400 text-6xl opacity-30 animate-pulse">filter_center_focus</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mt-8 text-center space-y-2">
-                    <p class="font-myth-font text-emerald-400 text-lg tracking-wider animate-pulse">Synchronizing Aegis Mirror Network...</p>
-                    <p class="font-data-mono text-zinc-500 text-xs">COMMUNICATION HANDSHAKE: 0x88F...BC9A</p>
-                    <button class="mt-8 text-zinc-400 hover:text-white underline text-xs uppercase tracking-widest" @click="scanning = false">Cancel Alignment</button>
-                </div>
             </div>
         </section>
 

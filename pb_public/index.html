@@ -224,70 +224,111 @@
                     <p class="text-xs text-slate-500 font-semibold tracking-widest uppercase">Digital Sovereignty Engine</p>
                 </header>
 
-                <!-- Holographic Medusa Core & QR Scan Grid Dual-Layout -->
-                <div class="flex flex-col md:flex-row items-center justify-center gap-8 w-full">
-                    <!-- Medusa Core -->
-                    <div class="relative w-56 h-56 rounded-full flex justify-center items-center group cursor-pointer" @click="
-                        scanning = true;
-                        setTimeout(() => {
-                            scanning = false;
-                            window.triggerDownload();
-                            currentScreen = registered ? 'dashboard' : 'beta';
-                        }, 1500);
-                    ">
-                        <div class="absolute inset-0 rounded-full border border-amber-500/20 scale-110 group-hover:rotate-180 transition-transform duration-[4000ms] ease-in-out"></div>
-                        <div class="absolute inset-0 rounded-full border-2 border-emerald-500/10 scale-105 animate-pulse"></div>
-                        <div class="relative w-44 h-44 rounded-full overflow-hidden medusa-glow bg-[radial-gradient(circle,rgba(27,38,59,0.6)_0%,rgba(11,12,16,1)_100%)] border-2 border-amber-600/30 flex items-center justify-center">
-                            <img class="w-full h-full object-cover opacity-80" src="/medusa-core.png" onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuAGYKPDMmMA91jWxKmGPZHO9_-IWtpvSn--JA4QwYQzPUP_O5nJ4ZU8nDTWAYKtFg1gsL8Mt3GxAWQGNImH59s02X1rcq2A0_b30FrO57sYKjEAivcUadqFeXzuxBFdipjLnnwRbcKXGQsmN8c_r5c9cDRFnKsL2J_7MVPop-QpXfTZ12siK_AO-S7JcrzIXJYGkCmJPfYSHuHHemwJqJTCULXJW3jrtzIm9aLUI2CsTsab1Iyf2Frd0yxwhl_gWisZaCQ'">
-                        </div>
-                        <div class="absolute bottom-2 bg-slate-950/80 border border-emerald-500/20 px-2 py-0.5 rounded-full text-[9px] text-emerald-400 font-data-mono uppercase tracking-widest">
-                            [ Core Active ]
-                        </div>
+                <!-- Centered Medusa Core -->
+                <div class="relative w-56 h-56 rounded-full flex justify-center items-center group cursor-pointer" @click="
+                    scanning = true;
+                    setTimeout(() => {
+                        scanning = false;
+                        window.triggerDownload();
+                        currentScreen = registered ? 'dashboard' : 'beta';
+                    }, 1500);
+                ">
+                    <div class="absolute inset-0 rounded-full border border-amber-500/20 scale-110 group-hover:rotate-180 transition-transform duration-[4000ms] ease-in-out"></div>
+                    <div class="absolute inset-0 rounded-full border-2 border-emerald-500/10 scale-105 animate-pulse"></div>
+                    <div class="relative w-44 h-44 rounded-full overflow-hidden medusa-glow bg-[radial-gradient(circle,rgba(27,38,59,0.6)_0%,rgba(11,12,16,1)_100%)] border-2 border-amber-600/30 flex items-center justify-center">
+                        <img class="w-full h-full object-cover opacity-80" src="/medusa-core.png" onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuAGYKPDMmMA91jWxKmGPZHO9_-IWtpvSn--JA4QwYQzPUP_O5nJ4ZU8nDTWAYKtFg1gsL8Mt3GxAWQGNImH59s02X1rcq2A0_b30FrO57sYKjEAivcUadqFeXzuxBFdipjLnnwRbcKXGQsmN8c_r5c9cDRFnKsL2J_7MVPop-QpXfTZ12siK_AO-S7JcrzIXJYGkCmJPfYSHuHHemwJqJTCULXJW3jrtzIm9aLUI2CsTsab1Iyf2Frd0yxwhl_gWisZaCQ'">
                     </div>
+                    <div class="absolute bottom-2 bg-slate-950/80 border border-emerald-500/20 px-2 py-0.5 rounded-full text-[9px] text-emerald-400 font-data-mono uppercase tracking-widest">
+                        [ Core Active ]
+                    </div>
+                </div>
 
-                    <!-- Embedded QR Barcode Scanner Grid -->
-                    <div class="relative w-56 h-56 bg-zinc-950/80 rounded-3xl p-4 border border-emerald-500/30 overflow-hidden shadow-2xl cursor-pointer hover:border-emerald-400 transition-all duration-300 group/qr" @click="
-                        scanning = true;
-                        setTimeout(() => {
-                            scanning = false;
-                            window.triggerDownload();
-                            currentScreen = registered ? 'dashboard' : 'beta';
-                        }, 1500);
-                    ">
-                        <!-- Green laser scan line -->
-                        <div class="absolute inset-x-0 h-1 bg-emerald-400 shadow-[0_0_20px_#00e475] z-30 animate-[scan-line_3s_infinite_linear]"></div>
+                <!-- Simple Black & White QR Code (Embedded directly under the shield) -->
+                <div class="relative w-44 h-44 bg-white p-3 rounded-2xl shadow-xl cursor-pointer hover:scale-105 transition-transform duration-300 group/qr" @click="
+                    scanning = true;
+                    setTimeout(() => {
+                        scanning = false;
+                        window.triggerDownload();
+                        currentScreen = registered ? 'dashboard' : 'beta';
+                    }, 1500);
+                ">
+                    <!-- Standard SVG QR Code representation -->
+                    <svg class="w-full h-full" viewBox="0 0 29 29" shape-rendering="crispEdges">
+                        <!-- Background -->
+                        <rect width="29" height="29" fill="white"/>
                         
-                        <!-- Dynamic Matrix Block Grid (Native JS for absolute reliability) -->
-                        <div class="grid grid-cols-12 grid-rows-12 gap-1 h-full">
-                            <script>
-                                (function() {
-                                    const grid = document.currentScript.parentElement;
-                                    for (let i = 0; i < 144; i++) {
-                                        const div = document.createElement('div');
-                                        div.className = 'rounded-sm aspect-square';
-                                        if (i % 3 === 0 || i % 7 === 0 || i % 11 === 0) {
-                                            div.className += ' bg-emerald-400 shadow-[0_0_8px_#00e475] animate-pulse';
-                                        } else {
-                                            div.className += ' bg-zinc-900/50 border border-zinc-800/40';
-                                        }
-                                        grid.appendChild(div);
-                                    }
-                                })();
-                            </script>
-                        </div>
+                        <!-- Top-Left Finder -->
+                        <rect x="0" y="0" width="7" height="7" fill="black"/>
+                        <rect x="1" y="1" width="5" height="5" fill="white"/>
+                        <rect x="2" y="2" width="3" height="3" fill="black"/>
+                        
+                        <!-- Top-Right Finder -->
+                        <rect x="22" y="0" width="7" height="7" fill="black"/>
+                        <rect x="23" y="1" width="5" height="5" fill="white"/>
+                        <rect x="24" y="2" width="3" height="3" fill="black"/>
+                        
+                        <!-- Bottom-Left Finder -->
+                        <rect x="0" y="22" width="7" height="7" fill="black"/>
+                        <rect x="1" y="23" width="5" height="5" fill="white"/>
+                        <rect x="2" y="24" width="3" height="3" fill="black"/>
+                        
+                        <!-- Alignment Pattern -->
+                        <rect x="20" y="20" width="5" height="5" fill="black"/>
+                        <rect x="21" y="21" width="3" height="3" fill="white"/>
+                        <rect x="22" y="22" width="1" height="1" fill="black"/>
+                        
+                        <!-- Timing Patterns -->
+                        <rect x="6" y="8" width="1" height="1" fill="black"/>
+                        <rect x="6" y="10" width="1" height="1" fill="black"/>
+                        <rect x="6" y="12" width="1" height="1" fill="black"/>
+                        <rect x="6" y="14" width="1" height="1" fill="black"/>
+                        <rect x="6" y="16" width="1" height="1" fill="black"/>
+                        <rect x="6" y="18" width="1" height="1" fill="black"/>
+                        <rect x="6" y="20" width="1" height="1" fill="black"/>
+                        <rect x="8" y="6" width="1" height="1" fill="black"/>
+                        <rect x="10" y="6" width="1" height="1" fill="black"/>
+                        <rect x="12" y="6" width="1" height="1" fill="black"/>
+                        <rect x="14" y="6" width="1" height="1" fill="black"/>
+                        <rect x="16" y="6" width="1" height="1" fill="black"/>
+                        <rect x="18" y="6" width="1" height="1" fill="black"/>
+                        <rect x="20" y="6" width="1" height="1" fill="black"/>
+                        
+                        <!-- Data Modules -->
+                        <rect x="9" y="0" width="2" height="1" fill="black"/><rect x="13" y="0" width="1" height="1" fill="black"/><rect x="17" y="0" width="2" height="1" fill="black"/>
+                        <rect x="8" y="1" width="1" height="1" fill="black"/><rect x="12" y="1" width="2" height="1" fill="black"/><rect x="16" y="1" width="1" height="1" fill="black"/><rect x="19" y="1" width="2" height="1" fill="black"/>
+                        <rect x="10" y="2" width="2" height="1" fill="black"/><rect x="15" y="2" width="1" height="1" fill="black"/><rect x="18" y="2" width="1" height="1" fill="black"/>
+                        <rect x="9" y="3" width="1" height="1" fill="black"/><rect x="11" y="3" width="3" height="1" fill="black"/><rect x="16" y="3" width="2" height="1" fill="black"/><rect x="20" y="3" width="1" height="1" fill="black"/>
+                        <rect x="8" y="4" width="2" height="1" fill="black"/><rect x="14" y="4" width="1" height="1" fill="black"/><rect x="17" y="4" width="1" height="1" fill="black"/><rect x="19" y="4" width="2" height="1" fill="black"/>
+                        <rect x="11" y="5" width="2" height="1" fill="black"/><rect x="15" y="5" width="2" height="1" fill="black"/><rect x="18" y="5" width="1" height="1" fill="black"/>
+                        
+                        <rect x="0" y="8" width="2" height="1" fill="black"/><rect x="3" y="8" width="1" height="1" fill="black"/><rect x="8" y="8" width="3" height="1" fill="black"/><rect x="13" y="8" width="1" height="1" fill="black"/><rect x="15" y="8" width="2" height="1" fill="black"/><rect x="19" y="8" width="1" height="1" fill="black"/><rect x="22" y="8" width="3" height="1" fill="black"/><rect x="27" y="8" width="2" height="1" fill="black"/>
+                        <rect x="1" y="9" width="1" height="1" fill="black"/><rect x="4" y="9" width="2" height="1" fill="black"/><rect x="9" y="9" width="1" height="1" fill="black"/><rect x="11" y="9" width="1" height="1" fill="black"/><rect x="14" y="9" width="3" height="1" fill="black"/><rect x="18" y="9" width="2" height="1" fill="black"/><rect x="21" y="9" width="1" height="1" fill="black"/><rect x="24" y="9" width="2" height="1" fill="black"/>
+                        <rect x="0" y="10" width="1" height="1" fill="black"/><rect x="3" y="10" width="2" height="1" fill="black"/><rect x="8" y="10" width="1" height="1" fill="black"/><rect x="10" y="10" width="2" height="1" fill="black"/><rect x="13" y="10" width="1" height="1" fill="black"/><rect x="16" y="10" width="2" height="1" fill="black"/><rect x="20" y="10" width="1" height="1" fill="black"/><rect x="23" y="10" width="1" height="1" fill="black"/><rect x="26" y="10" width="3" height="1" fill="black"/>
+                        <rect x="2" y="11" width="2" height="1" fill="black"/><rect x="9" y="11" width="2" height="1" fill="black"/><rect x="12" y="11" width="1" height="1" fill="black"/><rect x="15" y="11" width="3" height="1" fill="black"/><rect x="19" y="11" width="1" height="1" fill="black"/><rect x="22" y="11" width="2" height="1" fill="black"/><rect x="25" y="11" width="1" height="1" fill="black"/>
+                        <rect x="0" y="12" width="1" height="1" fill="black"/><rect x="4" y="12" width="1" height="1" fill="black"/><rect x="8" y="12" width="1" height="1" fill="black"/><rect x="11" y="12" width="3" height="1" fill="black"/><rect x="16" y="12" width="1" height="1" fill="black"/><rect x="18" y="12" width="2" height="1" fill="black"/><rect x="21" y="12" width="1" height="1" fill="black"/><rect x="24" y="12" width="3" height="1" fill="black"/><rect x="28" y="12" width="1" height="1" fill="black"/>
+                        <rect x="1" y="13" width="2" height="1" fill="black"/><rect x="5" y="13" width="1" height="1" fill="black"/><rect x="9" y="13" width="1" height="1" fill="black"/><rect x="12" y="13" width="2" height="1" fill="black"/><rect x="15" y="13" width="1" height="1" fill="black"/><rect x="19" y="13" width="3" height="1" fill="black"/><rect x="23" y="13" width="2" height="1" fill="black"/><rect x="26" y="13" width="1" height="1" fill="black"/>
+                        <rect x="3" y="14" width="2" height="1" fill="black"/><rect x="8" y="14" width="2" height="1" fill="black"/><rect x="11" y="14" width="1" height="1" fill="black"/><rect x="14" y="14" width="2" height="1" fill="black"/><rect x="18" y="14" width="1" height="1" fill="black"/><rect x="20" y="14" width="2" height="1" fill="black"/><rect x="24" y="14" width="1" height="1" fill="black"/><rect x="27" y="14" width="2" height="1" fill="black"/>
+                        <rect x="0" y="15" width="2" height="1" fill="black"/><rect x="4" y="15" width="1" height="1" fill="black"/><rect x="9" y="15" width="1" height="1" fill="black"/><rect x="12" y="15" width="2" height="1" fill="black"/><rect x="16" y="15" width="3" height="1" fill="black"/><rect x="21" y="15" width="1" height="1" fill="black"/><rect x="23" y="15" width="3" height="1" fill="black"/><rect x="28" y="15" width="1" height="1" fill="black"/>
+                        <rect x="2" y="16" width="1" height="1" fill="black"/><rect x="5" y="16" width="1" height="1" fill="black"/><rect x="8" y="16" width="2" height="1" fill="black"/><rect x="11" y="16" width="1" height="1" fill="black"/><rect x="14" y="16" width="1" height="1" fill="black"/><rect x="18" y="16" width="2" height="1" fill="black"/><rect x="22" y="16" width="1" height="1" fill="black"/><rect x="25" y="16" width="2" height="1" fill="black"/>
+                        <rect x="0" y="17" width="1" height="1" fill="black"/><rect x="3" y="17" width="2" height="1" fill="black"/><rect x="9" y="17" width="1" height="1" fill="black"/><rect x="12" y="17" width="3" height="1" fill="black"/><rect x="16" y="17" width="1" height="1" fill="black"/><rect x="20" y="17" width="2" height="1" fill="black"/><rect x="24" y="17" width="1" height="1" fill="black"/><rect x="27" y="17" width="1" height="1" fill="black"/>
+                        <rect x="1" y="18" width="2" height="1" fill="black"/><rect x="5" y="18" width="2" height="1" fill="black"/><rect x="8" y="18" width="1" height="1" fill="black"/><rect x="11" y="18" width="1" height="1" fill="black"/><rect x="14" y="18" width="2" height="1" fill="black"/><rect x="18" y="18" width="1" height="1" fill="black"/><rect x="22" y="18" width="3" height="1" fill="black"/><rect x="26" y="18" width="2" height="1" fill="black"/>
+                        <rect x="3" y="19" width="1" height="1" fill="black"/><rect x="9" y="19" width="2" height="1" fill="black"/><rect x="13" y="19" width="2" height="1" fill="black"/><rect x="16" y="19" width="1" height="1" fill="black"/><rect x="19" y="19" width="2" height="1" fill="black"/><rect x="23" y="19" width="1" height="1" fill="black"/><rect x="25" y="19" width="3" height="1" fill="black"/>
+                        <rect x="0" y="20" width="2" height="1" fill="black"/><rect x="4" y="20" width="2" height="1" fill="black"/><rect x="8" y="20" width="1" height="1" fill="black"/><rect x="11" y="20" width="1" height="1" fill="black"/><rect x="14" y="20" width="3" height="1" fill="black"/><rect x="18" y="20" width="1" height="1" fill="black"/><rect x="26" y="20" width="2" height="1" fill="black"/>
+                        
+                        <rect x="8" y="21" width="2" height="1" fill="black"/><rect x="11" y="21" width="3" height="1" fill="black"/><rect x="16" y="21" width="1" height="1" fill="black"/><rect x="18" y="21" width="1" height="1" fill="black"/><rect x="26" y="21" width="1" height="1" fill="black"/><rect x="28" y="21" width="1" height="1" fill="black"/>
+                        <rect x="9" y="22" width="1" height="1" fill="black"/><rect x="12" y="22" width="1" height="1" fill="black"/><rect x="14" y="22" width="2" height="1" fill="black"/><rect x="18" y="22" width="2" height="1" fill="black"/><rect x="26" y="22" width="2" height="1" fill="black"/>
+                        <rect x="8" y="23" width="3" height="1" fill="black"/><rect x="13" y="23" width="1" height="1" fill="black"/><rect x="16" y="23" width="2" height="1" fill="black"/><rect x="27" y="23" width="2" height="1" fill="black"/>
+                        <rect x="10" y="24" width="2" height="1" fill="black"/><rect x="13" y="24" width="2" height="1" fill="black"/><rect x="17" y="24" width="1" height="1" fill="black"/><rect x="19" y="24" width="1" height="1" fill="black"/><rect x="26" y="24" width="1" height="1" fill="black"/><rect x="28" y="24" width="1" height="1" fill="black"/>
+                        <rect x="8" y="25" width="2" height="1" fill="black"/><rect x="12" y="25" width="1" height="1" fill="black"/><rect x="15" y="25" width="2" height="1" fill="black"/><rect x="18" y="25" width="1" height="1" fill="black"/><rect x="20" y="25" width="3" height="1" fill="black"/><rect x="24" y="25" width="2" height="1" fill="black"/><rect x="27" y="25" width="1" height="1" fill="black"/>
+                        <rect x="9" y="26" width="1" height="1" fill="black"/><rect x="11" y="26" width="3" height="1" fill="black"/><rect x="16" y="26" width="1" height="1" fill="black"/><rect x="19" y="26" width="1" height="1" fill="black"/><rect x="21" y="26" width="2" height="1" fill="black"/><rect x="25" y="26" width="1" height="1" fill="black"/><rect x="28" y="26" width="1" height="1" fill="black"/>
+                        <rect x="8" y="27" width="2" height="1" fill="black"/><rect x="13" y="27" width="1" height="1" fill="black"/><rect x="15" y="27" width="2" height="1" fill="black"/><rect x="18" y="27" width="2" height="1" fill="black"/><rect x="22" y="27" width="1" height="1" fill="black"/><rect x="24" y="27" width="3" height="1" fill="black"/>
+                        <rect x="10" y="28" width="1" height="1" fill="black"/><rect x="12" y="28" width="2" height="1" fill="black"/><rect x="16" y="28" width="1" height="1" fill="black"/><rect x="20" y="28" width="2" height="1" fill="black"/><rect x="23" y="28" width="1" height="1" fill="black"/><rect x="26" y="28" width="2" height="1" fill="black"/>
+                    </svg>
 
-                        <!-- Target Focus corners -->
-                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <div class="w-3/4 h-3/4 border-2 border-emerald-400/20 rounded-2xl flex items-center justify-center">
-                                <span class="material-symbols-outlined text-emerald-400 text-5xl opacity-30 group-hover/qr:scale-110 transition-transform duration-300">filter_center_focus</span>
-                            </div>
-                        </div>
-
-                        <!-- Scan overlay status -->
-                        <div x-show="scanning" class="absolute inset-0 bg-black/90 flex flex-col items-center justify-center z-40 transition-opacity duration-300">
-                            <span class="material-symbols-outlined text-emerald-400 text-4xl animate-spin">sync</span>
-                            <span class="text-[9px] font-data-mono text-emerald-400 mt-2 text-center">ALIGNED & DOWNLOADING...</span>
-                        </div>
+                    <!-- Scan overlay status -->
+                    <div x-show="scanning" class="absolute inset-0 bg-black/90 flex flex-col items-center justify-center rounded-2xl z-40 transition-opacity duration-300">
+                        <span class="material-symbols-outlined text-emerald-400 text-4xl animate-spin">sync</span>
+                        <span class="text-[9px] font-data-mono text-emerald-400 mt-2 text-center">ALIGNED & DOWNLOADING...</span>
                     </div>
                 </div>
 

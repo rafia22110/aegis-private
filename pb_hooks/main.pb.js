@@ -75,7 +75,7 @@ routerAdd("POST", "/api/register-test", (c) => {
                 <span class="material-symbols-outlined text-tertiary text-6xl">check_circle</span>
                 <h3 class="font-headline-lg text-tertiary">Registration Successful</h3>
                 <p class="text-body-md text-on-surface-variant">RSA-4096 handshake established. Secure profile activated.</p>
-                <button class="mt-lg px-xl py-lg bg-primary text-on-primary rounded-xl font-body-md font-semibold hover:bg-primary-container transition-all" onclick="window.location.reload()">Proceed to Dashboard</button>
+                <button class="mt-lg px-xl py-lg bg-primary text-on-primary rounded-xl font-body-md font-semibold hover:bg-primary-container transition-all" @click="currentScreen = 'dashboard'">Proceed to Dashboard</button>
             </div>
         `);
     } catch (err) {

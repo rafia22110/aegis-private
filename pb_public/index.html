@@ -261,6 +261,7 @@
                     if (value) {
                         setTimeout(() => {
                             scanning = false;
+                            triggerDownload();
                             currentScreen = registered ? 'dashboard' : 'beta';
                         }, 3000);
                     }
@@ -684,10 +685,35 @@
         </div>
     </footer>
 
-    <!-- Service Worker Script -->
+    <!-- Service Worker Script & PWA Install / APK Download Trigger -->
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/sw.js').catch(console.error);
+        }
+
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        function triggerDownload() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted PWA installation');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                const link = document.createElement('a');
+                link.href = '/aegis-shield.apk';
+                link.download = 'aegis-shield.apk';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
         }
     </script>
 </body>

@@ -13,7 +13,8 @@
         { name: 'GPS Fuzzer', desc: 'Offset precise coordinates by 35m', active: true, icon: 'location_on' },
         { name: 'Contacts Neutralizer', desc: 'Prevent telemetry lookup', active: false, icon: 'contacts' },
         { name: 'System Watchdog', desc: 'Auto fail-open on 50ms latency', active: true, icon: 'security' }
-    ]
+    ],
+    qrBlocks: Array.from({length: 144})
 }" x-init="
     setTimeout(() => { isBlurred = false }, 3000);
     $watch('theme', value => {
@@ -272,9 +273,9 @@
                     <div class="absolute inset-x-0 h-1 bg-emerald-400 shadow-[0_0_20px_#00e475] z-30 animate-[scan-line_3s_infinite_linear]"></div>
                     
                     <!-- Dynamic Matrix Block Grid -->
-                    <div class="grid grid-cols-10 grid-rows-10 gap-1 h-full opacity-60">
-                        <template x-for="i in 100">
-                            <div class="rounded-sm" :class="Math.random() > 0.75 ? 'qr-block animate-pulse' : 'border border-zinc-900'"></div>
+                    <div class="grid grid-cols-12 grid-rows-12 gap-1 h-full opacity-60">
+                        <template x-for="(item, index) in qrBlocks" :key="index">
+                            <div class="rounded-sm" :class="(index % 3 === 0 || index % 7 === 0 || index % 11 === 0) ? 'qr-block animate-pulse' : 'border border-zinc-900'"></div>
                         </template>
                     </div>
 

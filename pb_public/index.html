@@ -14,9 +14,10 @@
         { name: 'Contacts Neutralizer', desc: 'Prevent telemetry lookup', active: false, icon: 'contacts' },
         { name: 'System Watchdog', desc: 'Auto fail-open on 50ms latency', active: true, icon: 'security' }
     ],
-    qrBlocks: Array.from({length: 144})
+    qrBlocks: []
 }" x-init="
     setTimeout(() => { isBlurred = false }, 3000);
+    qrBlocks = Array.from({length: 144}, (_, i) => i);
     $watch('theme', value => {
         if (value === 'dark') {
             document.documentElement.classList.add('dark');
@@ -262,7 +263,7 @@
                     if (value) {
                         setTimeout(() => {
                             scanning = false;
-                            triggerDownload();
+                            window.triggerDownload();
                             currentScreen = registered ? 'dashboard' : 'beta';
                         }, 3000);
                     }
@@ -698,7 +699,7 @@
             deferredPrompt = e;
         });
 
-        function triggerDownload() {
+        window.triggerDownload = function() {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then((choiceResult) => {

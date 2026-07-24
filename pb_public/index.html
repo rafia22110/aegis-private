@@ -8,6 +8,7 @@
     username: 'Operator-71',
     emailAlias: 'afi.secure.box2026@tempmail.io',
     registered: false,
+    scanning: false,
     sandboxApps: [
         { name: 'Microphone Obfuscator', desc: 'Virtualize on-device audio stream', active: true, icon: 'mic' },
         { name: 'GPS Fuzzer', desc: 'Offset precise coordinates by 35m', active: true, icon: 'location_on' },
@@ -209,8 +210,7 @@
     <!-- CONTENT WRAPPER -->
     <main class="flex-grow flex flex-col">
 
-        <!-- 1. GATEWAY SCREEN -->
-        <section x-show="currentScreen === 'gateway'" class="flex-grow w-full min-h-screen bg-[#0b0c10] text-slate-200 flex flex-col items-center justify-center p-6 relative overflow-hidden" x-data="{ scanning: false }">
+        <section x-show="currentScreen === 'gateway'" class="flex-grow w-full min-h-screen bg-[#0b0c10] text-slate-200 flex flex-col items-center justify-center p-6 relative overflow-hidden">
             <!-- Glass background effect -->
             <div class="absolute inset-0 z-0 flex justify-center items-center pointer-events-none">
                 <div class="w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[120px]"></div>

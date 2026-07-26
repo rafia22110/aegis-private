@@ -107,8 +107,8 @@
           activeProfile: 'Standard',
           customAlias: 'rafiargsnti221169@gmail.com',
           manualTab: 'general',
-          licenseStatus: 'inactive',
-          licenseType: 'Free tier',
+          licenseStatus: 'active',
+          licenseType: 'Sovereign Lifetime',
           cardholderName: 'Aegis Sovereign Participant',
           cardNumber: '4580 1200 4500 9012',
           cvv: '777',
@@ -492,9 +492,6 @@
                                 Aegis Core Control Center
                             </h2>
                             <div class="flex items-center gap-2">
-                                <button @click="showBillingModal = true" class="px-3 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs font-bold rounded-lg transition">
-                                    Billing & Subscription
-                                </button>
                                 <button @click="showPrivacyModal = true" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-750 text-xs rounded-lg transition">
                                     Privacy Policy
                                 </button>
@@ -798,68 +795,6 @@
         </div>
     </div>
 
-    <!-- Production Billing & License Activation Modal -->
-    <div x-show="showBillingModal"
-         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/85 backdrop-blur-md"
-         x-transition
-         x-cloak>
-        <div class="bg-stone-900 border border-amber-900/30 rounded-2xl max-w-md w-full p-6 space-y-6 relative text-left">
-            <button @click="showBillingModal = false" class="absolute top-4 right-4 text-stone-400 hover:text-stone-100">
-                <span class="material-symbols-outlined">close</span>
-            </button>
-
-            <div class="text-center space-y-1">
-                <span class="material-symbols-outlined text-amber-500 text-3xl">verified_user</span>
-                <h3 class="heading-font font-bold text-lg text-stone-100">Premium Sovereign Protection</h3>
-                <p class="text-xs text-stone-400">Unlock absolute lifetime cryptographic tunneling limits</p>
-            </div>
-
-            <!-- Active promo billing tier -->
-            <div class="bg-stone-950 border border-amber-900/20 p-4 rounded-xl space-y-2">
-                <div class="flex justify-between items-center">
-                    <span class="text-xs font-bold text-amber-500 uppercase tracking-wider">Lifetime Sovereign Plan</span>
-                    <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded font-mono font-bold">$10 Single Payment</span>
-                </div>
-                <div class="text-[11px] text-stone-500 space-y-1">
-                    <p class="flex items-center gap-1.5">
-                        <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
-                        <span>100% full money-back guarantee within 30 days of purchase.</span>
-                    </p>
-                    <p class="flex items-center gap-1.5">
-                        <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
-                        <span>50% partial money-back guarantee up to 4 months of use.</span>
-                    </p>
-                </div>
-            </div>
-
-            <!-- Card inputs -->
-            <div class="space-y-3">
-                <div>
-                    <label class="block text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1">Cardholder Name</label>
-                    <input type="text" x-model="cardholderName" class="w-full bg-stone-950 px-3 py-2 border border-stone-800 rounded-lg text-xs text-stone-200 focus:outline-none focus:border-amber-500/40">
-                </div>
-                <div class="grid grid-cols-3 gap-2">
-                    <div class="col-span-2">
-                        <label class="block text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1">Card Number</label>
-                        <input type="text" x-model="cardNumber" class="w-full bg-stone-950 px-3 py-2 border border-stone-800 rounded-lg text-xs text-stone-200 focus:outline-none focus:border-amber-500/40 font-mono">
-                    </div>
-                    <div>
-                        <label class="block text-[10px] font-bold text-stone-400 uppercase tracking-wider mb-1">CVV</label>
-                        <input type="text" x-model="cvv" class="w-full bg-stone-950 px-3 py-2 border border-stone-800 rounded-lg text-xs text-stone-200 focus:outline-none focus:border-amber-500/40 font-mono text-center">
-                    </div>
-                </div>
-            </div>
-
-            <div class="pt-2">
-                <button @click="purchasePremiumLicense()"
-                        :disabled="licenseStatus === 'processing'"
-                        class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-stone-100 font-bold text-xs rounded-xl shadow-lg transition duration-150 flex items-center justify-center gap-1.5">
-                    <span class="material-symbols-outlined text-sm">payments</span>
-                    <span x-text="licenseStatus === 'processing' ? 'Authorizing cryptographics...' : (licenseStatus === 'active' ? 'License Successfully Activated!' : 'Authorize $10 One-Time Payment')"></span>
-                </button>
-            </div>
-        </div>
-    </div>
 
     <!-- Production Zero-Knowledge Privacy Covenant Modal -->
     <div x-show="showPrivacyModal"

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aegis Mirror — מנוע הריבונות הדיגיטלית</title>
+    
+    <!-- Datastar 1.0 (11 KiB Reactive Engine) -->
+    <script type="module" src="https://cdn.jsdelivr.net/gh/starfederation/datastar@v1.0.0/bundles/datastar.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Heebo:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
+        
+        .myth-font { font-family: 'Cinzel', serif; }
+        body { font-family: 'Heebo', sans-serif; background-color: #06090e; color: #f3f4f6; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        
+        .liquid-glass {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(245, 158, 11, 0.02) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+        
+        @keyframes pulse-emerald {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.5)); }
+            50% { transform: scale(1.02); filter: drop-shadow(0 0 30px rgba(16, 185, 129, 0.8)); }
+        }
+        @keyframes pulse-amber {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(245, 158, 11, 0.4)); }
+            50% { transform: scale(1.02); filter: drop-shadow(0 0 35px rgba(245, 158, 11, 0.7)); }
+        }
+        .active-shield { animation: pulse-emerald 4s infinite ease-in-out; }
+        .bypass-shield { animation: pulse-amber 4s infinite ease-in-out; }
+    </style>
+</head>
+<body class="min-h-screen py-8 px-4 sm:px-6 selection:bg-emerald-500 selection:text-slate-950">
+
+    <!-- DATASTAR REACTIVE ROOT STORE -->
+    <main class="max-w-xl mx-auto space-y-6"
+         data-store="{ 
+            phone: '',
+            country: '+972',
+            isLinked: false,
+            linkedPhone: '',
+            isSecure: true, 
+            showSandbox: false, 
+            activeAlias: 'aegis.matrix.vault2026@relay.aegis-mirror.io'
+         }">
+
+        <!-- HEADER -->
+        <header class="text-center space-y-1">
+            <h1 class="myth-font text-3xl sm:text-4xl font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-100 to-emerald-300">
+                AEGIS MIRROR
+            </h1>
+            <p class="text-xs text-emerald-400 font-bold tracking-widest uppercase font-mono">
+                Digital Sovereignty Engine &bull; Zero-Trust Mobile Security
+            </p>
+        </header>
+
+        <!-- MEDUSA SHIELD RING -->
+        <div class="flex justify-center items-center py-2">
+            <div class="relative w-64 h-64 sm:w-72 sm:h-72 rounded-full flex justify-center items-center transition-all duration-700"
+                 data-class="{ 'active-shield': $isSecure && $isLinked, 'bypass-shield': !$isSecure || !$isLinked }">
+                
+                <div class="absolute inset-0 rounded-full border-4 border-amber-500/30 bg-[radial-gradient(circle,_rgba(27,38,59,0.7)_0%,_rgba(11,12,16,1)_100%)] shadow-2xl"></div>
+                
+                <div class="z-10 text-center space-y-2 p-4 pointer-events-none">
+                    <div class="myth-font text-base sm:text-lg font-black tracking-widest"
+                         data-class="{ 'text-emerald-400': $isSecure && $isLinked, 'text-amber-400': !$isSecure || !$isLinked }">
+                        <span data-text="$isLinked ? ($isSecure ? 'SHIELD ARMED' : 'BYPASS MODE') : 'PENDING ACTIVATION'">PENDING ACTIVATION</span>
+                    </div>
+                    <div class="text-xs text-slate-400 font-mono" data-text="$isLinked ? 'Gorgon Matrix Active' : 'Enter mobile number to activate'">
+                        Enter mobile number to activate
+                    </div>
+                    <div class="mt-2 text-[11px] text-emerald-300/90 bg-slate-950/70 py-1.5 px-3 rounded-lg border border-emerald-500/30 font-medium">
+                        3-Step Protocol: DNS &bull; AdID &bull; MOCK
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1. ACTIVATION CARD (FORM: PHONE + COUNTRY CODE) -->
+        <section class="liquid-glass rounded-2xl p-6 space-y-4 shadow-xl" data-show="!$isLinked">
+            <div class="border-b border-white/10 pb-2 flex items-center justify-between">
+                <h2 class="text-sm font-bold tracking-wide text-white flex items-center gap-2">
+                    <span>📱 הפעלת הגנה ישירות למכשיר</span>
+                </h2>
+                <span class="text-[11px] text-emerald-400 font-mono">STEP 1</span>
+            </div>
+            
+            <p class="text-xs text-slate-400 leading-relaxed">
+                הכנס את מספר הטלפון הנייד שלך לקבלת קישור ההפעלה והגנת הסוברנטיות המלאה ישירות למכשיר.
+            </p>
+
+            <form onsubmit="event.preventDefault();" class="space-y-4">
+                <div class="space-y-1">
+                    <label class="text-[11px] text-slate-400 block font-medium">קידומת מדינה ומספר טלפון:</label>
+                    <div class="flex gap-2">
+                        <select data-model="country" class="bg-slate-950 border border-slate-800 text-white rounded-xl px-3 py-3 text-xs font-mono focus:outline-none focus:border-emerald-500">
+                            <option value="+972">🇮🇱 +972</option>
+                            <option value="+1">🇺🇸 +1</option>
+                            <option value="+44">🇬🇧 +44</option>
+                            <option value="+49">🇩🇪 +49</option>
+                            <option value="+33">🇫🇷 +33</option>
+                            <option value="+34">🇪🇸 +34</option>
+                            <option value="+39">🇮🇹 +39</option>
+                            <option value="+7">🇷🇺 +7</option>
+                            <option value="+86">🇨🇳 +86</option>
+                            <option value="+91">🇮🇳 +91</option>
+                        </select>
+                        <input 
+                            type="tel" 
+                            id="phone-input"
+                            data-model="phone" 
+                            placeholder="050-1234567" 
+                            class="flex-1 bg-slate-950 border border-slate-800 text-white rounded-xl px-4 py-3 text-sm font-mono tracking-wider focus:outline-none focus:border-emerald-500"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <button 
+                    type="button" 
+                    id="connect-btn"
+                    data-on-click="if ($phone.trim().length >= 7) { $linkedPhone = $country + ' ' + $phone; $isLinked = true; }"
+                    class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-slate-950 font-black text-sm tracking-wide uppercase transition-all shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-2"
+                >
+                    <span>קבל הגנה למכשיר הנייד &bull; Connect</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </button>
+            </form>
+        </section>
+
+        <!-- 2. LINKED DEVICE CARD (ACTIVE STATE) -->
+        <section class="liquid-glass rounded-2xl p-6 space-y-4 shadow-xl border-emerald-500/30" data-show="$isLinked">
+            <div class="border-b border-white/10 pb-2 flex items-center justify-between">
+                <h2 class="text-sm font-bold tracking-wide text-white flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span>מכשיר מקושר ומאובטח</span>
+                </h2>
+                <span class="text-xs text-emerald-400 font-mono font-bold" data-text="$linkedPhone">+972 0501234567</span>
+            </div>
+
+            <div class="p-3 bg-emerald-950/30 border border-emerald-500/30 rounded-xl text-xs text-emerald-300 flex items-center gap-2">
+                <span>✓</span>
+                <span>הקישור הוקם בהצלחה. האפליקציה פועלת במצב Fail-Closed ומסננת כל חבילת רשת.</span>
+            </div>
+
+            <!-- Controls when linked -->
+            <div class="space-y-3 pt-2">
+                <button data-on-click="$isSecure = !$isSecure" 
+                        class="w-full py-3 px-5 rounded-xl font-bold text-xs tracking-wide uppercase transition-all flex items-center justify-between shadow"
+                        data-class="{ 'bg-gradient-to-r from-emerald-600 to-teal-500 text-slate-950': $isSecure, 'bg-gradient-to-r from-amber-600 to-orange-500 text-slate-950': !$isSecure }">
+                    <span data-text="$isSecure ? '🛡️ מגן פעיל (Shield Active)' : '⚠️ מצב מעקף (Bypass Mode)'">🛡️ מגן פעיל</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded bg-black/20 font-extrabold font-mono" data-text="$isSecure ? 'SECURE' : 'BYPASS'">SECURE</span>
+                </button>
+
+                <button data-on-click="$showSandbox = !$showSandbox" 
+                        class="w-full bg-slate-900/80 text-slate-300 border border-slate-800 py-3 px-5 rounded-xl font-bold text-xs tracking-wider uppercase flex items-center justify-between hover:bg-slate-800">
+                    <span>📦 הגדרות בידוד אפליקציות (App Sandbox)</span>
+                    <span class="text-xs text-slate-500 font-mono" data-text="$showSandbox ? 'CLOSE' : 'OPEN'">OPEN</span>
+                </button>
+
+                <button data-on-click="$isLinked = false; $phone = '';" 
+                        class="w-full text-center text-xs text-slate-500 hover:text-slate-300 pt-1 transition-colors">
+                    נתק מכשיר / החלף מספר טלפון &bull; Unlink
+                </button>
+            </div>
+        </section>
+
+        <!-- PER-APP SANDBOX SELECTION -->
+        <div class="liquid-glass rounded-2xl p-5 space-y-3" data-show="$showSandbox">
+            <h3 class="text-xs font-bold tracking-widest text-slate-400 uppercase border-b border-slate-800/60 pb-2">בידוד והזרקת MOCK לאפליקציות</h3>
+            <div class="space-y-2 pt-1 text-xs">
+                <label class="flex items-center justify-between p-3 bg-slate-950/50 rounded-xl border border-slate-800/80 cursor-pointer">
+                    <span class="font-medium text-slate-200">Facebook & Instagram (Synthetic Contact Vectors)</span>
+                    <input type="checkbox" checked class="rounded bg-slate-900 text-emerald-500 h-4 w-4 accent-emerald-500">
+                </label>
+                <label class="flex items-center justify-between p-3 bg-slate-950/50 rounded-xl border border-slate-800/80 cursor-pointer">
+                    <span class="font-medium text-slate-200">WhatsApp & Meta (Background Telemetry Filter)</span>
+                    <input type="checkbox" checked class="rounded bg-slate-900 text-emerald-500 h-4 w-4 accent-emerald-500">
+                </label>
+                <label class="flex items-center justify-between p-3 bg-slate-950/50 rounded-xl border border-slate-800/80 cursor-pointer">
+                    <span class="font-medium text-slate-200">TikTok & Ad Trackers (Zero-Telemetry Drop)</span>
+                    <input type="checkbox" checked class="rounded bg-slate-900 text-emerald-500 h-4 w-4 accent-emerald-500">
+                </label>
+            </div>
+        </div>
+
+        <!-- OBSERVABILITY JOURNAL (LIVE DEFENSE FEED) -->
+        <div class="liquid-glass rounded-2xl p-5 space-y-3">
+            <div class="flex justify-between items-center border-b border-slate-800/60 pb-2">
+                <h3 class="text-xs font-bold tracking-widest text-slate-300 uppercase">פיד הגנה חי &bull; Live Defense Feed</h3>
+                <span class="text-[10px] text-emerald-400 font-mono font-bold">Watchdog &lt;50ms</span>
+            </div>
+            <div class="space-y-2 text-xs">
+                <div class="p-3 bg-slate-950/60 border border-emerald-500/20 text-emerald-300 rounded-xl flex items-center justify-between">
+                    <div>
+                        <div class="font-bold">Aegis Matrix allowed verified emergency route to Play Services.</div>
+                        <div class="text-[10px] text-slate-500 font-mono">com.google.android.gms &rarr; play.googleapis.com</div>
+                    </div>
+                    <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-black/40 border border-white/5">6.4ms</span>
+                </div>
+                <div class="p-3 bg-slate-950/60 border border-amber-500/20 text-amber-300 rounded-xl flex items-center justify-between">
+                    <div>
+                        <div class="font-bold">Aegis Gorgon Matrix injected synthetic contact vectors.</div>
+                        <div class="text-[10px] text-slate-500 font-mono">com.facebook.katana &rarr; graph.facebook.com</div>
+                    </div>
+                    <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-black/40 border border-white/5">11.8ms</span>
+                </div>
+                <div class="p-3 bg-slate-950/60 border border-rose-500/20 text-rose-300 rounded-xl flex items-center justify-between">
+                    <div>
+                        <div class="font-bold">Aegis Shield kernel-dropped ad beacon packet.</div>
+                        <div class="text-[10px] text-slate-500 font-mono">com.xiaomi.gamecenter &rarr; tracking.ads.io</div>
+                    </div>
+                    <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-black/40 border border-white/5">3.9ms</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="text-center text-xs text-slate-600 pt-4 pb-8 space-y-1">
+            <div class="font-mono">AEGIS MIRROR &copy; 2026 &bull; Digital Sovereignty Engine</div>
+            <div>Distributed & Maintained by Rafael Argenti / Nexus Engine</div>
+        </footer>
+
+    </main>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').catch(() => {});
+        }
+    </script>
+</body>
+</html>

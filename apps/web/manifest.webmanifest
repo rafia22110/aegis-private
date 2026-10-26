@@ -1,0 +1,11 @@
+{
+  "name": "Aegis Mirror - Migration Preview",
+  "short_name": "Aegis Preview",
+  "lang": "he",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#06090e",
+  "theme_color": "#06090e"
+}

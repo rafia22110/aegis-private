@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Aegis Mirror Dev</string>
+    <string name="engine_status">מצב המנוע: %1$s</string>
+    <string name="status_pending">מצב ההגנה לא ידוע</string>
+    <string name="build_notice">גרסת פיתוח לבדיקת בנייה. אין מנוע תעבורה מחובר. האפליקציה אינה מפעילה VPN ואינה מגינה על המכשיר. לא מתבקש מספר טלפון ולא נאספים נתונים.</string>
+    <string name="activation_unavailable">הפעלת המגן אינה זמינה</string>
+</resources>

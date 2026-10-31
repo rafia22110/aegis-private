@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; manifest-src 'self'; script-src 'none'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Aegis Mirror — ממשק מאוחד</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="manifest" href="manifest.webmanifest">
+</head>
+<body>
+<main>
+<header><img class="logo" src="assets/logo.png" alt="סמל Aegis Mirror" width="64" height="64"><h1>AEGIS MIRROR</h1><p>Digital Sovereignty Engine</p></header>
+<aside class="notice" role="status">תצוגת מעבר — אין מנוע מחובר. דף זה אינו מפעיל VPN ואינו מעיד שהמכשיר מוגן.</aside>
+<section class="shield" aria-labelledby="shield-title">
+<img src="assets/medusa-core.png" alt="" width="224" height="224">
+<div><h2 id="shield-title">מצב ההגנה לא ידוע</h2><p>UNKNOWN · ENGINE NOT CONNECTED</p></div>
+</section>
+<section class="card" aria-labelledby="setup-title"><h2 id="setup-title">התקנה וחיבור למכשיר</h2>
+<ol><li>אפליקציית Android: בנייה והתקנה עדיין לא אומתו.</li><li>הרשאת VPN: נדרש אישור מערכת במכשיר; הדף אינו מעניק אותה.</li><li>אימות מצב: יוצג רק לאחר חיבור למקור מזוהה ועדכני.</li></ol>
+<p>אין צורך להזין מספר טלפון בתצוגת המעבר. אין כרגע הורדת APK או QR התקנה מאומתים.</p>
+<button id="shield-control" type="button" disabled aria-describedby="control-note">הפעלת המגן אינה זמינה</button>
+<p id="control-note">כפתור זה לא משנה מצב אבטחה ולא שולח בקשות.</p></section>
+<section class="card" aria-labelledby="capabilities-title"><h2 id="capabilities-title">יכולות המערכת</h2>
+<ul class="capabilities"><li><span>סינון רשת מקומי</span><span class="badge">לא אומת</span></li><li><span>וירטואליזציית חיישנים</span><span class="badge">לא אומתה</span></li><li><span>זהויות חלופיות</span><span class="badge">לא אומתו</span></li><li><span>חיבור לציוד לביש</span><span class="badge">לא אומת</span></li></ul>
+<details><summary>בידוד אפליקציות — ממתין למימוש</summary><p>לא מוצגים מתגים פעילים ל־MOCK, למיקרופון או למיקום ללא יכולת מוכחת במנוע.</p></details></section>
+<section class="card" aria-labelledby="feed-title"><h2 id="feed-title">יומן פעילות</h2><p class="empty">אין נתונים ממכשיר מחובר.</p><p>לא מוצגים אירועי חסימה, זמני השהיה או נתוני הדגמה כאילו התרחשו בפועל.</p></section>
+<footer><p>AEGIS MIRROR · Rafael Argenti / Nexus Engine</p><p>ממשק מעבר סטטי · ללא טלמטריה · ללא בקשות API</p></footer>
+<noscript><p class="notice">הממשק סטטי ואינו דורש JavaScript. אין חיבור למנוע במצב זה.</p></noscript>
+</main>
+</body>
+</html>

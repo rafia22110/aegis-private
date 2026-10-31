@@ -1,0 +1,68 @@
+name: Android development build
+on:
+  push:
+    branches: [main, integration/unified-aegis]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  android:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Verify hosted Android SDK
+        shell: bash
+        run: |
+          set -euo pipefail
+          : "${ANDROID_HOME:?GitHub runner Android SDK is unavailable}"
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          test -x "$SDKMANAGER"
+          echo "SDKMANAGER=$SDKMANAGER" >> "$GITHUB_ENV"
+          java -version
+          "$SDKMANAGER" --version
+      - name: Install only declared SDK packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$SDKMANAGER" --sdk_root="$ANDROID_HOME" 'platforms;android-35' 'build-tools;35.0.0' </dev/null
+          test -f "$ANDROID_HOME/platforms/android-35/android.jar"
+          test -x "$ANDROID_HOME/build-tools/35.0.0/aapt2"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+          cache-read-only: true
+      - name: Build debug APK
+        working-directory: apps/android
+        run: gradle --no-daemon --console=plain --stacktrace :app:assembleDebug
+      - name: Run JVM tests
+        working-directory: apps/android
+        run: gradle --no-daemon --console=plain --stacktrace :app:testDebugUnitTest
+      - name: Run Android lint
+        working-directory: apps/android
+        run: gradle --no-daemon --console=plain --stacktrace :app:lintDebug
+      - name: Upload development APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: aegis-android-debug
+          path: apps/android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 7
+      - name: Upload available diagnostic reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aegis-android-reports
+          path: |
+            apps/android/app/build/reports/
+            apps/android/app/build/test-results/
+          if-no-files-found: warn
+          retention-days: 7

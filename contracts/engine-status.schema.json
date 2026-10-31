@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Aegis Engine Status v1",
+  "description": "A payload contract, not proof of protection. Consumers must authenticate its source and enforce freshness using observed_at. Demo data must never be displayed as active protection.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "device_id", "observed_at", "mode", "state", "vpn_established", "enforcement_verified", "capabilities"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "device_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "mode": {"enum": ["live", "demo"]},
+    "state": {"enum": ["unknown", "stopped", "starting", "active", "degraded", "bypass", "error"]},
+    "vpn_established": {"type": "boolean"},
+    "enforcement_verified": {"type": "boolean"},
+    "reason": {"type": "string", "maxLength": 1024},
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["network_filtering", "sensor_virtualization", "identity_aliases", "wearable_mesh"],
+      "properties": {
+        "network_filtering": {"$ref": "#/$defs/capability"},
+        "sensor_virtualization": {"$ref": "#/$defs/capability"},
+        "identity_aliases": {"$ref": "#/$defs/capability"},
+        "wearable_mesh": {"$ref": "#/$defs/capability"}
+      }
+    }
+  },
+  "$defs": {
+    "capability": {"enum": ["unsupported", "unverified", "verified"]}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"state": {"const": "active"}}, "required": ["state"]},
+      "then": {"properties": {"mode": {"const": "live"}, "vpn_established": {"const": true}, "enforcement_verified": {"const": true}, "capabilities": {"properties": {"network_filtering": {"const": "verified"}}}}}
+    },
+    {
+      "if": {"properties": {"mode": {"const": "demo"}}, "required": ["mode"]},
+      "then": {"properties": {"enforcement_verified": {"const": false}, "vpn_established": {"const": false}, "state": {"const": "unknown"}}}
+    }
+  ]
+}

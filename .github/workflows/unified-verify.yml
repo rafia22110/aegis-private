@@ -1,7 +1,10 @@
 name: Unified Aegis verification
 on:
   push:
-    branches: [integration/unified-aegis]
+    branches: [main, integration/unified-aegis]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
 permissions:
   contents: read
 jobs:

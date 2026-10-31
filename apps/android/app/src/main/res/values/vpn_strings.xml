@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="vpn_setup_title">Aegis Mirror — הכנת VPN, גרסה 0.3</string>
+    <string name="vpn_setup_boundary">VPN אינו פעיל. גרסה זו בודקת אישור מערכת בלבד. אין מנהרת תעבורה, חסימת רשת או הגנה חדשה. הפרופילים והחוקים נשארים בדיקות החלטה מקומיות.</string>
+    <string name="vpn_existing_warning">אישור הבקשה עלול להחליף בחירת VPN קודמת ואף להפסיק VPN אחר. אם אתה תלוי בחיבור VPN אחר, אל תאשר כעת. אל תפעיל חסימת חיבורים ללא VPN עבור גרסת הכנה זו.</string>
+    <string name="vpn_request_consent">בקש אישור VPN מהמערכת — ללא חיבור</string>
+    <string name="vpn_refresh_consent">בדוק שוב את האישור</string>
+    <string name="vpn_system_settings">פתח הגדרות VPN של Android</string>
+    <string name="vpn_open_policy">פתח פרופילים וחוקים מקומיים</string>
+    <string name="vpn_consent_ready">אישור המערכת קיים כרגע. VPN לא פעיל; מנגנון העברת התעבורה טרם חובר.</string>
+    <string name="vpn_consent_missing">אין אישור מערכת לאפליקציה כרגע. VPN לא פעיל.</string>
+    <string name="vpn_consent_cancelled">הבקשה בוטלה או לא אושרה. VPN לא פעיל.</string>
+    <string name="vpn_consent_failed">לא ניתן להשלים או לבדוק את בקשת האישור. לא הופעל VPN על ידי גרסה זו.</string>
+    <string name="vpn_settings_unavailable">לא ניתן לפתוח את הגדרות ה־VPN במכשיר זה.</string>
+</resources>

@@ -3,6 +3,26 @@
     <string name="app_name">Aegis Mirror Dev</string>
     <string name="engine_status">מצב המנוע: %1$s</string>
     <string name="status_pending">מצב ההגנה לא ידוע</string>
-    <string name="build_notice">גרסת פיתוח לבדיקת בנייה. אין מנוע תעבורה מחובר. האפליקציה אינה מפעילה VPN ואינה מגינה על המכשיר. לא מתבקש מספר טלפון ולא נאספים נתונים.</string>
+    <string name="build_notice">גרסת פיתוח. אין VPN או אכיפת תעבורה.</string>
     <string name="activation_unavailable">הפעלת המגן אינה זמינה</string>
+    <string name="local_core_notice">ליבת מדיניות מקומית — בדיקת החלטות בלבד. אין חסימת רשת, החלפת חיישנים או שליחת נתונים.</string>
+    <string name="profile_explanation">הפרופיל והחוקים נשמרים במכשיר. ברירת המחדל בפרופיל המחמיר היא DENY; באחרים ALLOW. אלה ברירות החלטה בלבד — לא הבטחת הגנה או מסלול חירום.</string>
+    <string name="package_hint">שם חבילה, לדוגמה com.example.app</string>
+    <string name="host_hint">יעד, לדוגמה example.test</string>
+    <string name="port_hint">פורט: 0 לכל הפורטים בחוק; 1–65535 בבדיקה</string>
+    <string name="default_port">443</string>
+    <string name="save_rule">שמור או עדכן חוק מקומי</string>
+    <string name="evaluate_rule">בדוק החלטה — ללא שליחת תעבורה</string>
+    <string name="delete_rule">מחק חוק</string>
+    <string name="invalid_rule">החוק אינו תקין. בדוק שם חבילה, יעד ופורט.</string>
+    <string name="invalid_request">הבקשה אינה תקינה. בבדיקה נדרש פורט בין 1 ל־65535.</string>
+    <string name="operation_failed">הפעולה המקומית נכשלה. אין שינוי במצב הגנת הרשת.</string>
+    <string name="no_decision">טרם נבדקה החלטה בפרופיל הנבחר.</string>
+    <string name="decision_format">פרופיל %1$s — החלטת מדיניות %2$s. זו בדיקה בלבד, לא אירוע חסימה.</string>
+    <string name="event_count">נשמרו %1$d בדיקות החלטה מקומיות, עד 100 האחרונות.</string>
+    <string name="rule_format">%1$s → %2$s : %3$d — %4$s</string>
+    <string-array name="profile_names">
+        <item>רגיל — STANDARD</item><item>מחמיר — PARANOID</item><item>חירום — EMERGENCY</item><item>סוציאל דיאט — SOCIAL_DIET</item><item>מותאם — CUSTOM</item>
+    </string-array>
+    <string-array name="rule_actions"><item>ALLOW — אישור</item><item>DENY — דחייה</item></string-array>
 </resources>

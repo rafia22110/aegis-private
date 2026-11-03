@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
@@ -49,11 +49,41 @@ jobs:
       - name: Run Android lint
         working-directory: apps/android
         run: gradle --no-daemon --console=plain --stacktrace :app:lintDebug
-      - name: Upload development APK
+      - name: Verify UDP lab APK integrity signature and version
+        working-directory: apps/android
+        shell: bash
+        env:
+          SOURCE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          APK="$PWD/app/build/outputs/apk/debug/app-debug.apk"
+          REPORT_DIR="$PWD/app/build/reports/apk-validation"
+          TOOLS="$ANDROID_HOME/build-tools/35.0.0"
+          mkdir -p "$REPORT_DIR"
+          REPORT="$REPORT_DIR/apk-validation.txt"
+          printf 'Source head: %s\nCheckout commit: %s\nRun ID: %s\nRun attempt: %s\n' "$SOURCE_HEAD" "$(git rev-parse HEAD)" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" | tee "$REPORT"
+          test -s "$APK"
+          stat --printf='APK size: %s bytes\n' "$APK" | tee -a "$REPORT"
+          unzip -t "$APK" 2>&1 | tee -a "$REPORT"
+          test -x "$TOOLS/apksigner"
+          "$TOOLS/apksigner" verify --verbose --print-certs "$APK" 2>&1 | tee -a "$REPORT"
+          test -x "$TOOLS/aapt"
+          "$TOOLS/aapt" dump badging "$APK" | tee "$REPORT_DIR/badging.txt" | tee -a "$REPORT"
+          grep -F "package: name='com.aegismirror.app' versionCode='4' versionName='0.4.0-udp-lab'" "$REPORT_DIR/badging.txt" | tee -a "$REPORT"
+          (cd "$(dirname "$APK")"; sha256sum app-debug.apk) | tee "$APK.sha256" | tee -a "$REPORT"
+          printf '\nPASS: archive, APK signature and expected lab metadata verified.\nThis does not prove installed-key compatibility, device behavior or VPN protection.\n' | tee -a "$REPORT"
+          {
+            printf '## UDP lab APK verification\n\n```text\n'
+            cat "$REPORT"
+            printf '\n```\n'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload verified development APK and checksum
         uses: actions/upload-artifact@v4
         with:
           name: aegis-android-debug
-          path: apps/android/app/build/outputs/apk/debug/app-debug.apk
+          path: |
+            apps/android/app/build/outputs/apk/debug/app-debug.apk
+            apps/android/app/build/outputs/apk/debug/app-debug.apk.sha256
           if-no-files-found: error
           retention-days: 7
       - name: Upload available diagnostic reports

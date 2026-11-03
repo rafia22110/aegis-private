@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lab_title">Aegis Mirror — מעבדת UDP, גרסה 0.4</string>
+    <string name="lab_boundary">אין VPN פעיל ואין יירוט תעבורה. זו בדיקת העברה יזומה מתוך Aegis בלבד. בורר ALLOW/DENY כאן אינו מחובר לחוקי הדומיינים או לפרופילים.</string>
+    <string name="lab_warning">הזן רק IPv4 ופורט של שרת UDP Echo שבשליטתך. ב־ALLOW יישלחו 16 בתים אקראיים ללא הצפנה וללא נתונים אישיים. אין יעד ברירת מחדל. אין להפעיל חסימת חיבורים ללא VPN. אישור VPN עלול להפסיק VPN אחר.</string>
+    <string name="lab_host">IPv4 מספרי של שרת Echo שבשליטתך</string>
+    <string name="lab_port">פורט UDP של השרת, 1–65535</string>
+    <string name="lab_allow">ALLOW לבדיקה זו — כבוי פירושו DENY</string>
+    <string name="lab_probe">הרץ בדיקת UDP ידנית</string>
+    <string name="lab_cancel">בטל בדיקה</string>
+    <string name="lab_consent">פתח בקשת אישור VPN של Android</string>
+    <string name="lab_idle">טרם בוצעה בדיקת רשת. VPN אינו פעיל.</string>
+    <string name="lab_running">מבצע בדיקת UDP ליעד שהזנת…</string>
+    <string name="lab_busy">בדיקה קודמת עדיין מסתיימת. נסה שוב.</string>
+    <string name="lab_need_consent">נדרש אישור VPN נוכחי של Android לבדיקת החרגת השקע. פתח את מסך האישור וחזור. אין הפעלה אוטומטית.</string>
+    <string name="lab_no_network">לא נמצאה רשת פעילה שאינה VPN. לא בוצעה שליחה.</string>
+    <string name="lab_invalid_target">נדרש IPv4 מספרי תקין ופורט 1–65535. שמות מתחם, loopback, link-local וכתובות multicast אינם נתמכים.</string>
+    <string name="lab_denied">DENY — הבדיקה נעצרה לפני יצירת שקע ושליחת מטען. זו אינה חסימה של אפליקציה אחרת.</string>
+    <string name="lab_ok">התקבל Echo תואם למטען האקראי דרך רכיב ההעברה ושקע שהוחרג ונקשר לרשת. זו בדיקה יזומה, לא הוכחת הגנה על המכשיר.</string>
+    <string name="lab_not_echo">התקבלה תשובה שאינה Echo תואם. הבדיקה לא אושרה כתקינה.</string>
+    <string name="lab_failed">בדיקת ההעברה נכשלה או שלא התקבלה תשובה בזמן. אין להסיק מכך חסימת מדיניות. לא יבוצע ניסיון חלופי ללא החרגה.</string>
+    <string name="lab_cancelled">הבדיקה בוטלה. מטען שכבר נשלח אינו ניתן להחזרה.</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="self_test_start">בדיקה עצמית — ללא מחשב או שרת חיצוני</string>
+    <string name="self_test_boundary">בדיקת UDP פנימית בטלפון בלבד, בכתובת 127.0.0.1. אינה דורשת הזנת IP או הרשאת VPN. אינה בודקת protect, רשת חיצונית, מנהרת VPN או הגנה על אפליקציות אחרות.</string>
+    <string name="self_test_running">בדיקה עצמית פועלת: DENY ולאחריו ALLOW עם Echo אקראי…</string>
+    <string name="self_test_passed">עבר: DENY לא הגיע לשלב הסוקט ולא התקבל ממנו מטען בחלון הבדיקה; ALLOW החזיר מטען אקראי זהה עם כתובות ופורטים תקינים; המשאבים נסגרו. זו בדיקה מקומית בלבד, לא הוכחת VPN.</string>
+    <string name="self_test_failed">נכשל: הבדיקה העצמית לא הושלמה בהצלחה. אין להסיק שהגנת הרשת פעילה. אפשר לנסות שוב או לבטל.</string>
+</resources>
